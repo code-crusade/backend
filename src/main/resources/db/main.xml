@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gabar (generated)" id="1537229428244-1">
+        <createTable tableName="Foo">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FooPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537281999332-1">
+        <addColumn tableName="foo">
+            <column name="bar" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
