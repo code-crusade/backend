@@ -35,8 +35,8 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:2.1.0.M3" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.8" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:3.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: io.springfox:springfox-data-rest:2.9.3-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: io.springfox:springfox-data-rest:3.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.batch:spring-batch-test:4.1.0.M3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-test:5.1.0.RC2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.springframework.boot:spring-boot-devtools:2.1.0.M3" level="project" />
@@ -57,6 +57,7 @@
     <orderEntry type="library" name="Gradle: org.springframework.hateoas:spring-hateoas:0.25.0.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:5.1.0.RC3" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-common:3.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: io.springfox:springfox-spring-webmvc:3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-spring-web:3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-schema:3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-spi:3.0.0-SNAPSHOT" level="project" />
@@ -87,7 +88,6 @@
     <orderEntry type="library" name="Gradle: io.swagger:swagger-annotations:1.5.20" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.mapstruct:mapstruct:1.2.0.Final" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: org.assertj:assertj-core:3.11.1" level="project" />
     <orderEntry type="library" name="Gradle: org.mockito:mockito-core:2.22.0" level="project" />
