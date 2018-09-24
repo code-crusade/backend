@@ -1,15 +1,71 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-    <changeSet author="gabar (generated)" id="1537229428244-1">
-        <createTable tableName="Foo">
+
+    <changeSet author="gabar (generated)" id="1537554773207-1">
+        <createTable tableName="classGroup">
             <column name="id" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="FooPK"/>
+                <constraints primaryKey="true" primaryKeyName="classGroupPK"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537281999332-1">
-        <addColumn tableName="foo">
-            <column name="bar" type="varchar(255)"/>
-        </addColumn>
+    <changeSet author="gabar (generated)" id="1537554773207-2">
+        <createTable tableName="classGroup_students">
+            <column name="ClassGroup_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="students_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537554773207-3">
+        <createTable tableName="exercise">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="exercisePK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="unit_tests" type="CLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537554773207-4">
+        <createTable tableName="student">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="studentPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537554773207-5">
+        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537554773207-6">
+        <addForeignKeyConstraint baseColumnNames="students_id" baseTableName="classGroup_students" constraintName="FKdhgb5gw7cxfl15kdhs7ffor2x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537554773207-7">
+        <addForeignKeyConstraint baseColumnNames="ClassGroup_id" baseTableName="classGroup_students" constraintName="FKoovsxv93jwnroyfkr2e496vdf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537555979838-2">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537555979838-3">
+        <createTable tableName="submission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="submissionPK"/>
+            </column>
+            <column name="code" type="CLOB"/>
+            <column name="submission_id" type="BIGINT"/>
+            <column name="student_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537555979838-4">
+        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="submission" constraintName="FK5qgwrj4x77fn9w9cllbymtt33" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537555979838-5">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="submission" constraintName="FKhncywuw9vwff2htaofx9m3m75" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537555979838-1">
+        <dropUniqueConstraint constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
+        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
     </changeSet>
 </databaseChangeLog>

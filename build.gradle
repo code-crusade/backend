@@ -3,7 +3,7 @@ buildscript {
         userHome = System.getProperty("user.home")
         springBootVersion = '2.1.0.M3'
         mainDBUrl = "jdbc:h2:file:${buildDir}/db/footest-dev"
-        mainReferenceUrl = 'hibernate:spring:com.test.footest.entities?dialect=org.hibernate.dialect.H2Dialect'
+        mainReferenceUrl = 'hibernate:spring:com.etsmtl.codecrusade.entities?dialect=org.hibernate.dialect.H2Dialect'
         runList = ''
     }
     repositories {
@@ -26,6 +26,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 
 group = 'com.test.footest'
 version = '0.0.1-SNAPSHOT'
@@ -35,6 +36,7 @@ repositories {
     jcenter()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
+    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
     flatDir {
         // place manually added jar dependencies in libs
         dirs 'libs'
@@ -49,7 +51,6 @@ liquibase {
             referenceUrl project.ext.mainReferenceUrl
             username ""
             password ""
-
         }
         runList = project.ext.runList
     }
@@ -58,6 +59,14 @@ liquibase {
 lombok {
     version = '1.18.2'
     sha256 = ""
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
 }
 
 dependencies {
@@ -69,7 +78,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.liquibase:liquibase-core')
     compile('org.yaml:snakeyaml:1.8')
-    compile('org.liquibase.ext:liquibase-hibernate:2.0.0')
+    compile('org.liquibase.ext:liquibase-hibernate5:3.6')
+    compile('io.springfox:springfox-swagger2:3.0.0-SNAPSHOT')
+    compile('io.springfox:springfox-data-rest:3.0.0-SNAPSHOT')
+    compile('io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
