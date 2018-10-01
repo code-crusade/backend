@@ -1,4 +1,4 @@
-package com.etsmtl.codecrusade;
+package com.etsmtl.codecrusade.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
