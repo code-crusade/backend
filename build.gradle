@@ -28,7 +28,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 
-group = 'com.test.footest'
+group = 'com.etsmtl.codecrusade'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 10
 
@@ -83,6 +83,7 @@ dependencies {
     compile('io.springfox:springfox-spring-webmvc:3.0.0-SNAPSHOT')
     compile('io.springfox:springfox-data-rest:3.0.0-SNAPSHOT')
     compile('io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT')
+    compile project(':commons')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
