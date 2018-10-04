@@ -1,25 +1,21 @@
 package com.etsmtl.codecrusade.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.etsmtl.codecrusade.entities.security.User;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
-@Table(name="student")
 @Data
-@Builder
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+@DiscriminatorValue("STUDENT")
+public class Student extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	@Email
-	private String email;
 }

@@ -1,4 +1,9 @@
 package com.etsmtl.codecrusade.repository;
 
-public interface UserRepository {
+import com.etsmtl.codecrusade.entities.security.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
 }

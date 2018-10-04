@@ -1,5 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <changeSet author="gabar (generated)" id="1537554773207-1">
         <createTable tableName="classGroup">
@@ -37,13 +40,20 @@
         </createTable>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537554773207-5">
-        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
+        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9"
+                             tableName="classGroup_students"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537554773207-6">
-        <addForeignKeyConstraint baseColumnNames="students_id" baseTableName="classGroup_students" constraintName="FKdhgb5gw7cxfl15kdhs7ffor2x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="students_id" baseTableName="classGroup_students"
+                                 constraintName="FKdhgb5gw7cxfl15kdhs7ffor2x" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537554773207-7">
-        <addForeignKeyConstraint baseColumnNames="ClassGroup_id" baseTableName="classGroup_students" constraintName="FKoovsxv93jwnroyfkr2e496vdf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ClassGroup_id" baseTableName="classGroup_students"
+                                 constraintName="FKoovsxv93jwnroyfkr2e496vdf" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537555979838-2">
         <createSequence sequenceName="hibernate_sequence"/>
@@ -59,13 +69,108 @@
         </createTable>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537555979838-4">
-        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="submission" constraintName="FK5qgwrj4x77fn9w9cllbymtt33" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="submission"
+                                 constraintName="FK5qgwrj4x77fn9w9cllbymtt33" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1537555979838-5">
-        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="submission" constraintName="FKhncywuw9vwff2htaofx9m3m75" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="submission"
+                                 constraintName="FKhncywuw9vwff2htaofx9m3m75" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"
+                                 validate="true"/>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-1">
-        <dropUniqueConstraint constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
-        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
+    <changeSet author="gabar (generated)" id="1537835081827-2">
+        <createTable tableName="Privilege">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="PrivilegePK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-3">
+        <createTable tableName="Role">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="RolePK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-4">
+        <createTable tableName="roles_privileges">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-5">
+        <createTable tableName="user">
+            <column name="USER_TYPE" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="userPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-6">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-7">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="roles_privileges"
+                                 constraintName="FK2rfl694fu6ls2f2mqcxesqc6p" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="Role"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-8">
+        <addForeignKeyConstraint baseColumnNames="students_id" baseTableName="classGroup_students"
+                                 constraintName="FK42086iqxiosgi50s7nyov3kqu" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-9">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles"
+                                 constraintName="FKa9r8g5hiyy57ts5u4tkf0lbab" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="Role"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-10">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
+                                 constraintName="FKgd3iendaoyh04b95ykqise6qh" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-11">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="submission"
+                                 constraintName="FKmfr0iogbtbssiknheahbjq322" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-12">
+        <addForeignKeyConstraint baseColumnNames="privilege_id" baseTableName="roles_privileges"
+                                 constraintName="FKp0x1d9k5aksyqd1akwwfkh0ki" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="Privilege"
+                                 validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-13">
+        <dropForeignKeyConstraint baseTableName="CLASSGROUP_STUDENTS" constraintName="FKDHGB5GW7CXFL15KDHS7FFOR2X"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-14">
+        <dropForeignKeyConstraint baseTableName="SUBMISSION" constraintName="FKHNCYWUW9VWFF2HTAOFX9M3M75"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1537835081827-15">
+        <dropTable tableName="STUDENT"/>
     </changeSet>
 </databaseChangeLog>
