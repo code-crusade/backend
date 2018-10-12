@@ -8,7 +8,9 @@ buildscript {
         generatorPackage = 'com.etsmtl.codecrusade'
     }
     repositories {
+        mavenLocal()
         jcenter()
+        mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
     }
@@ -24,6 +26,7 @@ plugins {
     id 'idea'
     id 'org.hidetake.swagger.generator' version '2.14.0'
     id 'maven-publish'
+    id "com.github.dkorotych.gradle-maven-exec" version "2.0"
 }
 
 apply plugin: 'java'
@@ -38,6 +41,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 10
 
 repositories {
+    mavenLocal()
     jcenter()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
@@ -74,7 +78,7 @@ jacocoTestReport {
     }
 }
 
-openApiGenerate {
+task buildMavenProject(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     inputSpec = "${rootDir}/api.yaml".toString()
     outputDir = "${rootDir}/codecrusade-api/".toString()
     generatorName = 'spring'
@@ -85,7 +89,24 @@ openApiGenerate {
     id = "codecrusade-api"
     version = "${project.version}".toString()
     library = 'spring-boot'
+    configOptions = [parentGroupId   : 'com.etsmtl.codecrusade',
+                     parentArtifactId: 'codecrusade-api-parent',
+                     parentVersion   : '1.0-SNAPSHOT']
+
 }
+
+task installApiProject(type: MavenExec) {
+    goals 'clean', 'install'
+    workingDir "codecrusade-api/"
+    define([
+            'groupId'        : 'com.etsmtl.codecrusade',
+            'artifactId'     : 'codecrusade-api',
+            'interactiveMode': 'false'
+    ])
+    quiet true
+}
+
+tasks.installApiProject.dependsOn(buildMavenProject)
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -102,7 +123,7 @@ dependencies {
     compile('io.springfox:springfox-data-rest:3.0.0-SNAPSHOT')
     compile('io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT')
     compile project(':commons')
-    compile project(':codecrusade-api')
+    compile('com.etsmtl.codecrusade:codecrusade-api:0.0.1-SNAPSHOT')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
@@ -120,4 +141,4 @@ dependencies {
     liquibaseRuntime(sourceSets.main.output) // https://github.com/liquibase/liquibase-hibernate/issues/170
 }
 
-
+tasks.dependencies.dependsOn(installApiProject)

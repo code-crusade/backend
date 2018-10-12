@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api.iml" filepath="$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api.iml" group="codecrusade-api" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api_main.iml" group="codecrusade-api" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api_test.iml" group="codecrusade-api" />
+      <module fileurl="file://$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" filepath="$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons.iml" filepath="$PROJECT_DIR$/.idea/modules/commons.iml" group="commons" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons/commons_main.iml" filepath="$PROJECT_DIR$/.idea/modules/commons/commons_main.iml" group="commons" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons/commons_test.iml" filepath="$PROJECT_DIR$/.idea/modules/commons/commons_test.iml" group="commons" />
