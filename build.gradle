@@ -5,6 +5,7 @@ buildscript {
         mainDBUrl = "jdbc:h2:file:${buildDir}/db/footest-dev"
         mainReferenceUrl = 'hibernate:spring:com.etsmtl.codecrusade.entities?dialect=org.hibernate.dialect.H2Dialect'
         runList = ''
+        generatorPackage = 'com.etsmtl.codecrusade'
     }
     repositories {
         jcenter()
@@ -13,6 +14,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.openapitools:openapi-generator-gradle-plugin:3.3.0"
     }
 }
 
@@ -20,6 +22,8 @@ plugins {
     id 'org.liquibase.gradle' version '2.0.1'
     id 'io.franzbecker.gradle-lombok' version '1.14'
     id 'idea'
+    id 'org.hidetake.swagger.generator' version '2.14.0'
+    id 'maven-publish'
 }
 
 apply plugin: 'java'
@@ -27,6 +31,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
+apply plugin: 'org.openapi.generator'
 
 group = 'com.etsmtl.codecrusade'
 version = '0.0.1-SNAPSHOT'
@@ -69,6 +74,19 @@ jacocoTestReport {
     }
 }
 
+openApiGenerate {
+    inputSpec = "${rootDir}/api.yaml".toString()
+    outputDir = "${rootDir}/codecrusade-api/".toString()
+    generatorName = 'spring'
+    modelPackage = "${generatorPackage}.model".toString()
+    apiPackage = "${generatorPackage}.controllers".toString()
+    invokerPackage = "${generatorPackage}.invoker".toString()
+    groupId = "${project.group}".toString()
+    id = "codecrusade-api"
+    version = "${project.version}".toString()
+    library = 'spring-boot'
+}
+
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-batch')
@@ -84,6 +102,7 @@ dependencies {
     compile('io.springfox:springfox-data-rest:3.0.0-SNAPSHOT')
     compile('io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT')
     compile project(':commons')
+    compile project(':codecrusade-api')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')

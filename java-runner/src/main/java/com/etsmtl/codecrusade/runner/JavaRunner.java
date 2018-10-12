@@ -1,7 +1,5 @@
 package com.etsmtl.codecrusade.runner;
 
-import net.bytebuddy.ByteBuddy;
-
 import javax.tools.*;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.validation.*;
@@ -20,7 +18,6 @@ import java.util.Set;
 
 import static com.etsmtl.codecrusade.runner.ExecutionResult.ExecutionStatus.FAILURE;
 import static com.etsmtl.codecrusade.runner.ExecutionResult.ExecutionStatus.SUCCESS;
-import static net.bytebuddy.matcher.ElementMatchers.*;
 
 /**
  * Runs java sources with provided arguments.
@@ -93,9 +90,9 @@ public class JavaRunner implements Runner {
 			} catch (InvocationTargetException e) {
 				System.err.println("Invocation error :" + e);
 			}
-			new ByteBuddy().subclass(Runner.class)
+			/*new ByteBuddy().subclass(Runner.class)
 						   .method(named("evaluate").and(
-								   isDeclaredBy(Runner.class).and(returns(ExecutionResult.class))));
+								   isDeclaredBy(Runner.class).and(returns(ExecutionResult.class))));*/
 		}
 		else {
 			// gather diagnostics and throw
