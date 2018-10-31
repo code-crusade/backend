@@ -6,6 +6,11 @@
     <groupId>com.etsmtl.codecrusade</groupId>
     <artifactId>application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -220,6 +225,11 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -233,6 +243,24 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.java</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>generated/src/main/java</directory>
+                <includes>
+                    <include>**/*.java</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.liquibase</groupId>
@@ -254,6 +282,36 @@
                         <goals>
                             <goal>update</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>${project.basedir}/api.yaml</inputSpec>
+                            <output>generated/</output>
+                            <modelPackage>${groupId}.model</modelPackage>
+                            <apiPackage>${groupId}.controllers</apiPackage>
+                            <invokerPackage>${groupId}.invoker</invokerPackage>
+                            <groupId>${groupId}</groupId>
+                            <artifactId>codecrusade-api</artifactId>
+                            <artifactVersion>${version}</artifactVersion>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <parentGroupId>com.etsmtl.codecrusade</parentGroupId>
+                                <parentArtifactId>codecrusade-api-parent</parentArtifactId>
+                                <parentVersion>1.0-SNAPSHOT</parentVersion>
+                                <interfaceOnly>true</interfaceOnly>
+                            </configOptions>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

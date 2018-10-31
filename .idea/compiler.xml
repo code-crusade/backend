@@ -8,16 +8,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="application" />
-        <module name="codecrusade-api" />
         <module name="commons" />
         <module name="java-runner" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="application" target="1.5" />
+      <module name="application" target="11" />
       <module name="backend" target="11" />
       <module name="codecrusade-api" target="1.8" />
-      <module name="codecrusade-api-parent" target="1.8" />
+      <module name="codecrusade-api-parent" target="11" />
       <module name="commons" target="11" />
       <module name="java-runner" target="11" />
     </bytecodeTargetLevel>

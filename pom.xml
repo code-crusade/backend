@@ -29,42 +29,9 @@
         </repository>
     </repositories>
     <modules>
-        <module>codecrusade-api</module>
         <module>commons</module>
         <module>codecrusade-api-parent</module>
         <module>java-runner</module>
+        <module>application</module>
     </modules>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>3.3.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/api.yaml</inputSpec>
-                            <output>${project.basedir}/codecrusade-api/</output>
-                            <generatorName>spring</generatorName>
-                            <modelPackage>${groupId}.model</modelPackage>
-                            <apiPackage>${groupId}.controllers</apiPackage>
-                            <invokerPackage>${groupId}.invoker</invokerPackage>
-                            <groupId>${groupId}</groupId>
-                            <artifactId>codecrusade-api</artifactId>
-                            <artifactVersion>${version}</artifactVersion>
-                            <library>spring-boot</library>
-                            <configOptions>
-                                <parentGroupId>com.etsmtl.codecrusade</parentGroupId>
-                                <parentArtifactId>codecrusade-api-parent</parentArtifactId>
-                                <parentVersion>1.0-SNAPSHOT</parentVersion>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
