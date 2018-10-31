@@ -19,7 +19,7 @@
       <module name="codecrusade-api" target="1.8" />
       <module name="codecrusade-api-parent" target="1.8" />
       <module name="commons" target="11" />
-      <module name="java-runner" target="1.5" />
+      <module name="java-runner" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
