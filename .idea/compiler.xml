@@ -15,10 +15,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="application" target="1.5" />
-      <module name="backend" target="1.5" />
+      <module name="backend" target="11" />
       <module name="codecrusade-api" target="1.8" />
       <module name="codecrusade-api-parent" target="1.8" />
-      <module name="commons" target="1.5" />
+      <module name="commons" target="11" />
       <module name="java-runner" target="1.5" />
     </bytecodeTargetLevel>
   </component>
