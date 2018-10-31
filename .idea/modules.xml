@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api.iml" filepath="$PROJECT_DIR$/.idea/modules/codecrusade-api/codecrusade-api.iml" group="codecrusade-api" />
+      <module fileurl="file://$PROJECT_DIR$/application/application.iml" filepath="$PROJECT_DIR$/application/application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/backend.iml" filepath="$PROJECT_DIR$/.idea/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codecrusade-api/codecrusade-api.iml" filepath="$PROJECT_DIR$/codecrusade-api/codecrusade-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" filepath="$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons.iml" filepath="$PROJECT_DIR$/.idea/modules/commons.iml" group="commons" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons/commons_main.iml" filepath="$PROJECT_DIR$/.idea/modules/commons/commons_main.iml" group="commons" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commons/commons_test.iml" filepath="$PROJECT_DIR$/.idea/modules/commons/commons_test.iml" group="commons" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-runner.iml" filepath="$PROJECT_DIR$/.idea/modules/java-runner.iml" group="java-runner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-runner/java-runner_main.iml" filepath="$PROJECT_DIR$/.idea/modules/java-runner/java-runner_main.iml" group="java-runner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-runner/java-runner_test.iml" filepath="$PROJECT_DIR$/.idea/modules/java-runner/java-runner_test.iml" group="java-runner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service_main.iml" group="service" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service_test.iml" group="service" />
+      <module fileurl="file://$PROJECT_DIR$/commons/commons.iml" filepath="$PROJECT_DIR$/commons/commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-runner/java-runner.iml" filepath="$PROJECT_DIR$/java-runner/java-runner.iml" />
     </modules>
   </component>
 </project>
