@@ -5,8 +5,7 @@
  */
 package com.etsmtl.codecrusade.controllers;
 
-import com.etsmtl.codecrusade.model.RFC7807Body;
-import com.etsmtl.codecrusade.model.RunnerArguments;
+import com.etsmtl.codecrusade.model.UserPass;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,25 +29,32 @@ import java.util.Optional;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-05T19:13:49.931153400-05:00[America/New_York]")
 
 @Validated
-@Api(value = "runner", description = "the runner API")
-public interface RunnerApi {
+@Api(value = "auth", description = "the auth API")
+public interface AuthApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "Runs provided code", nickname = "runCodeForExercise", notes = "", tags={  })
+    @ApiOperation(value = "Provides a session cookie given a valid CAS Service ticket", nickname = "authCasloginGet", notes = "", tags={ "auth", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK"),
-        @ApiResponse(code = 400, message = "Api problem response", response = RFC7807Body.class),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/runner/{exerciseId}",
-        produces = { "application/problem+json", "application/problem+xml" }, 
+        @ApiResponse(code = 200, message = "Successfully authenticated") })
+    @RequestMapping(value = "/auth/caslogin",
+        method = RequestMethod.GET)
+    default ResponseEntity<Void> authCasloginGet(@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "ticket", required = true) String ticket) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "Provides a session cookie given a username and password", nickname = "authLoginPost", notes = "", tags={ "auth", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully authenticated"),
+        @ApiResponse(code = 400, message = "Authentication failed") })
+    @RequestMapping(value = "/auth/login",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> runCodeForExercise(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Long exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments) {
+    default ResponseEntity<Void> authLoginPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserPass userPass) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

@@ -304,7 +304,7 @@
                             <groupId>${groupId}</groupId>
                             <artifactId>codecrusade-api</artifactId>
                             <artifactVersion>${version}</artifactVersion>
-                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <configOptions>
                                 <parentGroupId>com.etsmtl.codecrusade</parentGroupId>
                                 <parentArtifactId>codecrusade-api-parent</parentArtifactId>
@@ -314,6 +314,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

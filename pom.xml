@@ -33,5 +33,6 @@
         <module>codecrusade-api-parent</module>
         <module>java-runner</module>
         <module>application</module>
+        <module>cas-server</module>
     </modules>
 </project>

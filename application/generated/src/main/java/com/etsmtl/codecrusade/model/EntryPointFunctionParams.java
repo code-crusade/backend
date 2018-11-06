@@ -1,6 +1,7 @@
 package com.etsmtl.codecrusade.model;
 
 import java.util.Objects;
+import com.etsmtl.codecrusade.model.SupportedType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -9,55 +10,56 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * RunnerArguments
+ * EntryPointFunctionParams
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-05T19:13:49.931153400-05:00[America/New_York]")
 
-public class RunnerArguments   {
-  @JsonProperty("code")
-  private String code;
+public class EntryPointFunctionParams   {
+  @JsonProperty("name")
+  private String name;
 
-  @JsonProperty("language")
-  private String language;
+  @JsonProperty("type")
+  private SupportedType type = null;
 
-  public RunnerArguments code(String code) {
-    this.code = code;
+  public EntryPointFunctionParams name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * code
-   * @return code
+   * Get name
+   * @return name
   **/
-  @ApiModelProperty(value = "code")
+  @ApiModelProperty(value = "")
 
 
-  public String getCode() {
-    return code;
+  public String getName() {
+    return name;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public RunnerArguments language(String language) {
-    this.language = language;
+  public EntryPointFunctionParams type(SupportedType type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * language
-   * @return language
+   * Get type
+   * @return type
   **/
-  @ApiModelProperty(value = "language")
+  @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getLanguage() {
-    return language;
+  public SupportedType getType() {
+    return type;
   }
 
-  public void setLanguage(String language) {
-    this.language = language;
+  public void setType(SupportedType type) {
+    this.type = type;
   }
 
 
@@ -69,23 +71,23 @@ public class RunnerArguments   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RunnerArguments runnerArguments = (RunnerArguments) o;
-    return Objects.equals(this.code, runnerArguments.code) &&
-        Objects.equals(this.language, runnerArguments.language);
+    EntryPointFunctionParams entryPointFunctionParams = (EntryPointFunctionParams) o;
+    return Objects.equals(this.name, entryPointFunctionParams.name) &&
+        Objects.equals(this.type, entryPointFunctionParams.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, language);
+    return Objects.hash(name, type);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RunnerArguments {\n");
+    sb.append("class EntryPointFunctionParams {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

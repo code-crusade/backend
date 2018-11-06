@@ -87,7 +87,7 @@ fabric.properties
 gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle/wrapper/gradle-wrapper.jar
+!cas-server/gradle/wrapper/gradle-wrapper.jar
 
 # Cache of project
 .gradletasknamecache

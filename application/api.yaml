@@ -6,8 +6,191 @@ info:
   termsOfService: 'urn:tos'
   contact: {}
 paths:
+  /exercises:
+    get:
+      summary: Gets the full list of exercises
+      operationId: exercisesIndex
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+  '/exercises/{exerciseId}':
+    get:
+      summary: Gets the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '401':
+          description: User must be logged in to see this exercise
+        '403':
+          description: User is not allowed to see this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/submissions':
+    get:
+      summary: Gets the list of submissions for the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExerciseSubmission'
+        '401':
+          description: User must be logged in to see the submissions.
+        '403':
+          description: User is not allowed to see the submissions.
+        '404':
+          description: Exercise does not exist
+    post:
+      summary: Submits the code as the current user's solution for the exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunnerArguments'
+      responses:
+        '201':
+          description: Submission has been created
+        '400':
+          description: Submitted solution does not fit the exercise parameters
+        '401':
+          description: User must be logged in to submit solutions to the exercise
+        '403':
+          description: User is not allowed to post solutions for this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/test':
+    post:
+      summary: Validate the code against the exercise's test suite
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunnerArguments'
+      responses:
+        '200':
+          description: The test suite has been executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeValidationReport'
+        '400':
+          description: Submitted solution does not fit the exercise parameters
+        '401':
+          description: User must be logged in to see this exercise
+        '403':
+          description: User is not allowed to see this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/submissions/{submissionId}':
+    get:
+      summary: Gets the list of submissions for the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExerciseSubmission'
+        '401':
+          description: User must be logged in to see this submission
+        '403':
+          description: User is not allowed to see this submission
+        '404':
+          description: Submission does not exist
+  '/exercises/{exerciseId}/submissions/{submissionId}/results':
+    get:
+      summary: Gets the results of the exercise validation for this submission
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeValidationReport'
+        '401':
+          description: User must be logged in to see the results
+        '403':
+          description: User is not allowed to see the results
+        '404':
+          description: Submission does not exist
   '/runner/{exerciseId}':
     post:
+      deprecated: true
       summary: Runs provided code
       operationId: runCodeForExercise
       parameters:
@@ -34,6 +217,53 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
+  '/auth/caslogin':
+    get:
+      summary: Provides a session cookie given a valid CAS Service ticket
+      # The service ticket can be used by the server to get user data from the SSO server
+      # Should probably be provided by spring-security or java-cas-client
+      externalDocs:
+        description : Apereo CAS protocol documentation
+        url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      parameters:
+      - name: ticket
+        in: query
+        required: true
+        schema:
+          type: string
+          example: 'ST-12345678'
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345;
+        # TODO : What to do if auth fails? 302?
+  '/auth/login':
+    post:
+      summary: Provides a session cookie given a username and password
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPass'
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345;
+        '400':
+          description: Authentication failed
 servers:
 - url: '//localhost:8080/'
 components:
@@ -48,8 +278,28 @@ components:
           description: language
           type: string
       example:
-        language: 'js'
-        code: 'function main() { console.log("Hello World"); }'
+        language: js
+        code: 'function main() { console.log(''Hello World''); }'
+    CodeValidationReport:
+      type: object
+      properties:
+        exerciseId:
+          type: integer
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              testName:
+                type: string
+              passed:
+                type: boolean
+              inputParameters:
+                type: array
+                items: {}
+              expectedOutput: {}
+              actualOutput: {}
+
     RFC7807Body:
       type: object
       properties:
@@ -68,6 +318,103 @@ components:
           format: uri
       xml:
         name: problem
+    Exercise:
+      type: object
+      properties:
+        exerciseId:
+          type: integer
+        title:
+          type: object
+          additionalProperties:
+            type: string
+            example: "Titre de l'exercice"
+          required: ['fr']
+        description:
+          type: object
+          additionalProperties:
+            type: string
+            example: "Description de l'exercice"
+          required: ['fr']
+        entryPoint:
+          $ref: '#/components/schemas/EntryPoint'
+        supportedLanguages:
+          type: array
+          items:
+            type: string
+        codeTemplates:
+          type: object
+          additionalProperties:
+            type: string
+        # TODO : Validation tests?
+    ExerciseSubmission:
+      type: object
+      properties:
+        submissionId:
+          type: integer
+        exerciseId:
+          type: integer
+        userId:
+          type: integer
+        program:
+          $ref: '#/components/schemas/RunnerArguments'
+        #validationReport:
+        #  $ref: '#/components/schemas/CodeValidationReport'
+        createdAt:
+          type: string
+          format: date-time
+    EntryPoint:
+      type: object
+      properties:
+        className:
+          type: string
+        functionName:
+          type: string
+        functionParams:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                $ref: '#/components/schemas/SupportedType'
+        returnType:
+          $ref: '#/components/schemas/SupportedType'
+    SupportedType:
+      type: string
+      enum:
+      - boolean
+      - int
+      - float
+      - string
+      - boolean[]
+      - int[]
+      - float[]
+      - string[]
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+    UserPass:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+  securitySchemes:
+    authCookie:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
   responses:
     RFC7807Error:
       description: Api problem response

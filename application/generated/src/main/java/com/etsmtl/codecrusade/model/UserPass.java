@@ -9,55 +9,55 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * RunnerArguments
+ * UserPass
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-05T19:13:49.931153400-05:00[America/New_York]")
 
-public class RunnerArguments   {
-  @JsonProperty("code")
-  private String code;
+public class UserPass   {
+  @JsonProperty("username")
+  private String username;
 
-  @JsonProperty("language")
-  private String language;
+  @JsonProperty("password")
+  private String password;
 
-  public RunnerArguments code(String code) {
-    this.code = code;
+  public UserPass username(String username) {
+    this.username = username;
     return this;
   }
 
   /**
-   * code
-   * @return code
+   * Get username
+   * @return username
   **/
-  @ApiModelProperty(value = "code")
+  @ApiModelProperty(value = "")
 
 
-  public String getCode() {
-    return code;
+  public String getUsername() {
+    return username;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public RunnerArguments language(String language) {
-    this.language = language;
+  public UserPass password(String password) {
+    this.password = password;
     return this;
   }
 
   /**
-   * language
-   * @return language
+   * Get password
+   * @return password
   **/
-  @ApiModelProperty(value = "language")
+  @ApiModelProperty(value = "")
 
 
-  public String getLanguage() {
-    return language;
+  public String getPassword() {
+    return password;
   }
 
-  public void setLanguage(String language) {
-    this.language = language;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -69,23 +69,23 @@ public class RunnerArguments   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RunnerArguments runnerArguments = (RunnerArguments) o;
-    return Objects.equals(this.code, runnerArguments.code) &&
-        Objects.equals(this.language, runnerArguments.language);
+    UserPass userPass = (UserPass) o;
+    return Objects.equals(this.username, userPass.username) &&
+        Objects.equals(this.password, userPass.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, language);
+    return Objects.hash(username, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RunnerArguments {\n");
+    sb.append("class UserPass {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }
