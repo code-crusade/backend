@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="classGroup")
+@Table(name = "classGroup")
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,6 +18,7 @@ public class ClassGroup {
 	private Long id;
 
 	@OneToMany
-	@JoinTable(name="classGroup_students")
+	@JoinColumn(name = "classGroup_id",
+				foreignKey = @ForeignKey(name = "fk_classGroup_id"))
 	private Set<Student> students;
 }

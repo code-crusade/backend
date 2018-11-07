@@ -3,7 +3,6 @@ package com.etsmtl.codecrusade.entities.converters;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -11,17 +10,15 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 @Converter
-@Component
 public class ObjectAttributeConverter implements AttributeConverter<Object, String> {
 
 	private static final TypeReference<Object> TypeRef = new TypeReference<>() {
 	};
 
+	@Autowired
 	private ObjectMapper objectMapper;
 
-	@Autowired
-	public ObjectAttributeConverter(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
+	public ObjectAttributeConverter() {
 	}
 
 	@Override

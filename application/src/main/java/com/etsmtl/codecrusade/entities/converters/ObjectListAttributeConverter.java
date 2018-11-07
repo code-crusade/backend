@@ -2,6 +2,7 @@ package com.etsmtl.codecrusade.entities.converters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -15,10 +16,10 @@ public class ObjectListAttributeConverter implements AttributeConverter<List<Obj
 	private static final TypeReference<List<Object>> TypeRef = new TypeReference<>() {
 	};
 
+	@Autowired
 	private ObjectMapper objectMapper;
 
-	public ObjectListAttributeConverter(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
+	public ObjectListAttributeConverter() {
 	}
 
 	@Override

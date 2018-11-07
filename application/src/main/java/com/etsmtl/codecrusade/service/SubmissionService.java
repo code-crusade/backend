@@ -32,7 +32,7 @@ public interface SubmissionService {
 	Optional<Submission> createSubmissionForExercise(Integer exerciseId, SubmissionArgument submissionArgument)
 			throws UserNotAllowedException, ExerciseService.ExerciseNotFoundException;
 
-	class UserNotAllowedException extends Exception {
+	class UserNotAllowedException extends RuntimeException {
 
 	}
 }

@@ -9,8 +9,6 @@ import com.etsmtl.codecrusade.model.CodeValidationReport;
 import com.etsmtl.codecrusade.model.Exercise;
 import com.etsmtl.codecrusade.model.ExerciseSubmission;
 import com.etsmtl.codecrusade.model.RunnerArguments;
-import com.etsmtl.codecrusade.service.ExerciseService;
-import com.etsmtl.codecrusade.service.SubmissionService;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,7 +29,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-05T19:13:49.931153400-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-07T12:58:45.826018600-05:00[America/New_York]")
 
 @Validated
 @Api(value = "exercises", description = "the exercises API")
@@ -103,8 +101,7 @@ public interface ExercisesApi {
     @RequestMapping(value = "/exercises/{exerciseId}/submissions",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments)
-            throws SubmissionService.UserNotAllowedException, ExerciseService.ExerciseNotFoundException {
+    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

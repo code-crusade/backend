@@ -26,13 +26,13 @@ public class Submission extends Auditable<String> {
 	private SubmissionArgument program;
 
 	@ManyToOne
-	@JoinColumn(name = "exercise_id")
+	@JoinColumn(name = "exercise_id", foreignKey = @ForeignKey(name = "fk_exercise_id"))
 	@NotNull
 	private Exercise exercise;
 
 	// TODO : somehow fill this automatically
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_id"))
 	@NotNull
 	private User user;
 

@@ -23,10 +23,12 @@ public class EntryPoint {
 	@Column(name = "className")
 	private String className;
 
-	@Column(name="functionName")
+	@Column(name = "functionName")
 	private String functionName;
 
 	@OneToMany
+	@JoinColumn(name = "entryPoint_id",
+				foreignKey = @ForeignKey(name = "fk_entryPoint_id"))
 	private List<FunctionParams> functionParams;
 
 	@Enumerated(EnumType.STRING)

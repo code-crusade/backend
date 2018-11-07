@@ -24,7 +24,8 @@ public class CodeValidationResults {
 	private Boolean passed;
 
 	@ManyToOne
-	@JoinColumn(name = "test_id")
+	@JoinColumn(name = "test_id",
+				foreignKey = @ForeignKey(name = "fk_test_id"))
 	private CodeValidation test;
 
 	@Column(name = "expectedOutput")
@@ -32,6 +33,7 @@ public class CodeValidationResults {
 	private Object actualOutput;
 
 	@ManyToOne
-	@JoinColumn(name = "submission_id")
+	@JoinColumn(name = "submission_id",
+				foreignKey = @ForeignKey(name = "fk_submission_id"))
 	private Submission submission;
 }

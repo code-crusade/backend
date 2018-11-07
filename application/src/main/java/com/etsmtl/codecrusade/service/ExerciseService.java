@@ -9,7 +9,7 @@ public interface ExerciseService {
 
 	Iterable<Exercise> getAllExercises();
 
-	class ExerciseNotFoundException extends Exception {
+	class ExerciseNotFoundException extends RuntimeException {
 
 	}
 }

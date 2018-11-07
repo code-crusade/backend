@@ -86,8 +86,7 @@ public class ExercisesController implements ExercisesApi {
 
 	@Override
 	public ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(Integer exerciseId,
-			@Valid RunnerArguments runnerArguments)
-			throws SubmissionService.UserNotAllowedException, ExerciseService.ExerciseNotFoundException {
+			@Valid RunnerArguments runnerArguments) {
 		return submissionService.createSubmissionForExercise(exerciseId, convertToEntity(runnerArguments))
 								.map(created -> ResponseEntity.ok().<Void>build())
 								.orElse(ResponseEntity.badRequest().build());

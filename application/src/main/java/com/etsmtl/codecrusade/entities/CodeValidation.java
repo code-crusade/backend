@@ -39,6 +39,7 @@ public class CodeValidation {
 	private Object expectedOutput;
 
 	@ManyToOne
-	@JoinColumn(name = "exercise_id")
+	@JoinColumn(name = "exercise_id",
+				foreignKey = @ForeignKey(name = "fk_exercise_id"))
 	private Exercise exercise;
 }

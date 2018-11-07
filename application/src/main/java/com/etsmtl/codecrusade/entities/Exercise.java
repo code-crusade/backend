@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name="exercise")
+@Table(name = "exercise")
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,19 +21,24 @@ public class Exercise {
 	private Integer id;
 
 	@ElementCollection
-	@MapKeyColumn(name="lang")
-	@Column(name="value")
-	@CollectionTable(name="exercise_titles", joinColumns=@JoinColumn(name="exerciseId"))
-	private Map<String,String> title;
+	@MapKeyColumn(name = "lang")
+	@Column(name = "value")
+	@CollectionTable(name = "exercise_titles",
+					 joinColumns = @JoinColumn(name = "exerciseId",
+											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
+	private Map<String, String> title;
 
 	@ElementCollection
-	@MapKeyColumn(name="lang")
-	@Column(name="value")
-	@CollectionTable(name="exercise_descriptions", joinColumns=@JoinColumn(name="exerciseId"))
-	private Map<String,String> description;
+	@MapKeyColumn(name = "lang")
+	@Column(name = "value")
+	@CollectionTable(name = "exercise_descriptions",
+					 joinColumns = @JoinColumn(name = "exerciseId",
+											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
+	private Map<String, String> description;
 
 	@OneToOne
-	@JoinColumn(name="exercise_id")
+	@JoinColumn(name = "entrypoint_id",
+				foreignKey = @ForeignKey(name = "fk_entrypoint_id"))
 	private EntryPoint entryPoint;
 
 	@Convert(converter = StringListAttributeConverter.class)
@@ -41,10 +46,12 @@ public class Exercise {
 	private List<String> supportedLanguages;
 
 	@ElementCollection
-	@MapKeyColumn(name="lang")
-	@Column(name="value")
-	@CollectionTable(name="exercise_templates", joinColumns=@JoinColumn(name="exerciseId"))
-	private Map<String,String> codeTemplates;
+	@MapKeyColumn(name = "lang")
+	@Column(name = "value")
+	@CollectionTable(name = "exercise_templates",
+					 joinColumns = @JoinColumn(name = "exerciseId",
+											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
+	private Map<String, String> codeTemplates;
 
 	@OneToMany(mappedBy = "exercise")
 	private List<CodeValidation> tests;

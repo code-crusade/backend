@@ -11,7 +11,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy-MM-dd-HH:mm</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyyy-MM-dd-HHmm</maven.build.timestamp.format>
     </properties>
     <dependencies>
         <dependency>
@@ -338,6 +338,13 @@
                         <artifactId>hibernate-validator</artifactId>
                         <version>5.3.6.Final</version>
                     </dependency>
+                    <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-aspects</artifactId>
+                        <version>5.1.2.RELEASE</version>
+                    </dependency>
+
                 </dependencies>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
@@ -355,14 +362,6 @@
                         ${project.basedir}/src/main/resources/db/changelog/changelog-${timestamp}.xml
                     </diffChangeLogFile>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
@@ -377,12 +376,12 @@
                             <generatorName>spring</generatorName>
                             <inputSpec>${project.basedir}/api.yaml</inputSpec>
                             <output>generated/</output>
-                            <modelPackage>${groupId}.model</modelPackage>
-                            <apiPackage>${groupId}.controllers</apiPackage>
-                            <invokerPackage>${groupId}.invoker</invokerPackage>
-                            <groupId>${groupId}</groupId>
+                            <modelPackage>${project.groupId}.model</modelPackage>
+                            <apiPackage>${project.groupId}.controllers</apiPackage>
+                            <invokerPackage>${project.groupId}.invoker</invokerPackage>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>codecrusade-api</artifactId>
-                            <artifactVersion>${version}</artifactVersion>
+                            <artifactVersion>${project.version}</artifactVersion>
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <configOptions>
                                 <parentGroupId>com.etsmtl.codecrusade</parentGroupId>

@@ -2,6 +2,7 @@ package com.etsmtl.codecrusade.entities.converters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -15,34 +16,32 @@ public class StringListAttributeConverter implements AttributeConverter<List<Str
 	private static final TypeReference<List<String>> TypeRef = new TypeReference<>() {
 	};
 
+	@Autowired
 	private ObjectMapper objectMapper;
 
-	public StringListAttributeConverter(ObjectMapper objectMapper){
-		this.objectMapper = objectMapper;
+	public StringListAttributeConverter() {
 	}
 
 	@Override
-	public String convertToDatabaseColumn (List<String> attribute) {
+	public String convertToDatabaseColumn(List<String> attribute) {
 		if (attribute == null) {
 			return null;
 		}
 		try {
 			return objectMapper.writeValueAsString(attribute);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
 	}
 
 	@Override
-	public List<String> convertToEntityAttribute (String dbData) {
+	public List<String> convertToEntityAttribute(String dbData) {
 		if (dbData == null) {
 			return null;
 		}
 		try {
 			return objectMapper.readValue(dbData, TypeRef);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
 	}
