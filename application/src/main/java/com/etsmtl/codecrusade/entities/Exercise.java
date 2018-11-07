@@ -1,13 +1,11 @@
 package com.etsmtl.codecrusade.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.etsmtl.codecrusade.entities.converters.StringListAttributeConverter;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name="exercise")
@@ -18,16 +16,33 @@ import java.util.Set;
 public class Exercise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column(name = "id")
+	@Setter(AccessLevel.NONE)
+	private Integer id;
 
-	@Lob
-	@NotBlank
-	@Column(name="unit_tests")
-	private String unitTests;
+	@ElementCollection
+	@MapKeyColumn(name="lang")
+	@Column(name="value")
+	@CollectionTable(name="exercise_titles", joinColumns=@JoinColumn(name="exerciseId"))
+	private Map<String,String> title;
 
-	@Column(name="title")
-	private String title;
+	@ElementCollection
+	@MapKeyColumn(name="lang")
+	@Column(name="value")
+	@CollectionTable(name="exercise_descriptions", joinColumns=@JoinColumn(name="exerciseId"))
+	private Map<String,String> description;
 
-	@Column(name="description")
-	private String description;
+	@OneToOne
+	@JoinColumn(name="exercise_id")
+	private EntryPoint entryPoint;
+
+	@Convert(converter = StringListAttributeConverter.class)
+	@Column(name = "supportedLanguages")
+	private List<String> supportedLanguages;
+
+	@ElementCollection
+	@MapKeyColumn(name="lang")
+	@Column(name="value")
+	@CollectionTable(name="exercise_templates", joinColumns=@JoinColumn(name="exerciseId"))
+	private Map<String,String> codeTemplates;
 }

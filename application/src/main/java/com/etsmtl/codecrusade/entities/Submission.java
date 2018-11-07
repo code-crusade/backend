@@ -1,14 +1,14 @@
 package com.etsmtl.codecrusade.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
+import com.etsmtl.codecrusade.entities.security.User;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Entity
-@Table(name="submission")
+@Table(name = "submission")
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,15 +16,19 @@ import javax.persistence.*;
 public class Submission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Setter(AccessLevel.NONE)
+	private Integer id;
 
-	@Lob
-	private String code;
+	@Embedded
+	private SubmissionArgument program;
 
 	@ManyToOne
 	@JoinColumn(name = "submission_id")
 	private Exercise exercise;
 
 	@ManyToOne
-	private Student student;
+	private User user;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private OffsetDateTime createdAt;
 }

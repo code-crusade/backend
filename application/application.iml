@@ -23,7 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/generated/src/main/java" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/generated/src/main/java" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -154,5 +154,7 @@
     <orderEntry type="library" name="Maven: org.jasig.cas.client:cas-client-core:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.modelmapper:modelmapper:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.modelmapper.extensions:modelmapper-spring:2.3.0" level="project" />
   </component>
 </module>
