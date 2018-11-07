@@ -1,12 +1,14 @@
 package com.etsmtl.codecrusade.controllers;
 
-import com.etsmtl.codecrusade.model.InlineObject;
 import com.etsmtl.codecrusade.model.UserPass;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Controller for auth. As everything is passthrough, this might be removed.
+ */
 public class AuthController implements AuthApi {
 
 	@Override

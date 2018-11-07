@@ -2,9 +2,8 @@ package com.etsmtl.codecrusade.repository;
 
 import com.etsmtl.codecrusade.entities.Submission;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "submissions",
-						path = "submissions")
+@Repository
 public interface SubmissionRepository extends PagingAndSortingRepository<Submission, Long> {
 }

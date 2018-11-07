@@ -2,9 +2,8 @@ package com.etsmtl.codecrusade.repository;
 
 import com.etsmtl.codecrusade.entities.Student;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "students",
-						path = "students")
+@Repository
 public interface StudentRepository extends PagingAndSortingRepository<Student, Long> {
 }
