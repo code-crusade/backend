@@ -59,5 +59,10 @@
       <version>3.11.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.graalvm.sdk</groupId>
+      <artifactId>graal-sdk</artifactId>
+      <version>1.0.0-rc8</version>
+    </dependency>
   </dependencies>
 </project>
