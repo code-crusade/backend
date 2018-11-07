@@ -1,7 +1,8 @@
-package com.etsmtl.codecrusade.service;
+package com.etsmtl.codecrusade.service.impl;
 
 import com.etsmtl.codecrusade.entities.Exercise;
 import com.etsmtl.codecrusade.repository.ExerciseRepository;
+import com.etsmtl.codecrusade.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

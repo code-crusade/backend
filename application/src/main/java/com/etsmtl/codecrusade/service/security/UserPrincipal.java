@@ -1,12 +1,14 @@
 package com.etsmtl.codecrusade.service.security;
 
 import com.etsmtl.codecrusade.entities.security.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class UserPrincipal implements UserDetails {
+	@Getter
 	private User user;
 	public UserPrincipal(User user){
 		this.user = user;

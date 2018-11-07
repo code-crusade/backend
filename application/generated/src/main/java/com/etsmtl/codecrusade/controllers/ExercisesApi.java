@@ -9,6 +9,8 @@ import com.etsmtl.codecrusade.model.CodeValidationReport;
 import com.etsmtl.codecrusade.model.Exercise;
 import com.etsmtl.codecrusade.model.ExerciseSubmission;
 import com.etsmtl.codecrusade.model.RunnerArguments;
+import com.etsmtl.codecrusade.service.ExerciseService;
+import com.etsmtl.codecrusade.service.SubmissionService;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -101,7 +103,8 @@ public interface ExercisesApi {
     @RequestMapping(value = "/exercises/{exerciseId}/submissions",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments) {
+    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments)
+            throws SubmissionService.UserNotAllowedException, ExerciseService.ExerciseNotFoundException {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

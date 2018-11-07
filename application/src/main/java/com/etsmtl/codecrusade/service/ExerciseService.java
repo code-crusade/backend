@@ -6,5 +6,10 @@ import java.util.Optional;
 
 public interface ExerciseService {
 	Optional<Exercise> getExerciseFromId(Integer id);
+
 	Iterable<Exercise> getAllExercises();
+
+	class ExerciseNotFoundException extends Exception {
+
+	}
 }

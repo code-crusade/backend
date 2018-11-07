@@ -10,6 +10,8 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd-HH:mm</maven.build.timestamp.format>
     </properties>
     <dependencies>
         <dependency>
@@ -244,6 +246,12 @@
             <artifactId>modelmapper-spring</artifactId>
             <version>2.3.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.graalvm.sdk/graal-sdk -->
+        <dependency>
+            <groupId>org.graalvm.sdk</groupId>
+            <artifactId>graal-sdk</artifactId>
+            <version>1.0.0-rc8</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -343,6 +351,9 @@
                     <driver>org.h2.Driver</driver>
                     <username></username>
                     <password></password>
+                    <diffChangeLogFile>
+                        ${project.basedir}/src/main/resources/db/changelog/changelog-${timestamp}.xml
+                    </diffChangeLogFile>
                 </configuration>
                 <executions>
                     <execution>

@@ -45,4 +45,7 @@ public class Exercise {
 	@Column(name="value")
 	@CollectionTable(name="exercise_templates", joinColumns=@JoinColumn(name="exerciseId"))
 	private Map<String,String> codeTemplates;
+
+	@OneToMany(mappedBy = "exercise")
+	private List<CodeValidation> tests;
 }
