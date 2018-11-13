@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,12 +17,12 @@ public class ClassGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(AccessLevel.NONE)
-	private Long id;
+	private Integer id;
 
 	@OneToMany
 	@JoinColumn(name = "classGroup_id",
 				foreignKey = @ForeignKey(name = "fk_classGroup_id"))
-	private List<Student> students;
+	private List<Student> students = new ArrayList<>();
 
 	@Column(name = "groupNumber")
 	private Integer groupNumber;

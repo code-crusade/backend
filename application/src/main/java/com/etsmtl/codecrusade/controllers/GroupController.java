@@ -11,17 +11,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
 
 @Controller
-public class GroupsController implements GroupsApi {
+public class GroupController implements GroupsApi {
 
 	private ClassGroupService groupService;
 	private ModelMapper       modelMapper;
 
 	@Autowired
-	public GroupsController(ClassGroupService groupService, ModelMapper modelMapper) {
+	public GroupController(ClassGroupService groupService, ModelMapper modelMapper) {
 		this.groupService = groupService;
 		this.modelMapper = modelMapper;
 	}
@@ -38,14 +39,16 @@ public class GroupsController implements GroupsApi {
 
 	@Override
 	public ResponseEntity<Group> groupsEdit(@Valid Group group) {
-		return groupService.updateGroup(group.getId(), convertToEntity(group))
+		return groupService.saveGroup(convertToEntity(group))
 						   .map(created -> ResponseEntity.ok(convertToDto(created)))
 						   .orElse(ResponseEntity.badRequest().build());
 	}
 
 	@Override
 	public ResponseEntity<List<Group>> groupsBrowse() {
-		return ResponseEntity.ok(groupService.findAllGroups().stream().map(this::convertToDto).collect(toList()));
+		return ResponseEntity.ok(StreamSupport.stream(groupService.findAllGroups().spliterator(), false)
+											  .map(this::convertToDto)
+											  .collect(toList()));
 	}
 
 	private ClassGroup convertToEntity(Group group) {

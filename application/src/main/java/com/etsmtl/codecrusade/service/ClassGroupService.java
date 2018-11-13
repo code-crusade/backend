@@ -2,7 +2,7 @@ package com.etsmtl.codecrusade.service;
 
 import com.etsmtl.codecrusade.entities.ClassGroup;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
@@ -16,22 +16,35 @@ public interface ClassGroupService {
 	 * @param classGroup the {@link ClassGroup} to create
 	 * @return the created group, with an id assigned
 	 */
-	Optional<ClassGroup> createGroup(ClassGroup classGroup);
+	Optional<ClassGroup> createGroup(@NotNull ClassGroup classGroup) throws IdSpecifiedException;
 
 	/**
 	 * Updates a group with provided values.
 	 *
-	 * @param id         the id of the existing ClassGroup
 	 * @param classGroup the {@link ClassGroup} to update
 	 * @return the updated {@link ClassGroup}
 	 */
-	Optional<ClassGroup> updateGroup(Integer id, ClassGroup classGroup);
+	Optional<ClassGroup> saveGroup(@NotNull ClassGroup classGroup) throws IdNotSpecifiedException;
 
 	/**
 	 * Finds a list of all groups.
 	 *
 	 * @return a list of all groups
 	 */
-	List<ClassGroup> findAllGroups();
+	Iterable<ClassGroup> findAllGroups();
+
+	/**
+	 * An exception that indicates an updated group has no id indicated.
+	 */
+	class IdNotSpecifiedException extends RuntimeException {
+
+	}
+
+	/**
+	 * An exception that indicates a group needed an id but none was provided.
+	 */
+	class IdSpecifiedException extends RuntimeException {
+
+	}
 
 }

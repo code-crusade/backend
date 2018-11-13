@@ -8,12 +8,14 @@ import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.entities.security.Auditable;
 import com.etsmtl.codecrusade.model.*;
 import com.etsmtl.codecrusade.model.Exercise;
+import com.etsmtl.codecrusade.repository.ClassGroupRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.etsmtl.codecrusade.util.Utilities.nullable;
@@ -24,12 +26,33 @@ import static java.util.stream.Collectors.toMap;
 @Configuration
 @Import({ SecurityConfig.class, WebConfig.class, CASConfig.class, AuditingConfig.class, I18nConfig.class })
 public class ApplicationConfiguration {
+	private static final String FR_CA = Locale.CANADA_FRENCH.toLanguageTag();
+	private static final String EN_CA = Locale.CANADA.toLanguageTag();
+
 	@Bean
-	public ModelMapper modelMapper() {
+	public ModelMapper modelMapper(ClassGroupRepository groupRepository) {
 		ModelMapper modelMapper = new ModelMapper();
 		// Convert Exercise entity -> Exercise Model
 		modelMapper.createTypeMap(com.etsmtl.codecrusade.entities.Exercise.class, Exercise.class)
-				   .addMapping(com.etsmtl.codecrusade.entities.Exercise::getId, Exercise::setId);
+				   .setConverter(context -> {
+					   com.etsmtl.codecrusade.entities.Exercise src = context.getSource();
+					   // TODO : sample test cases
+					   return new Exercise().description(
+							   new IntlString().en(src.getDescription().get(EN_CA).getMessage())
+											   .fr(src.getDescription().get(FR_CA).getMessage()))
+											.title(new IntlString().en(src.getTitle().get(EN_CA).getMessage())
+																   .fr(src.getTitle().get(FR_CA).getMessage()))
+											.difficulty(modelMapper.map(src.getDifficulty(), Difficulties.class))
+											.id(src.getId())
+											.supportedLanguages(src.getSupportedLanguages())
+											.template(modelMapper.map(src.getTemplate(),
+																	  com.etsmtl.codecrusade.model.Template.class))
+											.sampleTestCases(src.getTestCases()
+																.stream()
+																.map(testCase -> modelMapper.map(testCase,
+																								 TestCase.class))
+																.collect(toList()));
+				   });
 
 		// Convert Submission -> ExerciseSubmission
 		modelMapper.createTypeMap(Submission.class, ExerciseSubmission.class)
@@ -111,13 +134,16 @@ public class ApplicationConfiguration {
 															  .functionReturnValue(src.getFunctionReturnValue());
 		});
 
-		modelMapper.createTypeMap(Group.class, ClassGroup.class);
-		modelMapper.createTypeMap(ClassGroup.class, Group.class);
+		modelMapper.createTypeMap(Group.class, ClassGroup.class).addMapping(src->groupRepository.findAllById(src.getStudentsIds()),ClassGroup::setStudents);
+		modelMapper.createTypeMap(ClassGroup.class, Group.class)
+				   .addMappings(mapper -> mapper.skip(Group::setStudentsIds));
 		modelMapper.createTypeMap(Semester.class, Semesters.class)
 				   .setConverter(context -> Semesters.fromValue(context.getSource().getValue()));
 		// we have to rely on this since there is no getter generated
 		modelMapper.createTypeMap(Semesters.class, Semester.class)
 				   .setConverter(context -> Semester.fromValue(context.getSource().toString()));
+		// Convert ApplicationTestCase -> TestCase
+		modelMapper.createTypeMap(ApplicationTestCase.class, TestCase.class);
 		return modelMapper;
 	}
 }

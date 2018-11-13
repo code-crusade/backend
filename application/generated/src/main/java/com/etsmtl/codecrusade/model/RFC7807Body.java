@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 /**
  * RFC7807Body
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-13T11:55:45.840765800-05:00[America/New_York]")
 
 public class RFC7807Body   {
   @JsonProperty("type")

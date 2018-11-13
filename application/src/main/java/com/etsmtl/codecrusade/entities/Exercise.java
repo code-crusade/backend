@@ -1,10 +1,13 @@
 package com.etsmtl.codecrusade.entities;
 
+import com.etsmtl.codecrusade.annotation.MessageTemplate;
 import com.etsmtl.codecrusade.entities.converters.StringListAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,28 +24,33 @@ public class Exercise {
 	@Setter(AccessLevel.NONE)
 	private Integer id;
 
-	@Column(name="title")
-	private String title;
+	@OneToMany
+	@JoinColumn(referencedColumnName = "title",
+				name = "key")
+	@MessageTemplate("exercise.{id}.title")
+	@MapKey(name = "locale")
+	private Map<String, Message> title = new HashMap<>();
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_descriptions",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> description;
+	@OneToMany
+	@JoinColumn(referencedColumnName = "description",
+				name = "key")
+	@MessageTemplate("exercise.{id}.description")
+	@MapKey(name = "locale")
+	private Map<String, Message> description = new HashMap<>();
 
 	@Convert(converter = StringListAttributeConverter.class)
 	@Column(name = "supportedLanguages")
-	private List<String> supportedLanguages;
+	private List<String> supportedLanguages = new ArrayList<>();
 
 	@OneToOne
 	@JoinColumn(name = "exrecise_id",
 				foreignKey = @ForeignKey(name = "fk_template_id"))
 	private Template template;
 
-	@OneToMany(mappedBy = "exercise")
-	private List<CodeValidation> tests;
+	@OneToMany
+	@JoinColumn(name = "exercise_id",
+				foreignKey = @ForeignKey(name = "fk_exercise_id"))
+	private List<ApplicationTestCase> testCases = new ArrayList<>();
 
 	@NotNull
 	@Enumerated(EnumType.STRING)

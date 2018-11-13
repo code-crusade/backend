@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
  * Group of students
  */
 @ApiModel(description = "Group of students")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-13T11:55:45.840765800-05:00[America/New_York]")
 
 public class Group   {
   @JsonProperty("id")
@@ -38,6 +38,10 @@ public class Group   {
   @JsonProperty("students")
   @Valid
   private List<Student> students = new ArrayList<>();
+
+  @JsonProperty("students_ids")
+  @Valid
+  private List<Integer> studentsIds = null;
 
   @JsonProperty("archived")
   private Boolean archived;
@@ -163,7 +167,7 @@ public class Group   {
    * Get students
    * @return students
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, readOnly = true, value = "")
   @NotNull
 
   @Valid
@@ -174,6 +178,34 @@ public class Group   {
 
   public void setStudents(List<Student> students) {
     this.students = students;
+  }
+
+  public Group studentsIds(List<Integer> studentsIds) {
+    this.studentsIds = studentsIds;
+    return this;
+  }
+
+  public Group addStudentsIdsItem(Integer studentsIdsItem) {
+    if (this.studentsIds == null) {
+      this.studentsIds = new ArrayList<>();
+    }
+    this.studentsIds.add(studentsIdsItem);
+    return this;
+  }
+
+  /**
+   * Get studentsIds
+   * @return studentsIds
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public List<Integer> getStudentsIds() {
+    return studentsIds;
+  }
+
+  public void setStudentsIds(List<Integer> studentsIds) {
+    this.studentsIds = studentsIds;
   }
 
   public Group archived(Boolean archived) {
@@ -213,12 +245,13 @@ public class Group   {
         Objects.equals(this.semester, group.semester) &&
         Objects.equals(this.year, group.year) &&
         Objects.equals(this.students, group.students) &&
+        Objects.equals(this.studentsIds, group.studentsIds) &&
         Objects.equals(this.archived, group.archived);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, groupNumber, propertyClass, semester, year, students, archived);
+    return Objects.hash(id, groupNumber, propertyClass, semester, year, students, studentsIds, archived);
   }
 
   @Override
@@ -232,6 +265,7 @@ public class Group   {
     sb.append("    semester: ").append(toIndentedString(semester)).append("\n");
     sb.append("    year: ").append(toIndentedString(year)).append("\n");
     sb.append("    students: ").append(toIndentedString(students)).append("\n");
+    sb.append("    studentsIds: ").append(toIndentedString(studentsIds)).append("\n");
     sb.append("    archived: ").append(toIndentedString(archived)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,7 +30,7 @@ public class EntryPoint {
 	@OneToMany
 	@JoinColumn(name = "entryPoint_id",
 				foreignKey = @ForeignKey(name = "fk_entryPoint_id"))
-	private List<FunctionParams> functionParams;
+	private List<FunctionParams> functionParams = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	private ApplicationSupportedType returnType;

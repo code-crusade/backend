@@ -694,9 +694,15 @@ components:
         year:
           type: number
         students:
+          readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/Student'
+        students_ids:
+          writeOnly: true
+          type: array
+          items:
+            type: integer
         archived:
           type: boolean
       required:

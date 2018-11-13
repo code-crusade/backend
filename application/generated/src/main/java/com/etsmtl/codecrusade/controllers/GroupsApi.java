@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-13T11:55:45.840765800-05:00[America/New_York]")
 
 @Validated
 @Api(value = "groups", description = "the groups API")
@@ -52,7 +52,7 @@ public interface GroupsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"students_ids\" : [ 9, 9 ],  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
                     break;
                 }
             }
@@ -74,7 +74,7 @@ public interface GroupsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"students_ids\" : [ 9, 9 ],  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
                     break;
                 }
             }
@@ -100,7 +100,7 @@ public interface GroupsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"students_ids\" : [ 9, 9 ],  \"archived\" : true,  \"year\" : 1.46581298050294517310021547018550336360931396484375,  \"students\" : [ {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  }, {    \"totalExercisesSuccessed\" : 2.3021358869347654518833223846741020679473876953125,    \"firstName\" : 5,    \"lastName\" : \"lastName\",    \"accessCode\" : 5,    \"totalExercisesDone\" : 7.061401241503109105224211816675961017608642578125,    \"email\" : \"email\"  } ],  \"id\" : 0,  \"groupNumber\" : 6,  \"class\" : \"class\"}");
                     break;
                 }
             }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,5 +33,5 @@ public class Template {
 	private ApplicationSupportedType functionReturnType;
 
 	@OneToMany(mappedBy = "template")
-	private List<TemplateCode> templateCode;
+	private List<TemplateCode> templateCode = new ArrayList<>();
 }
