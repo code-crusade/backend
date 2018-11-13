@@ -9,18 +9,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UserPass
+ * Credentials
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-09T14:55:12.473779600-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
-public class UserPass   {
+public class Credentials   {
   @JsonProperty("username")
   private String username;
 
   @JsonProperty("password")
   private String password;
 
-  public UserPass username(String username) {
+  public Credentials username(String username) {
     this.username = username;
     return this;
   }
@@ -29,7 +29,8 @@ public class UserPass   {
    * Get username
    * @return username
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getUsername() {
@@ -40,7 +41,7 @@ public class UserPass   {
     this.username = username;
   }
 
-  public UserPass password(String password) {
+  public Credentials password(String password) {
     this.password = password;
     return this;
   }
@@ -49,7 +50,8 @@ public class UserPass   {
    * Get password
    * @return password
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getPassword() {
@@ -69,9 +71,9 @@ public class UserPass   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserPass userPass = (UserPass) o;
-    return Objects.equals(this.username, userPass.username) &&
-        Objects.equals(this.password, userPass.password);
+    Credentials credentials = (Credentials) o;
+    return Objects.equals(this.username, credentials.username) &&
+        Objects.equals(this.password, credentials.password);
   }
 
   @Override
@@ -82,7 +84,7 @@ public class UserPass   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserPass {\n");
+    sb.append("class Credentials {\n");
     
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");

@@ -9,55 +9,56 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * RunnerArguments
+ * IntlString
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
-public class RunnerArguments   {
-  @JsonProperty("code")
-  private String code;
+public class IntlString   {
+  @JsonProperty("fr")
+  private String fr;
 
-  @JsonProperty("language")
-  private String language;
+  @JsonProperty("en")
+  private String en;
 
-  public RunnerArguments code(String code) {
-    this.code = code;
+  public IntlString fr(String fr) {
+    this.fr = fr;
     return this;
   }
 
   /**
-   * code
-   * @return code
+   * Get fr
+   * @return fr
   **/
-  @ApiModelProperty(value = "code")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
-  public String getCode() {
-    return code;
+  public String getFr() {
+    return fr;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setFr(String fr) {
+    this.fr = fr;
   }
 
-  public RunnerArguments language(String language) {
-    this.language = language;
+  public IntlString en(String en) {
+    this.en = en;
     return this;
   }
 
   /**
-   * language
-   * @return language
+   * Get en
+   * @return en
   **/
-  @ApiModelProperty(value = "language")
+  @ApiModelProperty(value = "")
 
 
-  public String getLanguage() {
-    return language;
+  public String getEn() {
+    return en;
   }
 
-  public void setLanguage(String language) {
-    this.language = language;
+  public void setEn(String en) {
+    this.en = en;
   }
 
 
@@ -69,23 +70,23 @@ public class RunnerArguments   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RunnerArguments runnerArguments = (RunnerArguments) o;
-    return Objects.equals(this.code, runnerArguments.code) &&
-        Objects.equals(this.language, runnerArguments.language);
+    IntlString intlString = (IntlString) o;
+    return Objects.equals(this.fr, intlString.fr) &&
+        Objects.equals(this.en, intlString.en);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, language);
+    return Objects.hash(fr, en);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RunnerArguments {\n");
+    sb.append("class IntlString {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    fr: ").append(toIndentedString(fr)).append("\n");
+    sb.append("    en: ").append(toIndentedString(en)).append("\n");
     sb.append("}");
     return sb.toString();
   }

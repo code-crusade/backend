@@ -5,7 +5,7 @@
  */
 package com.etsmtl.codecrusade.controllers;
 
-import com.etsmtl.codecrusade.model.UserPass;
+import com.etsmtl.codecrusade.model.Credentials;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-07T12:58:45.826018600-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
 @Validated
 @Api(value = "auth", description = "the auth API")
@@ -54,7 +54,7 @@ public interface AuthApi {
     @RequestMapping(value = "/auth/login",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> authLoginPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserPass userPass) {
+    default ResponseEntity<Void> authLoginPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Credentials credentials) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

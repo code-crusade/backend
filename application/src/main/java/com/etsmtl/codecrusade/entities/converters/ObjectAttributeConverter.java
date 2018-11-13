@@ -9,6 +9,9 @@ import javax.persistence.Converter;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
+/**
+ * Converts an object into a json string.
+ */
 @Converter
 public class ObjectAttributeConverter implements AttributeConverter<Object, String> {
 

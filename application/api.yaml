@@ -21,6 +21,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Exercise'
+    post:
+      summary: Creates a new exercise
+      operationId: exercisesAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        '201':
+          description: Exercise has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to submit solutions to the exercise
+        '403':
+          description: User is not allowed to create a new exercise
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
@@ -86,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RunnerArguments'
+              $ref: '#/components/schemas/ExerciseSubmission'
       responses:
         '201':
           description: Submission has been created
@@ -188,6 +212,133 @@ paths:
           description: User is not allowed to see the results
         '404':
           description: Submission does not exist
+  /groups:
+    get:
+      summary: Gets the full list of groups
+      operationId: groupsBrowse
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+    post:
+      summary: Creates a new group
+      operationId: groupsAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Group has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new group
+        '403':
+          description: User is not allowed to create a new group
+    put:
+      summary: Edits an existing group
+      operationId: groupsEdit
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Group has been modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to edit group
+        '403':
+          description: User is not allowed to edit this group
+  /users:
+    get:
+      summary: Gets the full list of users
+      operationId: usersBrowse
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Creates a new user
+      operationId: usersAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new user
+        '403':
+          description: User is not allowed to create a new user
+  '/users/{userId}':
+    get:
+      summary: Gets the specified user
+      operationId: usersRead
+      security:
+      - authCookie: []
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: User must be logged in to see this user
+        '403':
+          description: User is not allowed to see this user
+        '404':
+          description: User does not exist
   '/runner/{exerciseId}':
     post:
       deprecated: true
@@ -223,7 +374,7 @@ paths:
       # The service ticket can be used by the server to get user data from the SSO server
       # Should probably be provided by spring-security or java-cas-client
       externalDocs:
-        description : Apereo CAS protocol documentation
+        description: Apereo CAS protocol documentation
         url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
       security: [] # You shouldn't have to be logged in to login
       tags: ['auth']
@@ -253,7 +404,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserPass'
+              $ref: '#/components/schemas/Credentials'
       responses:
         '200':
           description: Successfully authenticated
@@ -318,83 +469,116 @@ components:
           format: uri
       xml:
         name: problem
+    IntlString:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
     Exercise:
       type: object
       properties:
-        exerciseId:
+        id:
           type: integer
+          readOnly: true
         title:
-          type: object
-          additionalProperties:
-            type: string
-            example: "Titre de l'exercice"
-          required: ['fr']
+          $ref: '#/components/schemas/IntlString'
         description:
-          type: object
-          additionalProperties:
-            type: string
-            example: "Description de l'exercice"
-          required: ['fr']
-        entryPoint:
-          $ref: '#/components/schemas/EntryPoint'
+          $ref: '#/components/schemas/IntlString'
+        difficulty:
+          $ref: '#/components/schemas/Difficulties'
+        template:
+          $ref: '#/components/schemas/Template'
         supportedLanguages:
           type: array
           items:
             type: string
-        codeTemplates:
-          type: object
-          additionalProperties:
-            type: string
-        # TODO : Validation tests?
+        sampleTestCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+      required:
+      - id
+      - title
+      - description
+      - difficulty
+      - template
+      - sampleTestCases
     ExerciseSubmission:
       type: object
       properties:
-        submissionId:
+        id:
           type: integer
+          readOnly: true
         exerciseId:
           type: integer
         userId:
           type: integer
-        program:
-          $ref: '#/components/schemas/RunnerArguments'
+        code:
+          type: string
+        language:
+          $ref: '#/components/schemas/'
         #validationReport:
         #  $ref: '#/components/schemas/CodeValidationReport'
         createdAt:
           type: string
           format: date-time
-    EntryPoint:
+      required:
+      - id
+      - exerciseId
+      - userId
+      - code
+      - language
+    Template:
       type: object
       properties:
         className:
           type: string
         functionName:
           type: string
-        functionParams:
+        params:
           type: array
           items:
-            type: object
-            properties:
-              name:
-                type: string
-              type:
-                $ref: '#/components/schemas/SupportedType'
-        returnType:
+            $ref: '#/components/schemas/Parameter'
+        functionReturnValue:
+          $ref: '#/components/schemas/AnyValue'
+        functionReturnType:
           $ref: '#/components/schemas/SupportedType'
+        prependedCode:
+          type: object
+          additionalProperties:
+            type: string
+        appendedCode:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - functionName
+      - functionReturnValue
+      - params
+      - functionReturnType
+      - prependedCode
+      - appendedCode
     SupportedType:
       type: string
       enum:
-      - boolean
-      - int
-      - float
-      - string
-      - boolean[]
-      - int[]
-      - float[]
-      - string[]
+      - BOOLEAN
+      - INT
+      - FLOAT
+      - STRING
+      - CHAR
+      - BOOLEAN_ARRAY
+      - INT_ARRAY
+      - FLOAT_ARRAY
+      - STRING_ARRAY
+      - CHAR_ARRAY
     User:
       type: object
       properties:
-        userId:
+        id:
           type: integer
         firstName:
           type: string
@@ -403,13 +587,147 @@ components:
         email:
           type: string
           format: email
-    UserPass:
+        password:
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - password
+    Credentials:
       type: object
       properties:
         username:
           type: string
         password:
           type: string
+      required:
+      - username
+      - password
+    SupportedLanguages:
+      description: Languages supported by the api
+      type: string
+      enum:
+      - cpp
+      - java
+      - javascript
+      - python
+    Difficulties:
+      description: Exercise difficulty range
+      type: string
+      enum:
+      - EASY
+      - MEDIUM
+      - HARD
+    Semesters:
+      description: Semester values.
+      type: string
+      enum:
+      - FALL
+      - WINTER
+      - SUMMER
+    AnyValue:
+      description: Type encompassing any value type
+      nullable: true
+    TestCase:
+      description: Test case data structure used to generate examplary test cases
+      type: object
+      properties:
+        it:
+          type: string
+        assertions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Assertion'
+      required:
+      - it
+      - assertions
+    Assertion:
+      description: An assertion to be included in a test
+      type: object
+      properties:
+        inputArguments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Argument'
+        expectedOutput:
+          $ref: '#/components/schemas/Argument'
+      required:
+      - inputArguments
+      - expectedOutput
+    Argument:
+      description: An argument
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SupportedType'
+        value:
+          $ref: '#/components/schemas/AnyValue'
+      required:
+      - type
+      - value
+    Parameter:
+      description: A parameter
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SupportedType'
+      required:
+      - type
+      - name
+    Group:
+      description: Group of students
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        groupNumber:
+          type: integer
+        class:
+          type: string
+        semester:
+          $ref: '#/components/schemas/Semesters'
+        year:
+          type: number
+        students:
+          type: array
+          items:
+            $ref: '#/components/schemas/Student'
+        archived:
+          type: boolean
+      required:
+      - id
+      - groupNumber
+      - class
+      - semester
+      - year
+      - students
+      - archived
+    Student:
+      description: A student user
+      type: object
+      properties:
+        accessCode:
+          type: integer
+        firstName:
+          type: integer
+        lastName:
+          type: string
+        email:
+          type: string
+        totalExercisesSuccessed:
+          type: number
+        totalExercisesDone:
+          type: number
+      required:
+      - accessCode
+      - firstName
+      - lastName
+      - type
   securitySchemes:
     authCookie:
       type: apiKey

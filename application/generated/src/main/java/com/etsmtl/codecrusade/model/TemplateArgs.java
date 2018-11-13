@@ -1,6 +1,7 @@
 package com.etsmtl.codecrusade.model;
 
 import java.util.Objects;
+import com.etsmtl.codecrusade.model.SupportedType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -9,55 +10,56 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UserPass
+ * TemplateArgs
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-09T14:55:12.473779600-05:00[America/New_York]")
 
-public class UserPass   {
-  @JsonProperty("username")
-  private String username;
+public class TemplateArgs   {
+  @JsonProperty("name")
+  private String name;
 
-  @JsonProperty("password")
-  private String password;
+  @JsonProperty("type")
+  private SupportedType type = null;
 
-  public UserPass username(String username) {
-    this.username = username;
+  public TemplateArgs name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get username
-   * @return username
+   * Get name
+   * @return name
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getUsername() {
-    return username;
+  public String getName() {
+    return name;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public UserPass password(String password) {
-    this.password = password;
+  public TemplateArgs type(SupportedType type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * Get password
-   * @return password
+   * Get type
+   * @return type
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getPassword() {
-    return password;
+  public SupportedType getType() {
+    return type;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setType(SupportedType type) {
+    this.type = type;
   }
 
 
@@ -69,23 +71,23 @@ public class UserPass   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserPass userPass = (UserPass) o;
-    return Objects.equals(this.username, userPass.username) &&
-        Objects.equals(this.password, userPass.password);
+    TemplateArgs templateArgs = (TemplateArgs) o;
+    return Objects.equals(this.name, templateArgs.name) &&
+        Objects.equals(this.type, templateArgs.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password);
+    return Objects.hash(name, type);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserPass {\n");
+    sb.append("class TemplateArgs {\n");
     
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

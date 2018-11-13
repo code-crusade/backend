@@ -1,6 +1,7 @@
 package com.etsmtl.codecrusade.model;
 
 import java.util.Objects;
+import io.swagger.annotations.ApiModel;
 import com.fasterxml.jackson.annotation.JsonValue;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -8,33 +9,19 @@ import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * Gets or Sets SupportedType
+ * Exercise difficulty range
  */
-public enum SupportedType {
+public enum Difficulties {
   
-  BOOLEAN("BOOLEAN"),
+  EASY("EASY"),
   
-  INT("INT"),
+  MEDIUM("MEDIUM"),
   
-  FLOAT("FLOAT"),
-  
-  STRING("STRING"),
-  
-  CHAR("CHAR"),
-  
-  BOOLEAN_ARRAY("BOOLEAN_ARRAY"),
-  
-  INT_ARRAY("INT_ARRAY"),
-  
-  FLOAT_ARRAY("FLOAT_ARRAY"),
-  
-  STRING_ARRAY("STRING_ARRAY"),
-  
-  CHAR_ARRAY("CHAR_ARRAY");
+  HARD("HARD");
 
   private String value;
 
-  SupportedType(String value) {
+  Difficulties(String value) {
     this.value = value;
   }
 
@@ -45,8 +32,8 @@ public enum SupportedType {
   }
 
   @JsonCreator
-  public static SupportedType fromValue(String text) {
-    for (SupportedType b : SupportedType.values()) {
+  public static Difficulties fromValue(String text) {
+    for (Difficulties b : Difficulties.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

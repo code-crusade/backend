@@ -1,76 +1,71 @@
 package com.etsmtl.codecrusade.model;
 
 import java.util.Objects;
-import com.etsmtl.codecrusade.model.EntryPoint;
+import com.etsmtl.codecrusade.model.Difficulties;
+import com.etsmtl.codecrusade.model.IntlString;
+import com.etsmtl.codecrusade.model.Template;
+import com.etsmtl.codecrusade.model.TestCase;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Exercise
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-07T12:58:45.826018600-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
 public class Exercise   {
-  @JsonProperty("exerciseId")
-  private Integer exerciseId;
+  @JsonProperty("id")
+  private Integer id;
 
   @JsonProperty("title")
-  @Valid
-  private Map<String, String> title = null;
+  private IntlString title = null;
 
   @JsonProperty("description")
-  @Valid
-  private Map<String, String> description = null;
+  private IntlString description = null;
 
-  @JsonProperty("entryPoint")
-  private EntryPoint entryPoint = null;
+  @JsonProperty("difficulty")
+  private Difficulties difficulty = null;
+
+  @JsonProperty("template")
+  private Template template = null;
 
   @JsonProperty("supportedLanguages")
   @Valid
   private List<String> supportedLanguages = null;
 
-  @JsonProperty("codeTemplates")
+  @JsonProperty("sampleTestCases")
   @Valid
-  private Map<String, String> codeTemplates = null;
+  private List<TestCase> sampleTestCases = new ArrayList<>();
 
-  public Exercise exerciseId(Integer exerciseId) {
-    this.exerciseId = exerciseId;
+  public Exercise id(Integer id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get exerciseId
-   * @return exerciseId
+   * Get id
+   * @return id
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, readOnly = true, value = "")
+  @NotNull
 
 
-  public Integer getExerciseId() {
-    return exerciseId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setExerciseId(Integer exerciseId) {
-    this.exerciseId = exerciseId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Exercise title(Map<String, String> title) {
+  public Exercise title(IntlString title) {
     this.title = title;
-    return this;
-  }
-
-  public Exercise putTitleItem(String key, String titleItem) {
-    if (this.title == null) {
-      this.title = new HashMap<>();
-    }
-    this.title.put(key, titleItem);
     return this;
   }
 
@@ -78,27 +73,21 @@ public class Exercise   {
    * Get title
    * @return title
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
+  @Valid
 
-  public Map<String, String> getTitle() {
+  public IntlString getTitle() {
     return title;
   }
 
-  public void setTitle(Map<String, String> title) {
+  public void setTitle(IntlString title) {
     this.title = title;
   }
 
-  public Exercise description(Map<String, String> description) {
+  public Exercise description(IntlString description) {
     this.description = description;
-    return this;
-  }
-
-  public Exercise putDescriptionItem(String key, String descriptionItem) {
-    if (this.description == null) {
-      this.description = new HashMap<>();
-    }
-    this.description.put(key, descriptionItem);
     return this;
   }
 
@@ -106,36 +95,61 @@ public class Exercise   {
    * Get description
    * @return description
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
+  @Valid
 
-  public Map<String, String> getDescription() {
+  public IntlString getDescription() {
     return description;
   }
 
-  public void setDescription(Map<String, String> description) {
+  public void setDescription(IntlString description) {
     this.description = description;
   }
 
-  public Exercise entryPoint(EntryPoint entryPoint) {
-    this.entryPoint = entryPoint;
+  public Exercise difficulty(Difficulties difficulty) {
+    this.difficulty = difficulty;
     return this;
   }
 
   /**
-   * Get entryPoint
-   * @return entryPoint
+   * Get difficulty
+   * @return difficulty
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   @Valid
 
-  public EntryPoint getEntryPoint() {
-    return entryPoint;
+  public Difficulties getDifficulty() {
+    return difficulty;
   }
 
-  public void setEntryPoint(EntryPoint entryPoint) {
-    this.entryPoint = entryPoint;
+  public void setDifficulty(Difficulties difficulty) {
+    this.difficulty = difficulty;
+  }
+
+  public Exercise template(Template template) {
+    this.template = template;
+    return this;
+  }
+
+  /**
+   * Get template
+   * @return template
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
+  public Template getTemplate() {
+    return template;
+  }
+
+  public void setTemplate(Template template) {
+    this.template = template;
   }
 
   public Exercise supportedLanguages(List<String> supportedLanguages) {
@@ -166,32 +180,31 @@ public class Exercise   {
     this.supportedLanguages = supportedLanguages;
   }
 
-  public Exercise codeTemplates(Map<String, String> codeTemplates) {
-    this.codeTemplates = codeTemplates;
+  public Exercise sampleTestCases(List<TestCase> sampleTestCases) {
+    this.sampleTestCases = sampleTestCases;
     return this;
   }
 
-  public Exercise putCodeTemplatesItem(String key, String codeTemplatesItem) {
-    if (this.codeTemplates == null) {
-      this.codeTemplates = new HashMap<>();
-    }
-    this.codeTemplates.put(key, codeTemplatesItem);
+  public Exercise addSampleTestCasesItem(TestCase sampleTestCasesItem) {
+    this.sampleTestCases.add(sampleTestCasesItem);
     return this;
   }
 
   /**
-   * Get codeTemplates
-   * @return codeTemplates
+   * Get sampleTestCases
+   * @return sampleTestCases
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
+  @Valid
 
-  public Map<String, String> getCodeTemplates() {
-    return codeTemplates;
+  public List<TestCase> getSampleTestCases() {
+    return sampleTestCases;
   }
 
-  public void setCodeTemplates(Map<String, String> codeTemplates) {
-    this.codeTemplates = codeTemplates;
+  public void setSampleTestCases(List<TestCase> sampleTestCases) {
+    this.sampleTestCases = sampleTestCases;
   }
 
 
@@ -204,17 +217,18 @@ public class Exercise   {
       return false;
     }
     Exercise exercise = (Exercise) o;
-    return Objects.equals(this.exerciseId, exercise.exerciseId) &&
+    return Objects.equals(this.id, exercise.id) &&
         Objects.equals(this.title, exercise.title) &&
         Objects.equals(this.description, exercise.description) &&
-        Objects.equals(this.entryPoint, exercise.entryPoint) &&
+        Objects.equals(this.difficulty, exercise.difficulty) &&
+        Objects.equals(this.template, exercise.template) &&
         Objects.equals(this.supportedLanguages, exercise.supportedLanguages) &&
-        Objects.equals(this.codeTemplates, exercise.codeTemplates);
+        Objects.equals(this.sampleTestCases, exercise.sampleTestCases);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(exerciseId, title, description, entryPoint, supportedLanguages, codeTemplates);
+    return Objects.hash(id, title, description, difficulty, template, supportedLanguages, sampleTestCases);
   }
 
   @Override
@@ -222,12 +236,13 @@ public class Exercise   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Exercise {\n");
     
-    sb.append("    exerciseId: ").append(toIndentedString(exerciseId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    entryPoint: ").append(toIndentedString(entryPoint)).append("\n");
+    sb.append("    difficulty: ").append(toIndentedString(difficulty)).append("\n");
+    sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    supportedLanguages: ").append(toIndentedString(supportedLanguages)).append("\n");
-    sb.append("    codeTemplates: ").append(toIndentedString(codeTemplates)).append("\n");
+    sb.append("    sampleTestCases: ").append(toIndentedString(sampleTestCases)).append("\n");
     sb.append("}");
     return sb.toString();
   }

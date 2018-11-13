@@ -1,6 +1,6 @@
 package com.etsmtl.codecrusade.controllers;
 
-import com.etsmtl.codecrusade.model.UserPass;
+import com.etsmtl.codecrusade.model.Credentials;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
@@ -17,7 +17,7 @@ public class AuthController implements AuthApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> authLoginPost(@Valid UserPass userPass) {
+	public ResponseEntity<Void> authLoginPost(@Valid Credentials credentials) {
 		return null;
 	}
 }

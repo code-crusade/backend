@@ -11,11 +11,11 @@ import javax.validation.constraints.*;
 /**
  * User
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-07T12:58:45.826018600-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
 public class User   {
-  @JsonProperty("userId")
-  private Integer userId;
+  @JsonProperty("id")
+  private Integer id;
 
   @JsonProperty("firstName")
   private String firstName;
@@ -26,24 +26,28 @@ public class User   {
   @JsonProperty("email")
   private String email;
 
-  public User userId(Integer userId) {
-    this.userId = userId;
+  @JsonProperty("password")
+  private String password;
+
+  public User id(Integer id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get id
+   * @return id
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
-  public Integer getUserId() {
-    return userId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public User firstName(String firstName) {
@@ -55,7 +59,8 @@ public class User   {
    * Get firstName
    * @return firstName
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getFirstName() {
@@ -75,7 +80,8 @@ public class User   {
    * Get lastName
    * @return lastName
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getLastName() {
@@ -95,7 +101,8 @@ public class User   {
    * Get email
    * @return email
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getEmail() {
@@ -104,6 +111,27 @@ public class User   {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public User password(String password) {
+    this.password = password;
+    return this;
+  }
+
+  /**
+   * Get password
+   * @return password
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -116,15 +144,16 @@ public class User   {
       return false;
     }
     User user = (User) o;
-    return Objects.equals(this.userId, user.userId) &&
+    return Objects.equals(this.id, user.id) &&
         Objects.equals(this.firstName, user.firstName) &&
         Objects.equals(this.lastName, user.lastName) &&
-        Objects.equals(this.email, user.email);
+        Objects.equals(this.email, user.email) &&
+        Objects.equals(this.password, user.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, firstName, lastName, email);
+    return Objects.hash(id, firstName, lastName, email, password);
   }
 
   @Override
@@ -132,10 +161,11 @@ public class User   {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
     
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }

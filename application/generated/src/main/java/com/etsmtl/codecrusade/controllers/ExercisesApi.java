@@ -29,7 +29,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-07T12:58:45.826018600-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
 @Validated
 @Api(value = "exercises", description = "the exercises API")
@@ -38,6 +38,32 @@ public interface ExercisesApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
+
+    @ApiOperation(value = "Creates a new exercise", nickname = "exercisesAdd", notes = "", response = Exercise.class, authorizations = {
+        @Authorization(value = "authCookie")
+    }, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "Exercise has been created", response = Exercise.class),
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 401, message = "User must be logged in to submit solutions to the exercise"),
+        @ApiResponse(code = 403, message = "User is not allowed to create a new exercise") })
+    @RequestMapping(value = "/exercises",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default ResponseEntity<Exercise> exercisesAdd(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Exercise exercise) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"template\" : {    \"functionReturnValue\" : \"\",    \"functionName\" : \"functionName\",    \"className\" : \"className\",    \"params\" : [ {      \"name\" : \"name\"    }, {      \"name\" : \"name\"    } ],    \"appendedCode\" : {      \"key\" : \"appendedCode\"    },    \"prependedCode\" : {      \"key\" : \"prependedCode\"    }  },  \"supportedLanguages\" : [ \"supportedLanguages\", \"supportedLanguages\" ],  \"description\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"id\" : 0,  \"title\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"sampleTestCases\" : [ {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  }, {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  } ]}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
 
     @ApiOperation(value = "Gets the specified exercise", nickname = "exercisesExerciseIdGet", notes = "", response = Exercise.class, authorizations = {
         @Authorization(value = "authCookie")
@@ -54,7 +80,7 @@ public interface ExercisesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"exerciseId\" : 0,  \"supportedLanguages\" : [ \"supportedLanguages\", \"supportedLanguages\" ],  \"description\" : {    \"key\" : \"Description de l'exercice\"  },  \"entryPoint\" : {    \"functionParams\" : [ {      \"name\" : \"name\"    }, {      \"name\" : \"name\"    } ],    \"functionName\" : \"functionName\",    \"className\" : \"className\"  },  \"title\" : {    \"key\" : \"Titre de l'exercice\"  },  \"codeTemplates\" : {    \"key\" : \"codeTemplates\"  }}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"template\" : {    \"functionReturnValue\" : \"\",    \"functionName\" : \"functionName\",    \"className\" : \"className\",    \"params\" : [ {      \"name\" : \"name\"    }, {      \"name\" : \"name\"    } ],    \"appendedCode\" : {      \"key\" : \"appendedCode\"    },    \"prependedCode\" : {      \"key\" : \"prependedCode\"    }  },  \"supportedLanguages\" : [ \"supportedLanguages\", \"supportedLanguages\" ],  \"description\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"id\" : 0,  \"title\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"sampleTestCases\" : [ {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  }, {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  } ]}");
                     break;
                 }
             }
@@ -79,7 +105,7 @@ public interface ExercisesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\",  \"submissionId\" : 0,  \"exerciseId\" : 6,  \"program\" : {    \"language\" : \"js\",    \"code\" : \"function main() { console.log('Hello World'); }\"  },  \"userId\" : 1}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\",  \"code\" : \"code\",  \"exerciseId\" : 6,  \"language\" : \"{}\",  \"id\" : 0,  \"userId\" : 1}");
                     break;
                 }
             }
@@ -101,7 +127,7 @@ public interface ExercisesApi {
     @RequestMapping(value = "/exercises/{exerciseId}/submissions",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody RunnerArguments runnerArguments) {
+    default ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(@ApiParam(value = "",required=true) @PathVariable("exerciseId") Integer exerciseId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody ExerciseSubmission exerciseSubmission) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -122,7 +148,7 @@ public interface ExercisesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\",  \"submissionId\" : 0,  \"exerciseId\" : 6,  \"program\" : {    \"language\" : \"js\",    \"code\" : \"function main() { console.log('Hello World'); }\"  },  \"userId\" : 1}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\",  \"code\" : \"code\",  \"exerciseId\" : 6,  \"language\" : \"{}\",  \"id\" : 0,  \"userId\" : 1}");
                     break;
                 }
             }
@@ -196,7 +222,7 @@ public interface ExercisesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"exerciseId\" : 0,  \"supportedLanguages\" : [ \"supportedLanguages\", \"supportedLanguages\" ],  \"description\" : {    \"key\" : \"Description de l'exercice\"  },  \"entryPoint\" : {    \"functionParams\" : [ {      \"name\" : \"name\"    }, {      \"name\" : \"name\"    } ],    \"functionName\" : \"functionName\",    \"className\" : \"className\"  },  \"title\" : {    \"key\" : \"Titre de l'exercice\"  },  \"codeTemplates\" : {    \"key\" : \"codeTemplates\"  }}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"template\" : {    \"functionReturnValue\" : \"\",    \"functionName\" : \"functionName\",    \"className\" : \"className\",    \"params\" : [ {      \"name\" : \"name\"    }, {      \"name\" : \"name\"    } ],    \"appendedCode\" : {      \"key\" : \"appendedCode\"    },    \"prependedCode\" : {      \"key\" : \"prependedCode\"    }  },  \"supportedLanguages\" : [ \"supportedLanguages\", \"supportedLanguages\" ],  \"description\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"id\" : 0,  \"title\" : {    \"en\" : \"en\",    \"fr\" : \"fr\"  },  \"sampleTestCases\" : [ {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  }, {    \"it\" : \"it\",    \"assertions\" : [ {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    }, {      \"inputArguments\" : [ {        \"value\" : \"\"      }, {        \"value\" : \"\"      } ],      \"expectedOutput\" : {        \"value\" : \"\"      }    } ]  } ]}");
                     break;
                 }
             }

@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.converters.StringListAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +21,8 @@ public class Exercise {
 	@Setter(AccessLevel.NONE)
 	private Integer id;
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_titles",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> title;
+	@Column(name="title")
+	private String title;
 
 	@ElementCollection
 	@MapKeyColumn(name = "lang")
@@ -36,23 +32,19 @@ public class Exercise {
 											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
 	private Map<String, String> description;
 
-	@OneToOne
-	@JoinColumn(name = "entrypoint_id",
-				foreignKey = @ForeignKey(name = "fk_entrypoint_id"))
-	private EntryPoint entryPoint;
-
 	@Convert(converter = StringListAttributeConverter.class)
 	@Column(name = "supportedLanguages")
 	private List<String> supportedLanguages;
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_templates",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> codeTemplates;
+	@OneToOne
+	@JoinColumn(name = "exrecise_id",
+				foreignKey = @ForeignKey(name = "fk_template_id"))
+	private Template template;
 
 	@OneToMany(mappedBy = "exercise")
 	private List<CodeValidation> tests;
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Difficulty difficulty;
 }

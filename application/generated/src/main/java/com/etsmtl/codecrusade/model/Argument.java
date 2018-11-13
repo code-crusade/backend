@@ -1,6 +1,7 @@
 package com.etsmtl.codecrusade.model;
 
 import java.util.Objects;
+import com.etsmtl.codecrusade.model.SupportedType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -9,55 +10,59 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * RunnerArguments
+ * An argument
  */
+@ApiModel(description = "An argument")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-12T18:01:20.447505100-05:00[America/New_York]")
 
-public class RunnerArguments   {
-  @JsonProperty("code")
-  private String code;
+public class Argument   {
+  @JsonProperty("type")
+  private SupportedType type = null;
 
-  @JsonProperty("language")
-  private String language;
+  @JsonProperty("value")
+  private Object value = null;
 
-  public RunnerArguments code(String code) {
-    this.code = code;
+  public Argument type(SupportedType type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * code
-   * @return code
+   * Get type
+   * @return type
   **/
-  @ApiModelProperty(value = "code")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
+  @Valid
 
-  public String getCode() {
-    return code;
+  public SupportedType getType() {
+    return type;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setType(SupportedType type) {
+    this.type = type;
   }
 
-  public RunnerArguments language(String language) {
-    this.language = language;
+  public Argument value(Object value) {
+    this.value = value;
     return this;
   }
 
   /**
-   * language
-   * @return language
+   * Type encompassing any value type
+   * @return value
   **/
-  @ApiModelProperty(value = "language")
+  @ApiModelProperty(required = true, value = "Type encompassing any value type")
+  @NotNull
 
 
-  public String getLanguage() {
-    return language;
+  public Object getValue() {
+    return value;
   }
 
-  public void setLanguage(String language) {
-    this.language = language;
+  public void setValue(Object value) {
+    this.value = value;
   }
 
 
@@ -69,23 +74,23 @@ public class RunnerArguments   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RunnerArguments runnerArguments = (RunnerArguments) o;
-    return Objects.equals(this.code, runnerArguments.code) &&
-        Objects.equals(this.language, runnerArguments.language);
+    Argument argument = (Argument) o;
+    return Objects.equals(this.type, argument.type) &&
+        Objects.equals(this.value, argument.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, language);
+    return Objects.hash(type, value);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RunnerArguments {\n");
+    sb.append("class Argument {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }
