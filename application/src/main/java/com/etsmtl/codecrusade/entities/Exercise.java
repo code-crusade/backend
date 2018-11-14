@@ -7,9 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "exercise")
@@ -18,41 +16,37 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Exercise {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	@Setter(AccessLevel.NONE)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @Setter(AccessLevel.NONE)
+    private Integer id;
 
-	@OneToMany
-	@JoinColumn(referencedColumnName = "title",
-				name = "key")
-	@MessageTemplate("exercise.{id}.title")
-	@MapKey(name = "locale")
-	private Map<String, Message> title = new HashMap<>();
 
-	@OneToMany
-	@JoinColumn(referencedColumnName = "description",
-				name = "key")
-	@MessageTemplate("exercise.{id}.description")
-	@MapKey(name = "locale")
-	private Map<String, Message> description = new HashMap<>();
+    @OneToOne
+    @JoinColumn(name = "title_message_id", foreignKey = @ForeignKey(name = "fk_title_message_id"))
+    private Message title;
 
-	@Convert(converter = StringListAttributeConverter.class)
-	@Column(name = "supportedLanguages")
-	private List<String> supportedLanguages = new ArrayList<>();
+    @MessageTemplate("exercise.{id}.description")
+    @OneToOne
+    @JoinColumn(name = "description_message_id", foreignKey = @ForeignKey(name = "fk_desc_message_id"))
+    private Message description;
 
-	@OneToOne
-	@JoinColumn(name = "exrecise_id",
-				foreignKey = @ForeignKey(name = "fk_template_id"))
-	private Template template;
+    @Convert(converter = StringListAttributeConverter.class)
+    @Column(name = "supportedLanguages")
+    private List<String> supportedLanguages = new ArrayList<>();
 
-	@OneToMany
-	@JoinColumn(name = "exercise_id",
-				foreignKey = @ForeignKey(name = "fk_exercise_id"))
-	private List<ApplicationTestCase> testCases = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "exrecise_id",
+                foreignKey = @ForeignKey(name = "fk_template_id"))
+    private Template template;
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private Difficulty difficulty;
+    @OneToMany
+    @JoinColumn(name = "exercise_id",
+                foreignKey = @ForeignKey(name = "fk_exercise_id"))
+    private List<ApplicationTestCase> testCases = new ArrayList<>();
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 }

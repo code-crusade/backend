@@ -86,4 +86,5 @@
                              tableName="classGroup_students"/>
     </changeSet>
     <include file="changelog/changelog-2018-11-07-1759.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/changelog-2018-11-14-1928.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

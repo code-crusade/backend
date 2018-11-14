@@ -10,19 +10,17 @@ import javax.persistence.*;
 @Data
 public class TemplateCode {
 
-	@EmbeddedId
-	private TemplateCodeId id;
+    @EmbeddedId
+    private TemplateCodeId id;
 
-	@MapsId("lang")
-	private String lang;
+    @MapsId("templateId")
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name="fk_template_id"))
+    private Template template;
 
-	@MapsId("templateId")
-	@ManyToOne
-	private Template template;
+    @Column(name = "prependedCode")
+    private String prependedCode;
 
-	@Column(name="prependedCode")
-	private String prependedCode;
-
-	@Column(name="appendedCode")
-	private String appendedCode;
+    @Column(name = "appendedCode")
+    private String appendedCode;
 }

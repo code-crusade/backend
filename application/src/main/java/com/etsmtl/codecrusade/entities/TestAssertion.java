@@ -1,5 +1,6 @@
 package com.etsmtl.codecrusade.entities;
 
+import com.etsmtl.codecrusade.entities.converters.ObjectAttributeConverter;
 import com.etsmtl.codecrusade.entities.converters.ObjectListAttributeConverter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 public class TestAssertion {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Convert(converter = ObjectListAttributeConverter.class)
-	private List<TestArgument> inputArguments = new ArrayList<>();
+    @Column(name = "inputArguments")
+    @Convert(converter = ObjectListAttributeConverter.class)
+    private List<TestArgument> inputArguments = new ArrayList<>();
 
-	private TestArgument expectedOutput;
+    @Column(name = "expectedOutput")
+    @Convert(converter = ObjectAttributeConverter.class)
+    private TestArgument expectedOutput;
 }

@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  * An assertion to be included in a test
  */
 @ApiModel(description = "An assertion to be included in a test")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-13T11:55:45.840765800-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-11-14T14:33:02.883045400-05:00[America/New_York]")
 
 public class Assertion   {
   @JsonProperty("inputArguments")
