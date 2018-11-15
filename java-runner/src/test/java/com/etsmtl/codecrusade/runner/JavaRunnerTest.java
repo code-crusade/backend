@@ -1,5 +1,6 @@
 package com.etsmtl.codecrusade.runner;
 
+import org.jboss.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +8,8 @@ import static com.etsmtl.codecrusade.runner.ExecutionResult.ExecutionStatus.SUCC
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JavaRunnerTest {
+
+	Logger logger = Logger.getLogger(getClass());
 
 	private RunnerArguments arguments;
 
@@ -33,7 +36,10 @@ public class JavaRunnerTest {
 
 	@Test
 	public void testHappyPath() {
+		long startTime = System.currentTimeMillis();
 		ExecutionResult result = runner.evaluate(code,arguments);
+		long elapsed = (System.currentTimeMillis() - startTime);
+		logger.info(String.format("Took %f seconds", elapsed/1000d));
 		assertThat(result.getStatus()).isEqualTo(SUCCESS);
 	}
 }
