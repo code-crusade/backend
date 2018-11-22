@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.etsmtl.codecrusade</groupId>
-    <artifactId>application</artifactId>
+    <artifactId>codecrusade-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <java.version>11</java.version>
@@ -12,7 +12,25 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd-HHmm</maven.build.timestamp.format>
+        <docker.image.prefix>codecrusade</docker.image.prefix>
     </properties>
+    <repositories>
+        <repository>
+            <id>Spring-release</id>
+            <name>Spring snapshots</name>
+            <url>https://repo.spring.io/release</url>
+        </repository>
+        <repository>
+            <id>Spring-milestones</id>
+            <name>Spring milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+        <repository>
+            <id>Spring-snapshot</id>
+            <name>Spring snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -116,68 +134,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-spring-webmvc</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-data-rest</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.etsmtl.codecrusade</groupId>
             <artifactId>commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.etsmtl.codecrusade</groupId>
-            <artifactId>codecrusade-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
             <exclusions>
@@ -269,6 +227,19 @@
             <artifactId>commons-text</artifactId>
             <version>1.6</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.etsmtl.codecrusade</groupId>
+            <artifactId>codecrusade-api</artifactId>
+            <version>v1.0.0</version>
+            <scope>compile</scope>
+            <classifier>dep</classifier>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -291,15 +262,8 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
-            <resource>
-                <directory>generated/src/main/java</directory>
-                <includes>
-                    <include>**/*.java</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
         </resources>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <dependencies>
@@ -368,47 +332,17 @@
                 <version>3.6.2</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/main.xml</changeLogFile>
-                    <url>jdbc:h2:file:~/db/footest-dev;AUTO_SERVER=TRUE</url>
+                    <url>jdbc:h2:~/db/footest-dev;AUTO_SERVER=TRUE</url>
                     <referenceUrl>
                         hibernate:spring:com.etsmtl.codecrusade.entities?dialect=org.hibernate.dialect.H2Dialect
                     </referenceUrl>
                     <driver>org.h2.Driver</driver>
-                    <username></username>
+                    <username>sa</username>
                     <password></password>
                     <diffChangeLogFile>
                         ${project.basedir}/src/main/resources/db/changelog/changelog-${timestamp}.xml
                     </diffChangeLogFile>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>3.3.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>${project.basedir}/api.yaml</inputSpec>
-                            <output>generated/</output>
-                            <modelPackage>${project.groupId}.model</modelPackage>
-                            <apiPackage>${project.groupId}.controllers</apiPackage>
-                            <invokerPackage>${project.groupId}.invoker</invokerPackage>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>codecrusade-api</artifactId>
-                            <artifactVersion>${project.version}</artifactVersion>
-                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
-                            <configOptions>
-                                <parentGroupId>com.etsmtl.codecrusade</parentGroupId>
-                                <parentArtifactId>codecrusade-api-parent</parentArtifactId>
-                                <parentVersion>1.0-SNAPSHOT</parentVersion>
-                                <interfaceOnly>true</interfaceOnly>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -417,6 +351,68 @@
                     <source>11</source>
                     <target>11</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.0.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/api/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.9</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

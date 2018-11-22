@@ -90,12 +90,6 @@ public class ApplicationConfiguration {
             return null;
         });
 
-        // Convert EntryPoint entity -> EntryPoint model
-        modelMapper.createTypeMap(EntryPoint.class, com.etsmtl.codecrusade.model.EntryPoint.class);
-
-        // Convert FunctionParams -> EntryPointFunctionParams
-        modelMapper.createTypeMap(FunctionParams.class, EntryPointFunctionParams.class);
-
         // Convert SubmissionArgument -> RunnerArguments
         modelMapper.createTypeMap(SubmissionArgument.class, RunnerArguments.class);
 

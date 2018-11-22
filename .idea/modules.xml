@@ -5,9 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/application/application.iml" filepath="$PROJECT_DIR$/application/application.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/backend.iml" filepath="$PROJECT_DIR$/.idea/backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/cas-server/cas-overlay.iml" filepath="$PROJECT_DIR$/cas-server/cas-overlay.iml" />
-      <module fileurl="file://$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" filepath="$PROJECT_DIR$/codecrusade-api-parent/codecrusade-api-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codecrusade-api/codecrusade-api.iml" filepath="$PROJECT_DIR$/codecrusade-api/codecrusade-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/commons/commons.iml" filepath="$PROJECT_DIR$/commons/commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/java-runner/java-runner.iml" filepath="$PROJECT_DIR$/java-runner/java-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zuul-gateway/zuul-gateway.iml" filepath="$PROJECT_DIR$/zuul-gateway/zuul-gateway.iml" />
     </modules>
   </component>
 </project>

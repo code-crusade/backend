@@ -8,3 +8,11 @@ before_script:
 cache:
   directories:
   - $HOME/.m2/repository/
+
+sudo: required
+
+services:
+  - docker
+before_install:
+  - docker pull oracle/graalvm-ce:1.0.0-rc8
+  -

@@ -12,7 +12,6 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/application/pom.xml" />
-        <option value="$PROJECT_DIR$/codecrusade-api-parent/pom.xml" />
         <option value="$PROJECT_DIR$/commons/pom.xml" />
         <option value="$PROJECT_DIR$/java-runner/pom.xml" />
         <option value="$PROJECT_DIR$/cas-server/pom.xml" />
@@ -20,6 +19,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/codecrusade-api-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/codecrusade-api/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>
