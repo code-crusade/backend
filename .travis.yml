@@ -11,5 +11,5 @@ sudo: required
 services:
   - docker
 before_install:
-  - chmod +x gradlew
+  - chmod +x mvnw
   - docker pull oracle/graalvm-ce:1.0.0-rc8
