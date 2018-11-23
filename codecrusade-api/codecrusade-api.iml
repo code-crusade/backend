@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
+    <output url="file://$MODULE_DIR$/../codecrusade-api-generator/target/classes" />
+    <output-test url="file://$MODULE_DIR$/../codecrusade-api-generator/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/../codecrusade-api-parent/codecrusade-api/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated/src/main/java" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/java" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/.openapi-generator" isTestSource="false" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-generator/target" />
+      <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-parent/codecrusade-api/target" />
+      <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-parent/target" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

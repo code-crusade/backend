@@ -120,12 +120,6 @@ gradle-app.setting
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-/codecrusade-api
-
-# Changer ces 2 fichiers si pom.xml change
-!/codecrusade-api/pom.xml
-!/codecrusade-api/build.gradle
-
 !/codecrusade-api/.gitkeep
 
 
