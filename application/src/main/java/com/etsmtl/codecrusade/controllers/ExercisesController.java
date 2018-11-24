@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -86,8 +87,9 @@ public class ExercisesController implements ExercisesApi {
 
 	@Override
 	public ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(Integer exerciseId,
-			@Valid RunnerArguments runnerArguments) {
-		return submissionService.createSubmissionForExercise(exerciseId, convertToEntity(runnerArguments))
+			@Valid ExerciseSubmission exerciseSubmission) {
+
+		return submissionService.createSubmissionForExercise(exerciseId, convertToEntity(exerciseSubmission))
 								.map(created -> ResponseEntity.ok().<Void>build())
 								.orElse(ResponseEntity.badRequest().build());
 	}
@@ -107,6 +109,17 @@ public class ExercisesController implements ExercisesApi {
 		return null;
 	}
 
+	@Override
+	public ResponseEntity<Exercise> exercisesAdd(@Valid Exercise exercise) {
+		return exerciseService.createExercise(convertToEntity(exercise))
+							  .map(created -> ResponseEntity.created(UriComponentsBuilder.fromPath("/exercises/{id}")
+																						 .buildAndExpand(
+																								 created.getId())
+																						 .toUri())
+															.body(convertToDto(created)))
+							  .orElse(ResponseEntity.badRequest().build());
+	}
+
 	private Exercise convertToDto(com.etsmtl.codecrusade.entities.Exercise entity) {
 		return modelMapper.map(entity, Exercise.class);
 	}
@@ -119,7 +132,15 @@ public class ExercisesController implements ExercisesApi {
 		return modelMapper.map(dto, SubmissionArgument.class);
 	}
 
+	private Submission convertToEntity(ExerciseSubmission dto) {
+		return modelMapper.map(dto, Submission.class);
+	}
+
 	private CodeValidationReportResults convertToDto(CodeValidationResults dto) {
 		return modelMapper.map(dto, CodeValidationReportResults.class);
+	}
+
+	private com.etsmtl.codecrusade.entities.Exercise convertToEntity(Exercise exercise) {
+		return modelMapper.map(exercise, com.etsmtl.codecrusade.entities.Exercise.class);
 	}
 }

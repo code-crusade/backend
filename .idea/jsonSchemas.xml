@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="docker-compose 2.4">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="docker-compose 2.4" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v2.4.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="docker-compose.yml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="openapi-3.0">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="openapi-3.0" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/kogosoftwarellc/open-api/master/packages/openapi-schema-validator/resources/openapi-3.0.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="api.yaml" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="application/api.yaml" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="codecrusade-api/code-crusade-openapi.yml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>

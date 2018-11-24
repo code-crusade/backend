@@ -2,7 +2,6 @@ package com.etsmtl.codecrusade.service.impl;
 
 import com.etsmtl.codecrusade.entities.Exercise;
 import com.etsmtl.codecrusade.entities.Submission;
-import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.entities.security.User;
 import com.etsmtl.codecrusade.repository.ExerciseRepository;
 import com.etsmtl.codecrusade.repository.SubmissionRepository;
@@ -49,10 +48,10 @@ public class SubmissionServiceImpl implements SubmissionService {
 	}
 
 	@Override
-	public Optional<Submission> createSubmissionForExercise(Integer exerciseId, SubmissionArgument submissionArgument)
+	public Optional<Submission> createSubmissionForExercise(Integer exerciseId, Submission submission)
 			throws UserNotAllowedException, ExerciseNotFoundException {
 		Objects.requireNonNull(exerciseId);
-		Objects.requireNonNull(submissionArgument);
+		Objects.requireNonNull(submission);
 		// find exercise or throw
 		Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotFoundException::new);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,14 +59,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 		User user = userRepository.findByUsername(currentPrincipalName);
 		// ensure no submission exists
 		if (submissionRepository.countByExercise_IdAndUser_Id(exerciseId, user.getId()) == 0) {
-			Submission submission = Submission.builder()
-											  .exercise(exercise)
-											  .program(submissionArgument)
-											  .user(user)
-											  .build();
-
 			submission = saveSubmission(submission);
-
 			if (submission.getId() != null) {
 				return Optional.of(submission);
 			}

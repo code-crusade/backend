@@ -1,0 +1,751 @@
+openapi: 3.0.1
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+paths:
+  /exercises:
+    get:
+      summary: Gets the full list of exercises
+      operationId: exercisesIndex
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+    post:
+      summary: Creates a new exercise
+      operationId: exercisesAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        '201':
+          description: Exercise has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to submit solutions to the exercise
+        '403':
+          description: User is not allowed to create a new exercise
+  '/exercises/{exerciseId}':
+    get:
+      summary: Gets the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '401':
+          description: User must be logged in to see this exercise
+        '403':
+          description: User is not allowed to see this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/submissions':
+    get:
+      summary: Gets the list of submissions for the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExerciseSubmission'
+        '401':
+          description: User must be logged in to see the submissions.
+        '403':
+          description: User is not allowed to see the submissions.
+        '404':
+          description: Exercise does not exist
+    post:
+      summary: Submits the code as the current user's solution for the exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExerciseSubmission'
+      responses:
+        '201':
+          description: Submission has been created
+        '400':
+          description: Submitted solution does not fit the exercise parameters
+        '401':
+          description: User must be logged in to submit solutions to the exercise
+        '403':
+          description: User is not allowed to post solutions for this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/test':
+    post:
+      summary: Validate the code against the exercise's test suite
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunnerArguments'
+      responses:
+        '200':
+          description: The test suite has been executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeValidationReport'
+        '400':
+          description: Submitted solution does not fit the exercise parameters
+        '401':
+          description: User must be logged in to see this exercise
+        '403':
+          description: User is not allowed to see this exercise
+        '404':
+          description: Exercise does not exist
+  '/exercises/{exerciseId}/submissions/{submissionId}':
+    get:
+      summary: Gets the list of submissions for the specified exercise
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExerciseSubmission'
+        '401':
+          description: User must be logged in to see this submission
+        '403':
+          description: User is not allowed to see this submission
+        '404':
+          description: Submission does not exist
+  '/exercises/{exerciseId}/submissions/{submissionId}/results':
+    get:
+      summary: Gets the results of the exercise validation for this submission
+      security:
+      - authCookie: []
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeValidationReport'
+        '401':
+          description: User must be logged in to see the results
+        '403':
+          description: User is not allowed to see the results
+        '404':
+          description: Submission does not exist
+  /groups:
+    get:
+      summary: Gets the full list of groups
+      operationId: groupsBrowse
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+    post:
+      summary: Creates a new group
+      operationId: groupsAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Group has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new group
+        '403':
+          description: User is not allowed to create a new group
+    put:
+      summary: Edits an existing group
+      operationId: groupsEdit
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Group has been modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to edit group
+        '403':
+          description: User is not allowed to edit this group
+  /users:
+    get:
+      summary: Gets the full list of users
+      operationId: usersBrowse
+      security:
+      - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Creates a new user
+      operationId: usersAdd
+      security:
+      - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new user
+        '403':
+          description: User is not allowed to create a new user
+  '/users/{userId}':
+    get:
+      summary: Gets the specified user
+      operationId: usersRead
+      security:
+      - authCookie: []
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: User must be logged in to see this user
+        '403':
+          description: User is not allowed to see this user
+        '404':
+          description: User does not exist
+  '/runner/{exerciseId}':
+    post:
+      deprecated: true
+      summary: Runs provided code
+      operationId: runCodeForExercise
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunnerArguments'
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/RFC7807Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/auth/caslogin':
+    get:
+      summary: Provides a session cookie given a valid CAS Service ticket
+      # The service ticket can be used by the server to get user data from the SSO server
+      # Should probably be provided by spring-security or java-cas-client
+      externalDocs:
+        description: Apereo CAS protocol documentation
+        url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      parameters:
+      - name: ticket
+        in: query
+        required: true
+        schema:
+          type: string
+          example: 'ST-12345678'
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345;
+        # TODO : What to do if auth fails? 302?
+  '/auth/login':
+    post:
+      summary: Provides a session cookie given a username and password
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345;
+        '400':
+          description: Authentication failed
+servers:
+- url: '//localhost:8080/'
+components:
+  schemas:
+    RunnerArguments:
+      type: object
+      properties:
+        code:
+          description: code
+          type: string
+        language:
+          description: language
+          type: string
+      example:
+        language: js
+        code: 'function main() { console.log(''Hello World''); }'
+    CodeValidationReport:
+      type: object
+      properties:
+        exerciseId:
+          type: integer
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              testName:
+                type: string
+              passed:
+                type: boolean
+              inputParameters:
+                type: array
+                items: {}
+              expectedOutput: {}
+              actualOutput: {}
+
+    RFC7807Body:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        detail:
+          type: string
+        status:
+          type: integer
+          format: int64
+        instance:
+          type: string
+          format: uri
+      xml:
+        name: problem
+    IntlString:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          $ref: '#/components/schemas/IntlString'
+        description:
+          $ref: '#/components/schemas/IntlString'
+        difficulty:
+          $ref: '#/components/schemas/Difficulties'
+        template:
+          $ref: '#/components/schemas/Template'
+        supportedLanguages:
+          type: array
+          items:
+            type: string
+        sampleTestCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+      required:
+      - id
+      - title
+      - description
+      - difficulty
+      - template
+      - sampleTestCases
+    ExerciseSubmission:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        exerciseId:
+          type: integer
+        userId:
+          type: integer
+        code:
+          type: string
+        language:
+          $ref: '#/components/schemas/'
+        #validationReport:
+        #  $ref: '#/components/schemas/CodeValidationReport'
+        createdAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - exerciseId
+      - userId
+      - code
+      - language
+    Template:
+      type: object
+      properties:
+        className:
+          type: string
+        functionName:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        functionReturnValue:
+          $ref: '#/components/schemas/AnyValue'
+        functionReturnType:
+          $ref: '#/components/schemas/SupportedType'
+        prependedCode:
+          type: object
+          additionalProperties:
+            type: string
+        appendedCode:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - functionName
+      - functionReturnValue
+      - params
+      - functionReturnType
+      - prependedCode
+      - appendedCode
+    SupportedType:
+      type: string
+      enum:
+      - BOOLEAN
+      - INT
+      - FLOAT
+      - STRING
+      - CHAR
+      - BOOLEAN_ARRAY
+      - INT_ARRAY
+      - FLOAT_ARRAY
+      - STRING_ARRAY
+      - CHAR_ARRAY
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - password
+    Credentials:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+    SupportedLanguages:
+      description: Languages supported by the api
+      type: string
+      enum:
+      - cpp
+      - java
+      - javascript
+      - python
+    Difficulties:
+      description: Exercise difficulty range
+      type: string
+      enum:
+      - EASY
+      - MEDIUM
+      - HARD
+    Semesters:
+      description: Semester values.
+      type: string
+      enum:
+      - FALL
+      - WINTER
+      - SUMMER
+    AnyValue:
+      description: Type encompassing any value type
+      nullable: true
+    TestCase:
+      description: Test case data structure used to generate examplary test cases
+      type: object
+      properties:
+        it:
+          type: string
+        assertions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Assertion'
+      required:
+      - it
+      - assertions
+    Assertion:
+      description: An assertion to be included in a test
+      type: object
+      properties:
+        inputArguments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Argument'
+        expectedOutput:
+          $ref: '#/components/schemas/Argument'
+      required:
+      - inputArguments
+      - expectedOutput
+    Argument:
+      description: An argument
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SupportedType'
+        value:
+          $ref: '#/components/schemas/AnyValue'
+      required:
+      - type
+      - value
+    Parameter:
+      description: A parameter
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SupportedType'
+      required:
+      - type
+      - name
+    Group:
+      description: Group of students
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        groupNumber:
+          type: integer
+        class:
+          type: string
+        semester:
+          $ref: '#/components/schemas/Semesters'
+        year:
+          type: number
+        students:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Student'
+        students_ids:
+          writeOnly: true
+          type: array
+          items:
+            type: integer
+        archived:
+          type: boolean
+      required:
+      - id
+      - groupNumber
+      - class
+      - semester
+      - year
+      - students
+      - archived
+    Student:
+      description: A student user
+      type: object
+      properties:
+        accessCode:
+          type: integer
+        firstName:
+          type: integer
+        lastName:
+          type: string
+        email:
+          type: string
+        totalExercisesSuccessed:
+          type: number
+        totalExercisesDone:
+          type: number
+      required:
+      - accessCode
+      - firstName
+      - lastName
+      - type
+  securitySchemes:
+    authCookie:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
+  responses:
+    RFC7807Error:
+      description: Api problem response
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/RFC7807Body'
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/RFC7807Body'

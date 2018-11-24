@@ -1,89 +1,204 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-
-    <changeSet author="gabar (generated)" id="1537554773207-1">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gabar (generated)" id="1543028362388-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-2">
+        <createTable tableName="assertions">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="assertionsPK"/>
+            </column>
+            <column name="expectedOutput" type="VARCHAR(255)"/>
+            <column name="inputArguments" type="VARCHAR(255)"/>
+            <column name="testCase_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-3">
         <createTable tableName="classGroup">
-            <column name="id" type="BIGINT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true" primaryKeyName="classGroupPK"/>
             </column>
+            <column name="archived" type="BOOLEAN"/>
+            <column name="groupNumber" type="INT"/>
+            <column name="class" type="VARCHAR(255)"/>
+            <column name="semester" type="VARCHAR(255)"/>
+            <column name="year" type="DECIMAL(19, 2)"/>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-2">
-        <createTable tableName="classGroup_students">
-            <column name="ClassGroup_id" type="BIGINT">
-                <constraints primaryKey="true"/>
+    <changeSet author="gabar (generated)" id="1543028362388-4">
+        <createTable tableName="code_validation_results">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="code_validation_resultsPK"/>
             </column>
-            <column name="students_id" type="BIGINT">
-                <constraints primaryKey="true"/>
-            </column>
+            <column name="expectedOutput" type="VARCHAR(255)"/>
+            <column name="passed" type="BOOLEAN"/>
+            <column name="submission_id" type="INT"/>
+            <column name="test_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-3">
+    <changeSet author="gabar (generated)" id="1543028362388-5">
+        <createTable tableName="entryPoints">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="entryPointsPK"/>
+            </column>
+            <column name="className" type="VARCHAR(255)"/>
+            <column name="functionName" type="VARCHAR(255)"/>
+            <column name="returnType" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-6">
         <createTable tableName="exercise">
-            <column name="id" type="BIGINT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true" primaryKeyName="exercisePK"/>
             </column>
-            <column name="description" type="VARCHAR(255)"/>
-            <column name="title" type="VARCHAR(255)"/>
-            <column name="unit_tests" type="CLOB"/>
+            <column name="difficulty" type="VARCHAR(255)"/>
+            <column name="supportedLanguages" type="VARCHAR(255)"/>
+            <column name="description_message_id" type="VARCHAR(255)"/>
+            <column name="exrecise_id" type="INT"/>
+            <column name="title_message_id" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-4">
+    <changeSet author="gabar (generated)" id="1543028362388-7">
+        <createTable tableName="functionParams">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="functionParamsPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="entryPoint_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-8">
+        <createTable tableName="localizations">
+            <column name="message_id" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="locale" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-9">
+        <createTable tableName="messages">
+            <column name="key" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="messagesPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-10">
         <createTable tableName="student">
-            <column name="id" type="BIGINT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="studentPK"/>
             </column>
             <column name="email" type="VARCHAR(255)"/>
+            <column name="classGroup_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-5">
-        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9"
-                             tableName="classGroup_students"/>
-    </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-6">
-        <addForeignKeyConstraint baseColumnNames="students_id" baseTableName="classGroup_students"
-                                 constraintName="FKdhgb5gw7cxfl15kdhs7ffor2x" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"
-                                 validate="true"/>
-    </changeSet>
-    <changeSet author="gabar (generated)" id="1537554773207-7">
-        <addForeignKeyConstraint baseColumnNames="ClassGroup_id" baseTableName="classGroup_students"
-                                 constraintName="FKoovsxv93jwnroyfkr2e496vdf" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup"
-                                 validate="true"/>
-    </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-2">
-        <createSequence sequenceName="hibernate_sequence"/>
-    </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-3">
+    <changeSet author="gabar (generated)" id="1543028362388-11">
         <createTable tableName="submission">
-            <column autoIncrement="true" name="id" type="BIGINT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true" primaryKeyName="submissionPK"/>
             </column>
-            <column name="code" type="CLOB"/>
-            <column name="submission_id" type="BIGINT"/>
-            <column name="student_id" type="BIGINT"/>
+            <column name="createdBy" type="VARCHAR(255)"/>
+            <column name="creationDate" type="TIMESTAMP"/>
+            <column name="lastModifiedBy" type="VARCHAR(255)"/>
+            <column name="lastModifiedDate" type="TIMESTAMP"/>
+            <column name="code" type="VARCHAR(255)"/>
+            <column name="language" type="VARCHAR(255)"/>
+            <column name="exercise_id" type="INT"/>
+            <column name="user_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-4">
-        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="submission"
-                                 constraintName="FK5qgwrj4x77fn9w9cllbymtt33" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise"
-                                 validate="true"/>
+    <changeSet author="gabar (generated)" id="1543028362388-12">
+        <createTable tableName="templateCode">
+            <column name="lang" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="templateCodePK"/>
+            </column>
+            <column name="appendedCode" type="VARCHAR(255)"/>
+            <column name="prependedCode" type="VARCHAR(255)"/>
+            <column name="template_id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="templateCodePK"/>
+            </column>
+        </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-5">
-        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="submission"
-                                 constraintName="FKhncywuw9vwff2htaofx9m3m75" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"
-                                 validate="true"/>
+    <changeSet author="gabar (generated)" id="1543028362388-13">
+        <createTable tableName="templates">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="templatesPK"/>
+            </column>
+            <column name="returnType" type="VARCHAR(255)"/>
+            <column name="functionReturnValue" type="VARCHAR(255)"/>
+            <column name="entrypoint_id" type="INT"/>
+        </createTable>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1537555979838-1">
-        <dropUniqueConstraint constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9" tableName="classGroup_students"/>
-        <addUniqueConstraint columnNames="students_id" constraintName="UK_bq09a7uwkvlli1w1q6t1uqat9"
-                             tableName="classGroup_students"/>
+    <changeSet author="gabar (generated)" id="1543028362388-14">
+        <createTable tableName="testCase">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="testCasePK"/>
+            </column>
+            <column name="test_it" type="VARCHAR(255)"/>
+            <column name="exercise_id" type="INT"/>
+        </createTable>
     </changeSet>
-    <include file="changelog/changelog-2018-11-07-1759.xml" relativeToChangelogFile="true"/>
+    <changeSet author="gabar (generated)" id="1543028362388-15">
+        <createTable tableName="tests">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="testsPK"/>
+            </column>
+            <column name="expectedOutput" type="CLOB"/>
+            <column name="inputParameters" type="CLOB"/>
+            <column name="passed" type="BOOLEAN"/>
+            <column name="testName" type="VARCHAR(255)"/>
+            <column name="exercise_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-16">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="usersPK"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="roles" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-17">
+        <addUniqueConstraint columnNames="username" constraintName="UC_USERSUSERNAME_COL" tableName="users"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-18">
+        <addForeignKeyConstraint baseColumnNames="classGroup_id" baseTableName="student" constraintName="fk_classGroup_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-19">
+        <addForeignKeyConstraint baseColumnNames="description_message_id" baseTableName="exercise" constraintName="fk_desc_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-20">
+        <addForeignKeyConstraint baseColumnNames="entrypoint_id" baseTableName="templates" constraintName="fk_entrypoint_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="entryPoints" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-21">
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="tests" constraintName="fk_exercise_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-22">
+        <addForeignKeyConstraint baseColumnNames="message_id" baseTableName="localizations" constraintName="fk_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-23">
+        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="code_validation_results" constraintName="fk_submission_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="submission" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-24">
+        <addForeignKeyConstraint baseColumnNames="exrecise_id" baseTableName="exercise" constraintName="fk_template_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="templates" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-25">
+        <addForeignKeyConstraint baseColumnNames="testCase_id" baseTableName="assertions" constraintName="fk_testCase_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="testCase" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-26">
+        <addForeignKeyConstraint baseColumnNames="test_id" baseTableName="code_validation_results" constraintName="fk_test_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tests" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-27">
+        <addForeignKeyConstraint baseColumnNames="title_message_id" baseTableName="exercise" constraintName="fk_title_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543028362388-28">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="submission" constraintName="fk_user_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
 </databaseChangeLog>

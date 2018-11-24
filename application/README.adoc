@@ -1,0 +1,29 @@
+= Readme
+Gabriel Dupont-Francoeur <gabriel.dupontf@gmail.com>
+:icons: font
+
+:description: Compile, build and execution instructions
+
+[NOTE]
+====
+Substitute mvn with the ```.\mvnw``` wrapper if you don't have mvn available on the path.
+====
+
+== Prerequisites
+
+This application requires the cas-server built and compiled to run. Most of the required steps have been done
+(eg. generating a certificate) and the server may only need to be package.
+
+Do remember to keep the configuration up to date in link:src/main/java/com/etsmtl/codecrusade/configuration/CASConfig.java[CASConfig]
+
+== Compilation
+
+To compile run the following :
+
+ mvn clean compile
+
+The
+
+== Development
+
+== Packaging

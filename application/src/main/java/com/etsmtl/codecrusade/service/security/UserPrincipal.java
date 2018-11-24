@@ -3,6 +3,7 @@ package com.etsmtl.codecrusade.service.security;
 import com.etsmtl.codecrusade.entities.security.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return AuthorityUtils.createAuthorityList(user.getRoles().toArray(new String[]{}));
 	}
 
 	@Override

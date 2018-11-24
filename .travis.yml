@@ -2,9 +2,14 @@ language: java
 jdk:
   - openjdk11
 
-before_script:
-  - chmod +x mvnw
-
 cache:
   directories:
   - $HOME/.m2/repository/
+
+sudo: required
+
+services:
+  - docker
+before_install:
+  - chmod +x mvnw
+  - docker pull oracle/graalvm-ce:1.0.0-rc8

@@ -1,0 +1,11 @@
+<settings>
+    <proxies>
+        <proxy>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>proxy.logti.etsmtl.ca</host>
+            <port>3128</port>
+            <nonProxyHosts>www.google.com|*.somewhere.com</nonProxyHosts>
+        </proxy>
+    </proxies>
+</settings>

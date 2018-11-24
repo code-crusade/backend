@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class CodeValidation {
 	@Lob
 	@Column(name = "inputParameters")
 	@Convert(converter = ObjectListAttributeConverter.class)
-	private List<Object> inputParameters;
+	private List<Object> inputParameters = new ArrayList<>();
 
 	@Lob
 	@Column(name = "expectedOutput")

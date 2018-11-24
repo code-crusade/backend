@@ -14,7 +14,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	private ExerciseRepository exerciseRepository;
 
 	@Autowired
-	public ExerciseServiceImpl(ExerciseRepository exerciseRepository){
+	public ExerciseServiceImpl(ExerciseRepository exerciseRepository) {
 		this.exerciseRepository = exerciseRepository;
 	}
 
@@ -26,6 +26,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 	@Override
 	public Iterable<Exercise> getAllExercises() {
 		return exerciseRepository.findAll();
+	}
+
+	@Override
+	public Optional<Exercise> createExercise(Exercise exercise) {
+		return Optional.of(exerciseRepository.save(exercise));
 	}
 
 }

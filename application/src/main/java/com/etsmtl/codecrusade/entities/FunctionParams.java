@@ -10,6 +10,9 @@ import javax.persistence.*;
 @Table(name = "functionParams")
 @Getter
 @Setter
+/**
+ * TODO : make those embeddable
+ */
 public class FunctionParams {
 
 	@Id

@@ -1,11 +1,13 @@
 package com.etsmtl.codecrusade.entities;
 
+import com.etsmtl.codecrusade.annotation.MessageTemplate;
 import com.etsmtl.codecrusade.entities.converters.StringListAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "exercise")
@@ -14,45 +16,37 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Exercise {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	@Setter(AccessLevel.NONE)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @Setter(AccessLevel.NONE)
+    private Integer id;
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_titles",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> title;
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_descriptions",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> description;
+    @OneToOne
+    @JoinColumn(name = "title_message_id", foreignKey = @ForeignKey(name = "fk_title_message_id"))
+    private Message title;
 
-	@OneToOne
-	@JoinColumn(name = "entrypoint_id",
-				foreignKey = @ForeignKey(name = "fk_entrypoint_id"))
-	private EntryPoint entryPoint;
+    @MessageTemplate("exercise.{id}.description")
+    @OneToOne
+    @JoinColumn(name = "description_message_id", foreignKey = @ForeignKey(name = "fk_desc_message_id"))
+    private Message description;
 
-	@Convert(converter = StringListAttributeConverter.class)
-	@Column(name = "supportedLanguages")
-	private List<String> supportedLanguages;
+    @Convert(converter = StringListAttributeConverter.class)
+    @Column(name = "supportedLanguages")
+    private List<String> supportedLanguages = new ArrayList<>();
 
-	@ElementCollection
-	@MapKeyColumn(name = "lang")
-	@Column(name = "value")
-	@CollectionTable(name = "exercise_templates",
-					 joinColumns = @JoinColumn(name = "exerciseId",
-											   foreignKey = @ForeignKey(name = "fk_exercise_id")))
-	private Map<String, String> codeTemplates;
+    @OneToOne
+    @JoinColumn(name = "exrecise_id",
+                foreignKey = @ForeignKey(name = "fk_template_id"))
+    private Template template;
 
-	@OneToMany(mappedBy = "exercise")
-	private List<CodeValidation> tests;
+    @OneToMany
+    @JoinColumn(name = "exercise_id",
+                foreignKey = @ForeignKey(name = "fk_exercise_id"))
+    private List<ApplicationTestCase> testCases = new ArrayList<>();
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 }

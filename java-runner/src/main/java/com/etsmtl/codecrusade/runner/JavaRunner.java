@@ -1,5 +1,7 @@
 package com.etsmtl.codecrusade.runner;
 
+import org.jboss.logging.Logger;
+
 import javax.tools.*;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.validation.*;
@@ -13,6 +15,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,6 +26,7 @@ import static com.etsmtl.codecrusade.runner.ExecutionResult.ExecutionStatus.SUCC
  * Runs java sources with provided arguments.
  */
 public class JavaRunner implements Runner {
+	Logger logger = Logger.getLogger(getClass());
 	@Override
 	public ExecutionResult evaluate(String rawCode, RunnerArguments args) {
 		try {
@@ -52,6 +56,7 @@ public class JavaRunner implements Runner {
 
 		// TODO : use buffers
 		// compilation
+		long startTime = System.currentTimeMillis();
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 
@@ -73,8 +78,17 @@ public class JavaRunner implements Runner {
 				URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { new File("").toURI().toURL() });
 				Class newClass = Class.forName(args.getClassName(), true, classLoader);
 				Method declaredMethod = newClass.getDeclaredMethod(args.getMethodName(), args.getParameterTypes());
-				Object result = declaredMethod.invoke(newClass.getDeclaredConstructor().newInstance(),
+                long elapsed = (System.currentTimeMillis() - startTime);
+                logger.info(String.format("Compilation to execution took %f seconds", elapsed/1000d));
+                startTime = System.currentTimeMillis();
+
+                Object result = declaredMethod.invoke(newClass.getDeclaredConstructor().newInstance(),
 													  args.getMethodArguments());
+                elapsed = (System.currentTimeMillis() - startTime);
+                logger.info(String.format("Execution took %f seconds", elapsed/1000d));
+                diagnostics.getDiagnostics().stream().forEach(diagnostic -> {
+					logger.info(diagnostic.getMessage(Locale.getDefault()));
+				});
 				return args.getExpectedResult().equals(result);
 
 			} catch (ClassNotFoundException e) {
