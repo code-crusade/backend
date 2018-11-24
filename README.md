@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/code-crusade/backend.svg?branch=master)](https://travis-ci.com/code-crusade/backend)
+
 # backend
 
 ## Installing
