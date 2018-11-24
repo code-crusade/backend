@@ -15,6 +15,8 @@
         <option value="$PROJECT_DIR$/commons/pom.xml" />
         <option value="$PROJECT_DIR$/java-runner/pom.xml" />
         <option value="$PROJECT_DIR$/cas-server/pom.xml" />
+        <option value="$PROJECT_DIR$/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

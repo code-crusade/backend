@@ -17,7 +17,7 @@
     <repositories>
         <repository>
             <id>Spring-release</id>
-            <name>Spring snapshots</name>
+            <name>Spring releases</name>
             <url>https://repo.spring.io/release</url>
         </repository>
         <repository>
@@ -101,18 +101,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>1.8</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -240,6 +228,15 @@
             <scope>compile</scope>
             <classifier>dep</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+            <version>2.1.0.BUILD-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -249,6 +246,13 @@
                 <version>2.1.0.RELEASE</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-parent</artifactId>
+                <version>Greenwich.M3</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -260,6 +264,15 @@
                     <include>**/*.java</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
                 </includes>
             </resource>
         </resources>
@@ -332,7 +345,7 @@
                 <version>3.6.2</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/main.xml</changeLogFile>
-                    <url>jdbc:h2:~/db/footest-dev;AUTO_SERVER=TRUE</url>
+                    <url>jdbc:h2:~/db/footest-dev</url>
                     <referenceUrl>
                         hibernate:spring:com.etsmtl.codecrusade.entities?dialect=org.hibernate.dialect.H2Dialect
                     </referenceUrl>

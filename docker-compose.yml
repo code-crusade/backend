@@ -3,13 +3,46 @@ version: '2'
 services:
   mysql-service:
     image: mysql:latest
-    container_name: test-mysql
     ports:
     - 6603:3306
     env_file:
     - .env
     volumes:
     - /storage/docker/mysql-datadir:/var/lib/mysql
+  eureka-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./eureka-service
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-service:8282/eureka/
+    tty: false
+    ports:
+      - 8282:8282
+  config-server:
+    build:
+      dockerfile: Dockerfile
+      context: ./config-server
+    ports:
+      - 9999:9999
+    depends_on:
+    - eureka-service
+    environment:
+    - EUREKA_URI=http://eureka-service:8282/eureka
+  zuul-gateway:
+    build:
+      dockerfile: Dockerfile
+      context: ./zuul-gateway
+    ports:
+    - 8080:8080
+    depends_on:
+    - eureka-service
+    - config-server
+    environment:
+      - CONFIG_SERVER_URI=http://config-server:9999
+      - EUREKA_URI=http://eureka-service:8282/eureka
+    links:
+      - eureka-service
+      - codecrusade-service
   codecrusade-service:
     env_file:
     - .env
@@ -18,14 +51,14 @@ services:
       context: ./application
     depends_on:
     - mysql-service
+    - eureka-service
     ports:
-    - 8080:8080
+    - 8181:8181
     environment:
-    - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-service:3306
-  eureka:
-    image: netflixoss:eureka
-    environment:
-      eureka.client.serviceUrl.defaultZone: http://eureka:8070/eureka/
-    tty: false
-    ports:
-    - 8070:8070
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-service:3306/${MYSQL_DATABASE}
+      - CONFIG_SERVER_URI=http://config-server:9999
+      - EUREKA_URI=http://eureka-service:8282/eureka
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+
+

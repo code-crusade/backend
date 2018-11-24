@@ -1,0 +1,15 @@
+server:
+  port: 8181
+spring:
+  application:
+    name: codecrusade-application
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:9999}
+  liquibase:
+    change-log: classpath:db/main.xml
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8282/eureka}
