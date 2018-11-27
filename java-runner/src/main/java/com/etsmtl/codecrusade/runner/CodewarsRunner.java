@@ -9,9 +9,7 @@ import com.spotify.docker.client.LogStream;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.exceptions.ImageNotFoundException;
 import com.spotify.docker.client.exceptions.NotFoundException;
-import com.spotify.docker.client.messages.ContainerConfig;
-import com.spotify.docker.client.messages.ContainerCreation;
-import com.spotify.docker.client.messages.ExecCreation;
+import com.spotify.docker.client.messages.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -21,12 +19,12 @@ public class CodewarsRunner {
 
     // TODO: Add all languages supported by codewars-runner-cli
     public enum KnownLanguage {
-        C("c", "systems-runner", "criterion"),
-        CPLUSPLUS("cpp", "systems-runner", "igloo"),
-        CSHARP("csharp", "dotnet-runner", "nunit"),
-        JAVA("java", "java-runner", "junit"),
-        JAVASCRIPT("javascript", "node-runner", "cw-2"),
-        PYTHON3("python3", "python-runner", "cw-2"),
+        C("c", "codewars/systems-runner", "criterion"),
+        CPLUSPLUS("cpp", "codewars/systems-runner", "igloo"),
+        CSHARP("csharp", "codewars/dotnet-runner", "nunit"),
+        JAVA("java", "codewars/java-runner", "junit"),
+        JAVASCRIPT("javascript", "codewars/node-runner", "cw-2"),
+        PYTHON3("python3", "codewars/python-runner", "cw-2"),
         ;
 
         private final String runnerName;
@@ -70,8 +68,11 @@ public class CodewarsRunner {
         containerCommand.toArray(containerCommandArray);
 
         try {
+            final HostConfig hostConfig = HostConfig.builder().autoRemove(true).build();
             final ContainerConfig containerConfig = ContainerConfig.builder()
+                                                                   .hostConfig(hostConfig)
                                                                    .image(language.containerName)
+                                                                   .cmd("run")
                                                                    .build();
 
             ContainerCreation creation = docker.createContainer(containerConfig);
@@ -80,15 +81,21 @@ public class CodewarsRunner {
 
             final ExecCreation execCreation = docker.execCreate(
                     id, containerCommandArray,
+
                     DockerClient.ExecCreateParam.attachStdout(),
-                    DockerClient.ExecCreateParam.attachStderr());
-            final LogStream output = docker.execStart(execCreation.id());
+                    DockerClient.ExecCreateParam.attachStderr(),
+                    // Stdin must be attached or the socket might reset connection.
+                    //https://github.com/spotify/docker-client/issues/513#issuecomment-310731829
+                    DockerClient.ExecCreateParam.attachStdin()
+            );
 
-            docker.stopContainer(id, (int) timeout.getSeconds());
+            // TODO: Timeout for infinite loops and such
+            try (final LogStream stream = docker.execStart(execCreation.id())) {
+                System.out.println(docker.execInspect(execCreation.id()).toString());
 
-            final String execOutput = output.readFully();
+                return stream.readFully();
+            }
 
-            return execOutput;
         } catch (ImageNotFoundException e) {
             throw new MissingLanguageSupportException(language.runnerName, e);
         } catch (DockerException e) {
