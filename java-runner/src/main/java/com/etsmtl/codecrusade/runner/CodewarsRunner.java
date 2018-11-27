@@ -51,7 +51,8 @@ public class CodewarsRunner {
 
         ArrayList<String> containerCommand = new ArrayList<>();
 
-        containerCommand.add("node");
+        containerCommand.add("node"); // Argument 0 is always(?) considered the entry point
+
         containerCommand.add("run");
         containerCommand.add("-l");
         containerCommand.add(language.runnerName);
@@ -90,9 +91,7 @@ public class CodewarsRunner {
             // TODO: Timeout for infinite loops and such
             try (final LogStream stream = docker.execStart(execCreation.id())) {
                 System.out.println(docker.execInspect(execCreation.id()).toString());
-                String output = stream.readFully();
-                System.out.println("Output:" + output);
-                return output;
+                return stream.readFully();
             }
 
         } catch (ImageNotFoundException e) {

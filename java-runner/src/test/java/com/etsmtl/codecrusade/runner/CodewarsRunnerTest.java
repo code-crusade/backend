@@ -11,6 +11,11 @@ import static com.etsmtl.codecrusade.runner.ExecutionResult.ExecutionStatus.SUCC
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CodewarsRunnerTest {
+	private void passOrFail(String runnerOutput) {
+		Assert.assertTrue("Output must at least contain \"<PASSED::>\" or \"<FAILED::>\"",
+				runnerOutput.contains("<FAILED::>") || runnerOutput.contains("<PASSED::>"));
+	}
+
 	@Test
 	public void testRunJavascript() {
 		String code = "var a = 1;";
@@ -18,9 +23,9 @@ public class CodewarsRunnerTest {
 
 
 		String result = CodewarsRunner.runCode(CodewarsRunner.KnownLanguage.JAVASCRIPT, Duration.ofSeconds(10), code, test);
-		Assert.assertFalse(result, result.contains("exec failed"));
 
-		System.out.print(result);
+		System.out.println("Output:" + result);
+		passOrFail(result);
 	}
 
 	/*
