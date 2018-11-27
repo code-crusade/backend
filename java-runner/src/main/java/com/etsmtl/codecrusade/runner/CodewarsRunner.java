@@ -39,7 +39,7 @@ public class CodewarsRunner {
     }
 
     // Code and tests must be equivalent to full files
-    public static String runCode(KnownLanguage language, Duration timeout, String code, Optional<String> tests) {
+    public static String runCode(KnownLanguage language, Duration timeout, String code, String tests) {
         final DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
 
         try {
@@ -51,18 +51,17 @@ public class CodewarsRunner {
 
         ArrayList<String> containerCommand = new ArrayList<>();
 
+        containerCommand.add("node");
         containerCommand.add("run");
         containerCommand.add("-l");
         containerCommand.add(language.runnerName);
         containerCommand.add("-c");
         containerCommand.add(code);
 
-        tests.ifPresent(testFixtures -> {
-            containerCommand.add("-t");
-            containerCommand.add(language.testFormat);
-            containerCommand.add("-f");
-            containerCommand.add(testFixtures);
-        });
+        containerCommand.add("-t");
+        containerCommand.add(language.testFormat);
+        containerCommand.add("-f");
+        containerCommand.add(tests);
 
         String[] containerCommandArray = new String[containerCommand.size()];
         containerCommand.toArray(containerCommandArray);
@@ -72,7 +71,6 @@ public class CodewarsRunner {
             final ContainerConfig containerConfig = ContainerConfig.builder()
                                                                    .hostConfig(hostConfig)
                                                                    .image(language.containerName)
-                                                                   .cmd("run")
                                                                    .build();
 
             ContainerCreation creation = docker.createContainer(containerConfig);
@@ -92,8 +90,9 @@ public class CodewarsRunner {
             // TODO: Timeout for infinite loops and such
             try (final LogStream stream = docker.execStart(execCreation.id())) {
                 System.out.println(docker.execInspect(execCreation.id()).toString());
-
-                return stream.readFully();
+                String output = stream.readFully();
+                System.out.println("Output:" + output);
+                return output;
             }
 
         } catch (ImageNotFoundException e) {
