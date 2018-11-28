@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gabar (generated)" id="1543356874256-5">
+        <createTable tableName="assertion_result">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="assertion_resultPK"/>
+            </column>
+            <column name="items" type="CLOB"/>
+            <column name="passed" type="BOOLEAN"/>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="test_case_result_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-6">
+        <createTable tableName="reports">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="reportsPK"/>
+            </column>
+            <column name="executionTime" type="INT"/>
+            <column name="exitCode" type="INT"/>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="failed" type="INT"/>
+            <column name="passed" type="INT"/>
+            <column name="completed" type="BOOLEAN"/>
+            <column name="stderr" type="VARCHAR(255)"/>
+            <column name="stdout" type="VARCHAR(255)"/>
+            <column name="timedOut" type="BOOLEAN"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="exercise_id" type="INT"/>
+            <column name="submission_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-7">
+        <createTable tableName="test_case_result">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="test_case_resultPK"/>
+            </column>
+            <column name="passed" type="BOOLEAN"/>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="report_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-8">
+        <addColumn tableName="classGroup">
+            <column name="course" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-9">
+        <addForeignKeyConstraint baseColumnNames="report_id" baseTableName="test_case_result" constraintName="fk_report_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="reports" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-10">
+        <addForeignKeyConstraint baseColumnNames="test_case_result_id" baseTableName="assertion_result" constraintName="fk_test_case_result_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="test_case_result" validate="true"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-11">
+        <dropForeignKeyConstraint baseTableName="CODE_VALIDATION_RESULTS" constraintName="FK_TEST_ID"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-12">
+        <dropTable tableName="CODE_VALIDATION_RESULTS"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-13">
+        <dropTable tableName="TESTS"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-14">
+        <dropColumn columnName="CLASS" tableName="CLASSGROUP"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-1">
+        <dropForeignKeyConstraint baseTableName="functionParams" constraintName="fk_entryPoint_id"/>
+        <addForeignKeyConstraint baseColumnNames="entryPoint_id" baseTableName="functionParams" constraintName="fk_entryPoint_id" referencedColumnNames="id" referencedTableName="entryPoints"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-2">
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="testCase" constraintName="fk_exercise_id" referencedColumnNames="id" referencedTableName="exercise"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-3">
+        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="reports" constraintName="fk_submission_id" referencedColumnNames="id" referencedTableName="submission"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1543356874256-4">
+        <dropUniqueConstraint constraintName="UC_USERSUSERNAME_COL" tableName="users"/>
+        <addUniqueConstraint columnNames="username" constraintName="UC_USERSUSERNAME_COL" tableName="users"/>
+    </changeSet>
+</databaseChangeLog>

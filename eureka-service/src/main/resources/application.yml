@@ -9,3 +9,8 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8282/eureka}
+  instance:
+    # Prod should resolve with hostname
+    prefer-ip-address: true

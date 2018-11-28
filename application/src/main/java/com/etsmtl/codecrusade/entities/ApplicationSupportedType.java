@@ -5,21 +5,25 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum ApplicationSupportedType {
-	BOOLEAN("boolean"),
+	BOOLEAN("BOOLEAN"),
 
-	INT("int"),
+	INT("INT"),
 
-	FLOAT("float"),
+	FLOAT("FLOAT"),
 
-	STRING("string"),
+	STRING("STRING"),
 
-	BOOLEAN_("boolean[]"),
+	CHAR("CHAR"),
 
-	INT_("int[]"),
+	BOOLEAN_ARRAY("BOOLEAN_ARRAY"),
 
-	FLOAT_("float[]"),
+	INT_ARRAY("INT_ARRAY"),
 
-	STRING_("string[]");
+	FLOAT_ARRAY("FLOAT_ARRAY"),
+
+	STRING_ARRAY("STRING_ARRAY"),
+
+	CHAR_ARRAY("CHAR_ARRAY");
 
 	@Getter
 	private String value;

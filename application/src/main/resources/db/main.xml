@@ -1,5 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet author="gabar (generated)" id="1543028362388-1">
         <createSequence sequenceName="hibernate_sequence"/>
     </changeSet>
@@ -169,36 +172,59 @@
         <addUniqueConstraint columnNames="username" constraintName="UC_USERSUSERNAME_COL" tableName="users"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-18">
-        <addForeignKeyConstraint baseColumnNames="classGroup_id" baseTableName="student" constraintName="fk_classGroup_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="classGroup" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="classGroup_id" baseTableName="student"
+                                 constraintName="fk_classGroup_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="classGroup" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-19">
-        <addForeignKeyConstraint baseColumnNames="description_message_id" baseTableName="exercise" constraintName="fk_desc_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="description_message_id" baseTableName="exercise"
+                                 constraintName="fk_desc_message_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="key" referencedTableName="messages" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-20">
-        <addForeignKeyConstraint baseColumnNames="entrypoint_id" baseTableName="templates" constraintName="fk_entrypoint_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="entryPoints" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="entrypoint_id" baseTableName="templates"
+                                 constraintName="fk_entrypoint_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="entryPoints" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-21">
-        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="tests" constraintName="fk_exercise_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="exercise" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="tests" constraintName="fk_exercise_id"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+                                 referencedTableName="exercise" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-22">
-        <addForeignKeyConstraint baseColumnNames="message_id" baseTableName="localizations" constraintName="fk_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="message_id" baseTableName="localizations"
+                                 constraintName="fk_message_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="key" referencedTableName="messages" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-23">
-        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="code_validation_results" constraintName="fk_submission_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="submission" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="code_validation_results"
+                                 constraintName="fk_submission_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="submission" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-24">
-        <addForeignKeyConstraint baseColumnNames="exrecise_id" baseTableName="exercise" constraintName="fk_template_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="templates" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="exrecise_id" baseTableName="exercise" constraintName="fk_template_id"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+                                 referencedTableName="templates" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-25">
-        <addForeignKeyConstraint baseColumnNames="testCase_id" baseTableName="assertions" constraintName="fk_testCase_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="testCase" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="testCase_id" baseTableName="assertions"
+                                 constraintName="fk_testCase_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="testCase" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-26">
-        <addForeignKeyConstraint baseColumnNames="test_id" baseTableName="code_validation_results" constraintName="fk_test_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tests" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="test_id" baseTableName="code_validation_results"
+                                 constraintName="fk_test_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="tests" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-27">
-        <addForeignKeyConstraint baseColumnNames="title_message_id" baseTableName="exercise" constraintName="fk_title_message_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="key" referencedTableName="messages" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="title_message_id" baseTableName="exercise"
+                                 constraintName="fk_title_message_id" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="key" referencedTableName="messages" validate="true"/>
     </changeSet>
     <changeSet author="gabar (generated)" id="1543028362388-28">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="submission" constraintName="fk_user_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="submission" constraintName="fk_user_id"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+                                 referencedTableName="users" validate="true"/>
     </changeSet>
+    <include file="changelog/changelog-2018-11-27-2214.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

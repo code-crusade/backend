@@ -7,18 +7,18 @@ import javax.validation.ConstraintValidatorContext;
 
 public class SubmissionArgumentsValidator implements ConstraintValidator<SubmissionArgumentsValid, Submission> {
 
-	@Override
-	public void initialize(SubmissionArgumentsValid contactNumber) {
-	}
+    @Override
+    public void initialize(SubmissionArgumentsValid contactNumber) {
+    }
 
-	@Override
-	public boolean isValid(Submission submission, ConstraintValidatorContext cxt) {
-		return submission.getExercise() != null && submission.getProgram() != null
-				&& submission.getExercise().getSupportedLanguages() != null && submission.getExercise()
-																						 .getSupportedLanguages()
-																						 .contains(
-																								 submission.getProgram()
-																										   .getLanguage());
-	}
+    @Override
+    public boolean isValid(Submission submission, ConstraintValidatorContext cxt) {
+        return submission.getExercise() != null && submission.getExercise()
+                                                             .getSupportedLanguages() != null && submission.getExercise()
+                                                                                                           .getSupportedLanguages()
+                                                                                                           .contains(
+                                                                                                                   submission
+                                                                                                                           .getLanguage());
+    }
 
 }

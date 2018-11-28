@@ -1,5 +1,14 @@
 server:
-  port: 8080
+  port: 8443
+  ssl:
+    key-store: ${KEY_STORE_LOCATION:classpath:keystore/server.jks}
+    key-store-type: PKCS12
+    key-store-password: ${KEY_STORE_PASSWORD:secret}
+    key-alias: ${KEY_ALIAS:localhost}
+    key-password: secret
+    enabled: true
+  http2:
+    enabled: false
 
 spring:
   application:
@@ -7,8 +16,29 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://localhost:9999}
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            # TODO : we don'T have anything special so we will just regenerate one when officially released OR replace with encrypted values
+            client-id: 963216631039-kuup3bbd5miv7be0jp6ujrgc92ha3qru.apps.googleusercontent.com
+            client-secret: ye7xA5NOKZl7zIwddrp6cVt0
+            redirect-uri-template: ${OAUTH_REDIRECT_URI:https://localhost:8443/oauth2/redirect}
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8282/eureka}
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
+zuul:
+  routes:
+    app:
+      path: /app/**
+      url: ${WEB_CLIENT_URI:https://localhost:3000}
+    api:
+      path: /api/**
+      serviceId: codecrusade-application
+      stripPrefix: true

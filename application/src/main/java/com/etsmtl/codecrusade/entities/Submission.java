@@ -1,6 +1,5 @@
 package com.etsmtl.codecrusade.entities;
 
-import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.entities.security.Auditable;
 import com.etsmtl.codecrusade.entities.security.User;
 import com.etsmtl.codecrusade.entities.validation.SubmissionArgumentsValid;
@@ -21,9 +20,13 @@ public class Submission extends Auditable<String> {
 	@Setter(AccessLevel.NONE)
 	private Integer id;
 
-	@Embedded
+	@Column(name="code")
 	@NotNull
-	private SubmissionArgument program;
+	public String code;
+
+	@Column(name="language")
+	@NotNull
+	public String language;
 
 	@ManyToOne
 	@JoinColumn(name = "exercise_id", foreignKey = @ForeignKey(name = "fk_exercise_id"))
@@ -35,12 +38,4 @@ public class Submission extends Auditable<String> {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_id"))
 	@NotNull
 	private User user;
-
-	@Builder
-	public Submission(@NotNull SubmissionArgument program, @NotNull Exercise exercise, @NotNull User user) {
-		this.program = program;
-		this.exercise = exercise;
-		this.user = user;
-	}
-
 }

@@ -1,6 +1,8 @@
 package com.etsmtl.codecrusade.service;
 
-import com.etsmtl.codecrusade.entities.CodeValidationResults;
+import com.etsmtl.codecrusade.entities.Report;
+
+import java.util.Optional;
 
 public interface CodeValidationService {
 	/**
@@ -8,5 +10,5 @@ public interface CodeValidationService {
 	 * @param exerciseId
 	 * @return
 	 */
-	Iterable<CodeValidationResults> getAllResultsForExerciseAndSubmission(Integer exerciseId, Integer submissionId);
+	Optional<Report> getReportForExerciseAndSubmission(Integer exerciseId, Integer submissionId);
 }
