@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.configuration.*;
 import com.etsmtl.codecrusade.entities.*;
 import com.etsmtl.codecrusade.entities.EntryPoint;
 import com.etsmtl.codecrusade.entities.Template;
+import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
 import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.entities.security.Auditable;
 import com.etsmtl.codecrusade.entities.security.User;
@@ -69,8 +70,8 @@ public class ApplicationConfiguration {
                    .addMapping(Submission::getId, ExerciseSubmission::setId)
                    .addMapping(src -> src.getUser().getId(), ExerciseSubmission::setUserId)
                    .addMapping(Auditable::getCreationDate, ExerciseSubmission::setCreatedAt)
-                   .addMapping(src -> src.getProgram().getLanguage(), ExerciseSubmission::setLanguage)
-                   .addMapping(src -> src.getProgram().getCode(), ExerciseSubmission::setCode);
+                   .addMapping(Submission::getLanguage, ExerciseSubmission::setLanguage)
+                   .addMapping(Submission::getCode, ExerciseSubmission::setCode);
 
         // Convert ApplicationSupportedType -> SupportedType
         modelMapper.createTypeMap(ApplicationSupportedType.class, SupportedType.class).setConverter(context -> {
@@ -97,11 +98,7 @@ public class ApplicationConfiguration {
         modelMapper.createTypeMap(RunnerArguments.class, SubmissionArgument.class);
 
         // Convert CodeValidationReportResults -> CodeValidationReportResults
-        modelMapper.createTypeMap(CodeValidationResults.class, CodeValidationReportResults.class)
-                   .addMapping(src -> src.getTest().getInputParameters(),
-                           CodeValidationReportResults::setInputParameters)
-                   .addMapping(src -> src.getTest().getExpectedOutput(),
-                           CodeValidationReportResults::setExpectedOutput);
+        modelMapper.createTypeMap(ReportResult.class, CodeValidationReportResult.class);
 
         // Convert Template entity -> Template model
         modelMapper.createTypeMap(Template.class, com.etsmtl.codecrusade.model.Template.class).setConverter(context -> {
@@ -138,8 +135,7 @@ public class ApplicationConfiguration {
         });
 
         modelMapper.createTypeMap(Group.class, ClassGroup.class);
-        modelMapper.createTypeMap(ClassGroup.class, Group.class)
-                   .addMappings(mapper -> mapper.skip(Group::setStudentsIds));
+        modelMapper.createTypeMap(ClassGroup.class, Group.class);
         modelMapper.createTypeMap(Semester.class, Semesters.class)
                    .setConverter(context -> Semesters.fromValue(context.getSource().getValue()));
         // we have to rely on this since there is no getter generated
@@ -154,6 +150,7 @@ public class ApplicationConfiguration {
         modelMapper.createTypeMap(com.etsmtl.codecrusade.model.User.class, User.class)
                    .addMapping(com.etsmtl.codecrusade.model.User::getEmail, User::setUsername)
                    .addMappings(mapper -> mapper.skip(User::setRoles));
+        modelMapper.createTypeMap(Report.class, CodeValidationReport.class);
         return modelMapper;
     }
 }

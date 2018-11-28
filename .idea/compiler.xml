@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="application" />
-        <module name="cas-overlay" />
         <module name="codecrusade-api" />
         <module name="commons" />
         <module name="config-server" />

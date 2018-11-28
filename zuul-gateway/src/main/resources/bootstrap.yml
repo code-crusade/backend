@@ -1,0 +1,9 @@
+# Todo : make this dev-profile specific and disable in prod
+#debug: true
+#                     trace: true
+#                     logging:
+#                       level:
+#                         org:
+#                           springframework:
+#                             cloud:
+#                               netflix: trace

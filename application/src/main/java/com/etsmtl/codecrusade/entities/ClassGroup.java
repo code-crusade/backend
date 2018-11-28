@@ -27,8 +27,8 @@ public class ClassGroup {
 	@Column(name = "groupNumber")
 	private Integer groupNumber;
 
-	@Column(name = "class")
-	private String propertyClass;
+	@Column(name = "course")
+	private String course;
 
 	@Enumerated(EnumType.STRING)
 	private Semester semester;

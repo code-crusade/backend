@@ -15,4 +15,6 @@ public class SubmissionArgument implements Serializable {
 	private String code;
 	@Column(name = "language")
 	private String language;
+	@Column(name = "fixture")
+    private String fixture;
 }
