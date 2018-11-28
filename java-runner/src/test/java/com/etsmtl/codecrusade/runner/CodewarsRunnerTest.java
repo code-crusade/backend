@@ -39,7 +39,7 @@ public class CodewarsRunnerTest {
 		passOrFail(result);
 	}
 
-	/*
+
 	@Test
 	public void testRunJava() {
 		String code = 	"public class Foo {" +
@@ -53,5 +53,5 @@ public class CodewarsRunnerTest {
 
 		System.out.print(result);
 	}
-	*/
+
 }

@@ -24,7 +24,7 @@
       <module name="commons" target="11" />
       <module name="config-server" target="11" />
       <module name="eureka-service" target="11" />
-      <module name="java-runner" target="11" />
+      <module name="java-runner" target="10" />
       <module name="zuul-gateway" target="1.8" />
     </bytecodeTargetLevel>
   </component>
