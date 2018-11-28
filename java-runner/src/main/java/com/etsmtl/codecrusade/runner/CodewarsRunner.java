@@ -43,29 +43,6 @@ public class CodewarsRunner {
         }
     }
 
-    public static String runCode(KnownLanguage language, String code, String tests) {
-        Runtime rt = Runtime.getRuntime();
-
-        try {
-            Process p = rt.exec(String.format("docker run --rm %s run -l %s -c \"%s\" -t %s -f \"%s\"",
-                    language.containerName, language.runnerName, code, language.testFormat, tests));
-
-            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            List<String> results = new ArrayList<>();
-
-            while ((line = input.readLine()) != null) {
-                results.add(line);
-            }
-
-            return results.get(0);
-
-        } catch (IOException e) {
-
-        }
-        return "";
-    }
-
     // Code and tests must be equivalent to full files
     public static String runCode(KnownLanguage language, Duration timeout, String code, String tests) {
         final DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
