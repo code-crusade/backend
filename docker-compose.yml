@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
       context: ./eureka-service
     environment:
-      - eureka.client.serviceUrl.defaultZone=http://eureka-service:8282/eureka/
+      - EUREKA_URI=http://eureka-service:8282/eureka/
     tty: false
     ports:
       - 8282:8282
@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile
       context: ./zuul-gateway
     ports:
-    - 8080:8080
+    - 8443:8443
     depends_on:
     - eureka-service
     - config-server

@@ -428,29 +428,116 @@ components:
         language:
           description: language
           type: string
+        fixture:
+          description: fixture
+          type: string
       example:
         language: js
-        code: 'function main() { console.log(''Hello World''); }'
+        code: 'function dateNbDays(a0, a, p) {
+              	// your code
+                return "2016-11-22";
+                }'
+        fixture: 'function testing(actual, expected) {
+                 	Test.assertEquals(actual, expected)
+                 }
+
+                 Test.describe("dateNbDays",function() {
+                   Test.it("Basic tests",function() {
+                   testing(dateNbDays(4281, 5087, 2), "2024-07-03");
+                   testing(dateNbDays(4620, 5188, 2), "2021-09-19");
+                   testing(dateNbDays(9999, 11427, 6), "2018-03-13");
+                   testing(dateNbDays(3525, 4822, 3), "2026-04-18");
+                   testing(dateNbDays(5923, 6465, 6), "2017-06-10");
+                   testing(dateNbDays(4254, 4761, 8), "2017-05-22");
+                   testing(dateNbDays(1244, 2566, 4), "2033-11-04");
+                   testing(dateNbDays(6328, 7517, 5), "2019-05-25");
+                   testing(dateNbDays(2920, 3834, 2), "2029-06-03");
+                   testing(dateNbDays(7792, 8987, 4), "2019-07-09");
+                   })})'
     CodeValidationReport:
       type: object
       properties:
         exerciseId:
           type: integer
-        results:
+        exitCode:
+          type: integer
+        message:
+          type: string
+        result:
+          type: object
+          properties:
+            assertions:
+              type: object
+              properties:
+                passed:
+                  type: integer
+                failed:
+                  type: integer
+            completed:
+              type: boolean
+            output:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestCaseResult'
+          required:
+          - assertions
+          - completed
+          - output
+        stderr:
+          type: string
+        stdout:
+          type: string
+        timedOut:
+          type: boolean
+        token:
+          type: string
+        executionTime:
+          type: integer
+      required:
+      - exerciseId
+      - exitCode
+      - message
+      - result
+      - stderr
+      - stdout
+      - timedOut
+      - token
+      - executionTime
+    TestCaseResult:
+      type: object
+      properties:
+        passed:
+          type: boolean
+        text:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssertionResult'
+      required:
+      - text
+      - passed
+      - items
+    AssertionResult:
+      type: object
+      properties:
+        passed:
+          type: boolean
+        text:
+          type: string
+        items:
           type: array
           items:
             type: object
             properties:
-              testName:
-                type: string
               passed:
                 type: boolean
-              inputParameters:
-                type: array
-                items: {}
-              expectedOutput: {}
-              actualOutput: {}
-
+              message:
+                type: string
+      required:
+      - text
+      - passed
+      - items
     RFC7807Body:
       type: object
       properties:
@@ -520,9 +607,7 @@ components:
         code:
           type: string
         language:
-          $ref: '#/components/schemas/'
-        #validationReport:
-        #  $ref: '#/components/schemas/CodeValidationReport'
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -687,28 +772,22 @@ components:
           readOnly: true
         groupNumber:
           type: integer
-        class:
+        course:
           type: string
         semester:
           $ref: '#/components/schemas/Semesters'
         year:
           type: number
         students:
-          readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/Student'
-        students_ids:
-          writeOnly: true
-          type: array
-          items:
-            type: integer
         archived:
           type: boolean
       required:
       - id
       - groupNumber
-      - class
+      - course
       - semester
       - year
       - students
