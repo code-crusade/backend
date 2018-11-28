@@ -1,5 +1,6 @@
 package com.etsmtl.codecrusade.runner;
 
+import com.etsmtl.codecrusade.runner.codewars.CodewarsCliRunner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

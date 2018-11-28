@@ -1,4 +1,4 @@
-package com.etsmtl.codecrusade.runner;
+package com.etsmtl.codecrusade.runner.codewars;
 
 import com.etsmtl.codecrusade.runner.exceptions.AbnormalRunnerExitException;
 import com.etsmtl.codecrusade.runner.exceptions.IncorrectRunnerEnvironmentException;

@@ -1,5 +1,7 @@
 package com.etsmtl.codecrusade.runner;
 
+import java.util.List;
+
 public interface RunnerResult {
 
     enum Status {
@@ -13,6 +15,8 @@ public interface RunnerResult {
     String getOutput();
 
     Status getStatus();
+
+    List<RunnerResultItem> getItems();
 
     default boolean isError() {
         return Status.ERROR.equals(this.getStatus());

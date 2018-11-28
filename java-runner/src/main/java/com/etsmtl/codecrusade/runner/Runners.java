@@ -1,5 +1,7 @@
 package com.etsmtl.codecrusade.runner;
 
+import com.etsmtl.codecrusade.runner.codewars.CodewarsCliRunner;
+
 public final class Runners {
 
     private Runners() {}
