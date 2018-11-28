@@ -13,3 +13,8 @@ services:
 before_install:
   - chmod +x mvnw
   - docker pull oracle/graalvm-ce:1.0.0-rc8
+  - docker pull codewars/systems-runner
+  - docker pull codewars/dotnet-runner
+  - docker pull codewars/java-runner
+  - docker pull codewars/node-runner
+  - docker pull codewars/python-runner

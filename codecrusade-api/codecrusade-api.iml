@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated/src/main/java" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/java" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/.openapi-generator" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-generator/target" />
       <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-parent/codecrusade-api/target" />
       <excludeFolder url="file://$MODULE_DIR$/../codecrusade-api-parent/target" />

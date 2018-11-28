@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CodewarsCliRunner implements Runner {
 
@@ -66,7 +66,7 @@ public class CodewarsCliRunner implements Runner {
             while ((line = input.readLine()) != null) {
                 results.add(line);
             }
-            return new CodewarsCliRunnerResult(results.get(0), 0 , RunnerResult.Status.SUCCESS);
+            return new CodewarsCliRunnerResult(results.stream().collect(Collectors.joining("\n")), 0 , RunnerResult.Status.SUCCESS);
 
         } catch (IOException e) {
             return new CodewarsCliRunnerResult("Error: Failed to run cli. " + e, -1, RunnerResult.Status.ERROR);

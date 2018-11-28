@@ -66,7 +66,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <generatorName>spring</generatorName>
-                    <inputSpec>code-crusade-openapi.yml</inputSpec>
+                    <inputSpec>${project.basedir}/code-crusade-openapi.yml</inputSpec>
                     <output>${project.build.directory}/generated-sources/</output>
                     <modelPackage>${project.groupId}.model</modelPackage>
                     <apiPackage>${project.groupId}.controllers</apiPackage>
