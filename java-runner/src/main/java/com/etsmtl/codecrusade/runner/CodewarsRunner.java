@@ -8,12 +8,17 @@ import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.LogStream;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.exceptions.ImageNotFoundException;
-import com.spotify.docker.client.exceptions.NotFoundException;
-import com.spotify.docker.client.messages.*;
+import com.spotify.docker.client.messages.ContainerConfig;
+import com.spotify.docker.client.messages.ContainerCreation;
+import com.spotify.docker.client.messages.ExecCreation;
+import com.spotify.docker.client.messages.HostConfig;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public class CodewarsRunner {
 
@@ -36,6 +41,29 @@ public class CodewarsRunner {
             this.containerName = containerName;
             this.testFormat = testFormat;
         }
+    }
+
+    public static String runCode(KnownLanguage language, String code, String tests) {
+        Runtime rt = Runtime.getRuntime();
+
+        try {
+            Process p = rt.exec(String.format("docker run --rm %s run -l %s -c \"%s\" -t %s -f \"%s\"",
+                    language.containerName, language.runnerName, code, language.testFormat, tests));
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            List<String> results = new ArrayList<>();
+
+            while ((line = input.readLine()) != null) {
+                results.add(line);
+            }
+
+            return results.get(0);
+
+        } catch (IOException e) {
+
+        }
+        return "";
     }
 
     // Code and tests must be equivalent to full files
