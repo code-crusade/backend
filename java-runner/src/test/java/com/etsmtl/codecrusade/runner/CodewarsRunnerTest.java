@@ -28,6 +28,17 @@ public class CodewarsRunnerTest {
 		passOrFail(result);
 	}
 
+	@Test
+	public void testJavascriptCli() {
+		String code = "var a = 1;";
+		String test = "Test.assertEquals(a, 1)";
+
+		String result = CodewarsRunner.runCode(CodewarsRunner.KnownLanguage.JAVASCRIPT, code, test);
+
+		System.out.println("Output:" + result);
+		passOrFail(result);
+	}
+
 	/*
 	@Test
 	public void testRunJava() {
