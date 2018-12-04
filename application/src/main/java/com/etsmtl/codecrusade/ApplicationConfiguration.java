@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 @Configuration
-@Import({WebConfig.class, AuditingConfig.class, I18nConfig.class})
+@Import({ProdConfig.class, DevConfig.class})
 public class ApplicationConfiguration {
     private static final String FR_CA = Locale.CANADA_FRENCH.toLanguageTag();
     private static final String EN_CA = Locale.CANADA.toLanguageTag();
@@ -34,6 +34,7 @@ public class ApplicationConfiguration {
     @Bean
     public ModelMapper modelMapper(ClassGroupRepository groupRepository) {
         ModelMapper modelMapper = new ModelMapper();
+        // TODO: hide exercise fixtures
         // Convert Exercise entity -> Exercise Model
         modelMapper.createTypeMap(com.etsmtl.codecrusade.entities.Exercise.class, Exercise.class)
                    .setConverter(context -> {
@@ -141,7 +142,8 @@ public class ApplicationConfiguration {
         modelMapper.createTypeMap(ApplicationTestCase.class, TestCase.class);
         modelMapper.createTypeMap(User.class, com.etsmtl.codecrusade.model.User.class);
         modelMapper.createTypeMap(com.etsmtl.codecrusade.model.User.class, User.class)
-                   .addMappings(mapper -> mapper.skip(User::setRoles));
+                   .addMappings(mapper -> mapper.skip(User::setAuthorities))
+                   .addMappings(mapper -> mapper.skip(User::setMemberships));
         modelMapper.createTypeMap(Report.class, CodeValidationReport.class);
         return modelMapper;
     }

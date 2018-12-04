@@ -9,12 +9,8 @@ import javax.persistence.*;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@DiscriminatorValue("user")
+@DiscriminatorValue("student")
+@EqualsAndHashCode(callSuper = true)
 public class Student extends User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(AccessLevel.NONE)
-	private Long id;
 }
