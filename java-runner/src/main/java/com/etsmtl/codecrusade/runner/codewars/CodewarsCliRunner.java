@@ -38,6 +38,7 @@ public class CodewarsCliRunner implements Runner {
                 .addArgument(String.format("\"%s\"", code.replaceAll("\"", "\\\"")), false)
                 .addArgument("-t")
                 .addArgument(lang.getTestFormat())
+                .addArgument("-f")
                 .addArgument(String.format("\"%s\"", test.replaceAll("\"", "\\\"")), false);
 
         DefaultExecutor executor = new DefaultExecutor();
@@ -45,7 +46,8 @@ public class CodewarsCliRunner implements Runner {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        executor.setStreamHandler(new PumpStreamHandler(out));
+        PumpStreamHandler streamHandler = new PumpStreamHandler(out);
+        executor.setStreamHandler(streamHandler);
 
         StopWatch watch = StopWatch.createStarted();
 

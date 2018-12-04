@@ -7,6 +7,7 @@ import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.model.*;
 import com.etsmtl.codecrusade.service.CodeValidationService;
 import com.etsmtl.codecrusade.service.ExerciseService;
+import com.etsmtl.codecrusade.service.RunnerService;
 import com.etsmtl.codecrusade.service.SubmissionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +31,21 @@ import static java.util.stream.Collectors.toList;
 @Controller
 public class ExercisesController implements ExercisesApi {
 
-    private final CodeValidationService codeValidationService;
+    private CodeValidationService codeValidationService;
+    private RunnerService runnerService;
     private SubmissionService submissionService;
     private ExerciseService exerciseService;
     private ModelMapper modelMapper;
 
     @Autowired
     public ExercisesController(ExerciseService exerciseService, SubmissionService submissionService,
-                               CodeValidationService codeValidationService, ModelMapper modelMapper) {
+                               CodeValidationService codeValidationService, RunnerService runnerService,
+                               ModelMapper modelMapper) {
         this.exerciseService = exerciseService;
         this.submissionService = submissionService;
         this.modelMapper = modelMapper;
         this.codeValidationService = codeValidationService;
+        this.runnerService = runnerService;
     }
 
     @Override
@@ -105,7 +109,10 @@ public class ExercisesController implements ExercisesApi {
     @Override
     public ResponseEntity<CodeValidationReport> exercisesExerciseIdTestPost(Integer exerciseId,
                                                                             @Valid RunnerArguments runnerArguments) {
-        return null;
+        return runnerService.runCodeForExercise(exerciseId, convertToEntity(runnerArguments))
+                            .map(this::convertToDto)
+                            .map(ResponseEntity::ok)
+                            .orElseGet(() -> ResponseEntity.ok().build());
     }
 
     @Override
