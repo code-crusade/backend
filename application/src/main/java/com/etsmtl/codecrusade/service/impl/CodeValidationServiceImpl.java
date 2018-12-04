@@ -5,6 +5,7 @@ import com.etsmtl.codecrusade.repository.ReportRepository;
 import com.etsmtl.codecrusade.service.CodeValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class CodeValidationServiceImpl implements CodeValidationService {
 		this.reportRepository = codeValidationResultsRepository;
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public Optional<Report> getReportForExerciseAndSubmission(Integer exerciseId,
 																  Integer submissionId) {

@@ -224,7 +224,7 @@
         <dependency>
             <groupId>com.etsmtl.codecrusade</groupId>
             <artifactId>codecrusade-api</artifactId>
-            <version>v1.0.1</version>
+            <version>v1.0.2</version>
             <scope>compile</scope>
             <classifier>dep</classifier>
         </dependency>
@@ -236,6 +236,29 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <!-- ACL and cache support -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.11</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -345,7 +368,7 @@
                 <version>3.6.2</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/main.xml</changeLogFile>
-                    <url>jdbc:h2:~/db/footest-dev</url>
+                    <url>jdbc:h2:~/db/codecrusade-dev;MODE=MYSQL</url>
                     <referenceUrl>
                         hibernate:spring:com.etsmtl.codecrusade.entities?dialect=org.hibernate.dialect.H2Dialect
                     </referenceUrl>

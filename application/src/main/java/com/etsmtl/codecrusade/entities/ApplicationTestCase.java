@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,7 @@ public class ApplicationTestCase {
 	private Integer id;
 
 	@Column(name = "test_it")
+	@Size(max = 50)
 	private String it;
 
 	@OneToMany

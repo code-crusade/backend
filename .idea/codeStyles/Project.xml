@@ -25,6 +25,7 @@
       </formatting-settings>
     </DBN-SQL>
     <JavaCodeStyleSettings>
+      <option name="ANNOTATION_PARAMETER_WRAP" value="5" />
       <option name="ALIGN_MULTILINE_ANNOTATION_PARAMETERS" value="true" />
     </JavaCodeStyleSettings>
     <DBN-PSQL>

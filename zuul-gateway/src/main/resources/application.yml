@@ -16,15 +16,14 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://localhost:9999}
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            # TODO : we don'T have anything special so we will just regenerate one when officially released OR replace with encrypted values
-            client-id: 963216631039-kuup3bbd5miv7be0jp6ujrgc92ha3qru.apps.googleusercontent.com
-            client-secret: ye7xA5NOKZl7zIwddrp6cVt0
-            redirect-uri-template: ${OAUTH_REDIRECT_URI:https://localhost:8443/oauth2/redirect}
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 963216631039-kuup3bbd5miv7be0jp6ujrgc92ha3qru.apps.googleusercontent.com
+#            client-secret: ye7xA5NOKZl7zIwddrp6cVt0
+#            redirect-uri-template: ${OAUTH_REDIRECT_URI:https://localhost:8443/oauth2/redirect}
 eureka:
   client:
     serviceUrl:
@@ -34,11 +33,22 @@ eureka:
   instance:
     preferIpAddress: true
 zuul:
+  # This means authorization is passthrough
+  sensitive-headers: Cookie,Set-Cookie
   routes:
     app:
       path: /app/**
-      url: ${WEB_CLIENT_URI:https://localhost:3000}
+      url: ${WEB_CLIENT_URI:http://localhost:3000}
     api:
       path: /api/**
       serviceId: codecrusade-application
       stripPrefix: true
+
+google:
+  # TODO : we don'T have anything special so we will just regenerate one when officially released OR replace with encrypted values
+  clientId: 963216631039-kuup3bbd5miv7be0jp6ujrgc92ha3qru.apps.googleusercontent.com
+  clientSecret: ye7xA5NOKZl7zIwddrp6cVt0
+  accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+  userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+  redirectUri: ${OAUTH_REDIRECT_URI:https://localhost:8443/oauth2/redirect}
+  jwkUrl: https://www.googleapis.com/oauth2/v2/certs

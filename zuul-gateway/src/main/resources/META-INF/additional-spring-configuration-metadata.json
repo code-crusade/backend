@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "google.clientId",
+      "type": "java.lang.String",
+      "description": "Google client id"
+    },
+    {
+      "name": "google.clientSecret",
+      "type": "java.lang.String",
+      "description": "Client secret. Do try to encrypt it."
+    },
+    {
+      "name": "google.accessTokenUri",
+      "type": "java.lang.String",
+      "description": "URI for access tokens."
+    },
+    {
+      "name": "google.userAuthorizationUri",
+      "type": "java.lang.String",
+      "description": "User authorization uri."
+    },
+    {
+      "name": "google.redirectUri",
+      "type": "java.lang.String",
+      "description": "URI for redirection, as configured on the google app."
+    },
+    {
+      "name": "google.jwkUrl",
+      "type": "java.lang.String",
+      "description": "Uri for google certs."
+    }
+  ]
+}

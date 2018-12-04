@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "reports")
@@ -31,21 +32,25 @@ public class Report {
     private Integer exitCode;
 
     @Column(name = "message")
+    @Size(max = 500)
     private String message;
 
     @Embedded
     private ReportResult result;
 
     @Column(name = "stderr")
+    @Size(max = 5000)
     private String stderr;
 
     @Column(name = "stdout")
+    @Size(max = 5000)
     private String stdout;
 
     @Column(name = "timedOut")
     private Boolean timedOut;
 
     @Column(name = "token")
+    @Size(max = 5000)
     private String token;
 
     @Column(name = "executionTime")

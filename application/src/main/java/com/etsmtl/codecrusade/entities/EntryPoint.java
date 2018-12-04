@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,8 @@ public class EntryPoint {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "className")
-	private String className;
-
 	@Column(name = "functionName")
+	@Size(max=50)
 	private String functionName;
 
 	@OneToMany

@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 @Configuration
-@Import({SecurityConfig.class, WebConfig.class, CASConfig.class, AuditingConfig.class, I18nConfig.class})
+@Import({WebConfig.class, AuditingConfig.class, I18nConfig.class})
 public class ApplicationConfiguration {
     private static final String FR_CA = Locale.CANADA_FRENCH.toLanguageTag();
     private static final String EN_CA = Locale.CANADA.toLanguageTag();
@@ -54,7 +54,7 @@ public class ApplicationConfiguration {
                                                                                                .orElse(null)))
                                             .difficulty(modelMapper.map(src.getDifficulty(), Difficulties.class))
                                             .id(src.getId())
-                                            .supportedLanguages(src.getSupportedLanguages())
+                                            .fixtures(modelMapper.map(src.getFixtures(), ExerciseFixtures.class))
                                             .template(modelMapper.map(src.getTemplate(),
                                                     com.etsmtl.codecrusade.model.Template.class))
                                             .sampleTestCases(src.getTestCases()
@@ -63,7 +63,6 @@ public class ApplicationConfiguration {
                                                                         TestCase.class))
                                                                 .collect(toList()));
                    });
-
         // Convert Submission -> ExerciseSubmission
         modelMapper.createTypeMap(Submission.class, ExerciseSubmission.class)
                    .addMapping(src -> src.getExercise().getId(), ExerciseSubmission::setExerciseId)
@@ -114,8 +113,6 @@ public class ApplicationConfiguration {
 
             return new com.etsmtl.codecrusade.model.Template().appendedCode(appends)
                                                               .prependedCode(prepends)
-                                                              .className(nullable(src.getEntryPoint()).map(
-                                                                      EntryPoint::getClassName).orElse(""))
                                                               .functionName(nullable(src.getEntryPoint()).map(
                                                                       EntryPoint::getFunctionName).orElse(""))
                                                               .params(nullable(src.getEntryPoint()).map(
@@ -130,8 +127,7 @@ public class ApplicationConfiguration {
                                                                                                    .orElse(emptyList()))
                                                               .functionReturnType(
                                                                       modelMapper.map(src.getFunctionReturnType(),
-                                                                              SupportedType.class))
-                                                              .functionReturnValue(src.getFunctionReturnValue());
+                                                                              SupportedType.class));
         });
 
         modelMapper.createTypeMap(Group.class, ClassGroup.class);
@@ -143,14 +139,11 @@ public class ApplicationConfiguration {
                    .setConverter(context -> Semester.fromValue(context.getSource().toString()));
         // Convert ApplicationTestCase -> TestCase
         modelMapper.createTypeMap(ApplicationTestCase.class, TestCase.class);
-        modelMapper.createTypeMap(User.class, com.etsmtl.codecrusade.model.User.class)
-                   .addMapping(User::getUsername, com.etsmtl.codecrusade.model.User::setEmail)
-                   .addMapping(src -> "UNMAPPED", com.etsmtl.codecrusade.model.User::setFirstName)
-                   .addMapping(src -> "UNMAPPED", com.etsmtl.codecrusade.model.User::setLastName);
+        modelMapper.createTypeMap(User.class, com.etsmtl.codecrusade.model.User.class);
         modelMapper.createTypeMap(com.etsmtl.codecrusade.model.User.class, User.class)
-                   .addMapping(com.etsmtl.codecrusade.model.User::getEmail, User::setUsername)
                    .addMappings(mapper -> mapper.skip(User::setRoles));
         modelMapper.createTypeMap(Report.class, CodeValidationReport.class);
         return modelMapper;
     }
+
 }

@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.embeddable.TemplateCodeId;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "templateCode")
@@ -19,8 +20,10 @@ public class TemplateCode {
     private Template template;
 
     @Column(name = "prependedCode")
+    @Size(max = 1000)
     private String prependedCode;
 
     @Column(name = "appendedCode")
+    @Size(max = 1000)
     private String appendedCode;
 }

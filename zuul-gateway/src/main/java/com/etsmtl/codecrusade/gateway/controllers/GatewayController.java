@@ -27,8 +27,14 @@ public class GatewayController {
         this.authorizedClientService = oAuth2AuthorizedClientService;
     }
 
-    @GetMapping("/")
-    public void redirectUrl(OAuth2AuthenticationToken authentication) {
+    @GetMapping("/oauth2/redirect")
+    public String redirectUrl(){
+        return "redirect:/app";
+    }
+
+
+    @GetMapping("/oauth2/login")
+    public String forceLogin(OAuth2AuthenticationToken authentication) {
         OAuth2AuthorizedClient client = authorizedClientService
                 .loadAuthorizedClient(
                         authentication.getAuthorizedClientRegistrationId(),
@@ -44,7 +50,7 @@ public class GatewayController {
             HttpEntity entity = new HttpEntity("", headers);
             ResponseEntity<Map> response = restTemplate.exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
             Map userAttributes = response.getBody();
-            log.info("Successful redirect for : " + userAttributes.get("name") + " with email " + userAttributes.get("email"));
         }
+        return "redirect:/app";
     }
 }

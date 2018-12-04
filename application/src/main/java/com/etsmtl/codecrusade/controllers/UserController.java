@@ -1,6 +1,9 @@
 package com.etsmtl.codecrusade.controllers;
 
+import com.etsmtl.codecrusade.entities.Report;
+import com.etsmtl.codecrusade.model.CodeValidationReport;
 import com.etsmtl.codecrusade.model.User;
+import com.etsmtl.codecrusade.service.ReportService;
 import com.etsmtl.codecrusade.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,21 @@ import static java.util.stream.Collectors.toList;
 @Controller
 public class UserController implements UsersApi {
 
+    private ReportService reportService;
     private ModelMapper modelMapper;
     private UserService userService;
 
+    @Override
+    public ResponseEntity<List<CodeValidationReport>> userReportsRead(Integer userId) {
+        return ResponseEntity.ok(StreamSupport.stream(reportService.findAllReportsForUser(userId).spliterator(), false)
+                                              .map(this::convertToDto)
+                                              .collect(toList()));
+    }
+
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ReportService reportService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.reportService = reportService;
         this.modelMapper = modelMapper;
     }
 
@@ -57,5 +69,9 @@ public class UserController implements UsersApi {
 
     private com.etsmtl.codecrusade.entities.security.User convertToEntity(User dto) {
         return modelMapper.map(dto, com.etsmtl.codecrusade.entities.security.User.class);
+    }
+
+    private CodeValidationReport convertToDto(Report report) {
+        return modelMapper.map(report, CodeValidationReport.class);
     }
 }

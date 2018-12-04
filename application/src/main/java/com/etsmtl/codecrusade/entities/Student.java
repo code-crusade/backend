@@ -1,23 +1,20 @@
 package com.etsmtl.codecrusade.entities;
 
+import com.etsmtl.codecrusade.entities.security.User;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
-@Table(name="student")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+@DiscriminatorValue("user")
+public class Student extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(AccessLevel.NONE)
 	private Long id;
-
-	@Email
-	private String email;
 }

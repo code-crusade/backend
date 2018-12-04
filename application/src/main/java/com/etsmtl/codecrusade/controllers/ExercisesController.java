@@ -60,7 +60,7 @@ public class ExercisesController implements ExercisesApi {
     public ResponseEntity<ExerciseSubmission> exercisesExerciseIdSubmissionsSubmissionIdGet(Integer exerciseId,
                                                                                             Integer submissionId) {
         if (exerciseId != null && submissionId != null) {
-            return submissionService.getSubmissionByExercise(exerciseId, submissionId)
+            return submissionService.getSubmissionByExerciseForAuthenticatedUser(exerciseId, submissionId)
                                     .map(this::convertToEntity)
                                     .map(ResponseEntity::ok)
                                     .orElse(ResponseEntity.notFound().build());

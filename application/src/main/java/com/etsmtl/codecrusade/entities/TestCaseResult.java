@@ -3,6 +3,7 @@ package com.etsmtl.codecrusade.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class TestCaseResult {
     private Boolean passed;
 
     @Column(name = "text")
+    @Size(max = 500)
     private String text;
 
     @OneToMany

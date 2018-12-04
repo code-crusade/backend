@@ -14,11 +14,10 @@ public class SubmissionArgumentsValidator implements ConstraintValidator<Submiss
     @Override
     public boolean isValid(Submission submission, ConstraintValidatorContext cxt) {
         return submission.getExercise() != null && submission.getExercise()
-                                                             .getSupportedLanguages() != null && submission.getExercise()
-                                                                                                           .getSupportedLanguages()
-                                                                                                           .contains(
-                                                                                                                   submission
-                                                                                                                           .getLanguage());
+                                                             .getFixtures() != null && submission.getExercise()
+                                                                                                 .getFixtures()
+                                                                                                 .containsKey(submission
+                                                                                                         .getLanguage());
     }
 
 }

@@ -2,7 +2,8 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
     <changeSet author="gabar (generated)" id="1543028362388-1">
         <createSequence sequenceName="hibernate_sequence"/>
     </changeSet>
@@ -227,4 +228,5 @@
                                  referencedTableName="users" validate="true"/>
     </changeSet>
     <include file="changelog/changelog-2018-11-27-2214.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/acl.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

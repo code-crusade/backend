@@ -1,18 +1,22 @@
 package com.etsmtl.codecrusade.service;
 
 import com.etsmtl.codecrusade.entities.Submission;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.Optional;
 
 public interface SubmissionService {
 	/**
-	 * Finds submission by exercise id and submission id
+	 * Finds submission by exercise id and submission id for authenticated user.
 	 *
 	 * @param exerciseId   the exercise id
 	 * @param submissionId the submission id
 	 * @return an Optional submission
 	 */
-	Optional<Submission> getSubmissionByExercise(Integer exerciseId, Integer submissionId);
+	@PostAuthorize("hasPermission(returnObject, 'READ')")
+	Optional<Submission> getSubmissionByExerciseForAuthenticatedUser(Integer exerciseId, Integer submissionId);
 
 	/**
 	 * Finds all submissions by exercise id.
@@ -20,6 +24,7 @@ public interface SubmissionService {
 	 * @param exerciseId the exercise id
 	 * @return an Iterable of Submissions
 	 */
+	@PostFilter("hasRole('ADMIN') or hasPermission(filterObject, 'READ')")
 	Iterable<Submission> getAllSubmissionsByExercise(Integer exerciseId);
 
 	/**
@@ -31,6 +36,7 @@ public interface SubmissionService {
 	 * @throws UserNotAllowedException
 	 * @throws ExerciseService.ExerciseNotFoundException
 	 */
+	@PreAuthorize("hasRole('USER')")
 	Optional<Submission> createSubmissionForExercise(Integer exerciseId, Submission submission)
 			throws UserNotAllowedException, ExerciseService.ExerciseNotFoundException;
 

@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.converters.ObjectListAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,11 @@ public class AssertionResult {
     @Column(name = "passed")
     private Boolean passed;
 
-    @Column(name="text")
+    @Column(name = "text")
+    @Size(max = 500)
     private String text;
 
-    @Column(name="items")
+    @Column(name = "items")
     @Convert(converter = ObjectListAttributeConverter.class)
     @Lob
     @Builder.Default

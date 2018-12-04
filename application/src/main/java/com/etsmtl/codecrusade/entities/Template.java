@@ -1,6 +1,5 @@
 package com.etsmtl.codecrusade.entities;
 
-import com.etsmtl.codecrusade.entities.converters.ObjectAttributeConverter;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -23,10 +22,6 @@ public class Template {
 	@JoinColumn(name = "entrypoint_id",
 				foreignKey = @ForeignKey(name = "fk_entrypoint_id"))
 	private EntryPoint entryPoint;
-
-	@Column(name = "functionReturnValue")
-	@Convert(converter = ObjectAttributeConverter.class)
-	private Object functionReturnValue;
 
 	@Column(name = "returnType")
 	@Enumerated(EnumType.STRING)

@@ -1,0 +1,161 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+        objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <!-- Adapted from https://gist.github.com/wwerner/d6cd9688cb2f5738ccd6b2e72dca8bfa -->
+    <changeSet id="1" author="gabar">
+        <comment>Spring Security Authentication - Users, Authorities and ACLs</comment>
+        <comment>For the initial schema definition see
+            https://docs.spring.io/spring-security/site/docs/current/reference/html/appendix-schema.html
+        </comment>
+        <createTable tableName="user_authority">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey constraintName="pk-user_authority" tableName="user_authority" columnNames="user_id,authority"/>
+        <addForeignKeyConstraint constraintName="fk-user_authority-user" baseTableName="user_authority"
+                                 baseColumnNames="user_id" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+        <createIndex tableName="user_authority" indexName="ix-user_authority-user_name">
+            <column name="user_id"/>
+            <column name="authority"/>
+        </createIndex>
+
+        <!-- Groups -->
+        <createTable tableName="group">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-group"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="group_authority">
+            <column name="group_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="group_authority" baseColumnNames="group_id"
+                                 constraintName="fk_group_authorities_group"
+                                 referencedColumnNames="id" referencedTableName="group"/>
+
+        <createTable tableName="group_member">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-group_member"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="group_member" baseColumnNames="group_id"
+                                 constraintName="fk-group_member-group" referencedTableName="group"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="group_member" baseColumnNames="user_id"
+                                 constraintName="fk-group_member-user" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
+        <!-- Remember me token omitted -->
+
+        <!-- ACLs -->
+        <createTable tableName="acl_sid">
+            <column name="id" type="bigint" autoIncrement="true" startWith="100" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-acl_sid-id" nullable="false"/>
+            </column>
+            <column name="principal" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sid" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="acl_sid" columnNames="sid,principal" constraintName="unique_uk_1"/>
+
+        <createTable tableName="acl_class">
+            <column name="id" type="bigint" autoIncrement="true" startWith="100" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-acl_class-id" nullable="false"/>
+            </column>
+            <column name="class" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="acl_class" columnNames="class" constraintName="unique_uk_2"/>
+
+        <createTable tableName="acl_object_identity">
+            <column name="id" type="bigint" autoIncrement="true" startWith="100" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-acl_object_identity-id" nullable="false"/>
+            </column>
+            <column name="object_id_class" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="object_id_identity" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_object" type="bigint"/>
+            <column name="owner_sid" type="bigint"/>
+            <column name="entries_inheriting" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="acl_object_identity" columnNames="object_id_class,object_id_identity"/>
+        <addForeignKeyConstraint baseTableName="acl_object_identity" baseColumnNames="parent_object"
+                                 constraintName="foreign_fk_1" referencedTableName="acl_object_identity"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="acl_object_identity" baseColumnNames="object_id_class"
+                                 constraintName="foreign_fk_2" referencedTableName="acl_class"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="acl_object_identity" baseColumnNames="owner_sid"
+                                 constraintName="foreign_fk_3" referencedTableName="acl_sid"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="acl_entry">
+            <column name="id" type="bigint" autoIncrement="true" startWith="100" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="pk-acl_enry-id" nullable="false"/>
+            </column>
+            <column name="acl_object_identity" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ace_order" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sid" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mask" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="granting" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="audit_success" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="audit_failure" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="acl_entry" columnNames="acl_object_identity,ace_order"/>
+        <addForeignKeyConstraint baseTableName="acl_entry" baseColumnNames="acl_object_identity"
+                                 constraintName="foreign_fk_4" referencedTableName="acl_object_identity"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="acl_entry" baseColumnNames="sid" constraintName="foreign_fk_5"
+                                 referencedTableName="acl_sid"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
