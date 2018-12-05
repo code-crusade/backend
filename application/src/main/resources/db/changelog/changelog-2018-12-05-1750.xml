@@ -1,0 +1,184 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gabar (generated)" id="1544032223454-7">
+        <createTable tableName="exercise_fixtures">
+            <column name="exercise_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="fixture" type="VARCHAR(255)"/>
+            <column name="language" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-8">
+        <addColumn tableName="users">
+            <column name="classGroup_id" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-9">
+        <addColumn tableName="users">
+            <column name="email" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-10">
+        <addColumn tableName="exercise">
+            <column name="exercise_id" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-11">
+        <addColumn tableName="users">
+            <column name="firstName" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-12">
+        <addColumn tableName="users">
+            <column name="lastName" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-13">
+        <addColumn tableName="users">
+            <column name="user_type" type="varchar(31)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-14">
+        <addColumn tableName="assertion_result">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-15">
+        <addColumn tableName="assertions">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-16">
+        <addColumn tableName="classGroup">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-17">
+        <addColumn tableName="entryPoints">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-18">
+        <addColumn tableName="exercise">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-19">
+        <addColumn tableName="functionParams">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-20">
+        <addColumn tableName="group">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-21">
+        <addColumn tableName="group_authority">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-22">
+        <addColumn tableName="group_member">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-23">
+        <addColumn tableName="messages">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-24">
+        <addColumn tableName="reports">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-25">
+        <addColumn tableName="templateCode">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-26">
+        <addColumn tableName="templates">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-27">
+        <addColumn tableName="testCase">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-28">
+        <addColumn tableName="test_case_result">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-29">
+        <addColumn tableName="user_authority">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-30">
+        <addColumn tableName="users">
+            <column name="version" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1544032223454-30.5" author="gabar (manual)">
+        <dropPrimaryKey tableName="localizations"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-31">
+        <addPrimaryKey columnNames="message_id, locale" tableName="localizations"/>
+    </changeSet>
+    <!-- This comented out node was generated and it doesn't make sense -->
+    <!--<changeSet author="gabar (generated)" id="1544032223454-50">-->
+        <!--<addForeignKeyConstraint baseColumnNames="id" baseTableName="group_member" constraintName="FKju7d89p4jv8nvlojrrq308s37" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="group_member" validate="true"/>-->
+    <!--</changeSet>-->
+    <changeSet author="gabar (generated)" id="1544032223454-66">
+        <dropTable tableName="student"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-67">
+        <dropColumn columnName="classname" tableName="entrypoints"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-68">
+        <dropColumn columnName="exrecise_id" tableName="exercise"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-69">
+        <dropColumn columnName="functionreturnvalue" tableName="templates"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-70">
+        <dropColumn columnName="password" tableName="users"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-71">
+        <dropColumn columnName="roles" tableName="users"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-72">
+        <dropColumn columnName="supportedlanguages" tableName="exercise"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-73">
+        <dropColumn columnName="username" tableName="users"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-1">
+        <addForeignKeyConstraint baseColumnNames="classGroup_id" baseTableName="users" constraintName="fk_classGroup_id" referencedColumnNames="id" referencedTableName="classGroup"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-2">
+        <dropForeignKeyConstraint baseTableName="exercise_fixtures" constraintName="fk_exercise_id"/>
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="exercise_fixtures" constraintName="fk_exercise_id" referencedColumnNames="id" referencedTableName="exercise"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-3">
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="exercise" constraintName="fk_template_id" referencedColumnNames="id" referencedTableName="templates"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-4">
+        <dropNotNullConstraint columnDataType="bigint" columnName="group_id" tableName="group_member"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-5">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="name" tableName="group"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544032223454-6">
+        <dropNotNullConstraint columnDataType="int" columnName="user_id" tableName="group_member"/>
+    </changeSet>
+</databaseChangeLog>

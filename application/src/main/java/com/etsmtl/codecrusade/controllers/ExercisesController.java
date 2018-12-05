@@ -49,6 +49,11 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
+    public ResponseEntity<List<Fixture>> exercisesExerciseIdFixturesGet(Integer exerciseId) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<Exercise> exercisesExerciseIdGet(Integer exerciseId) {
         if (exerciseId != null) {
             return exerciseService.getExerciseFromId(exerciseId)

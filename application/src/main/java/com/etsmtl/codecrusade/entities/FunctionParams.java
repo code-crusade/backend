@@ -1,8 +1,6 @@
 package com.etsmtl.codecrusade.entities;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -11,6 +9,8 @@ import javax.validation.constraints.Size;
 @Table(name = "functionParams")
 @Getter
 @Setter
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 /**
  * TODO : make those embeddable
  */
@@ -19,7 +19,12 @@ public class FunctionParams {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @Column(name = "name")
     @Size(max = 50)

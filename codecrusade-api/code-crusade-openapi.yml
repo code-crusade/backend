@@ -114,6 +114,30 @@ paths:
           description: User is not allowed to post solutions for this exercise
         '404':
           description: Exercise does not exist
+  '/exercises/{exerciseId}/fixtures':
+    get:
+      summary: Gets all fixtures for an exercise
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fixture'
+        '401':
+          description: User must be logged in to see fixtures.
+        '403':
+          description: User is not allowed to see this exercises' fixtures.
+        '404':
+          description: Fixture sub-collection does not exist.
   '/exercises/{exerciseId}/test':
     post:
       summary: Validate the code against the user-provided test suite
@@ -527,20 +551,10 @@ components:
         template:
           $ref: '#/components/schemas/Template'
         fixtures:
-          type: object
-          properties:
-            cpp:
-              type: string
-              maxLength: 5000
-            python:
-              type: string
-              maxLength: 5000
-            java:
-              type: string
-              maxLength: 5000
-            javascript:
-              type: string
-              maxLength: 5000
+          writeOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Fixture'
         sampleTestCases:
           type: array
           items:
@@ -553,6 +567,21 @@ components:
       - template
       - fixtures
       - sampleTestCases
+    Fixture:
+      type: object
+      properties:
+        cpp:
+          type: string
+          maxLength: 5000
+        python:
+          type: string
+          maxLength: 5000
+        java:
+          type: string
+          maxLength: 5000
+        javascript:
+          type: string
+          maxLength: 5000
     ExerciseSubmission:
       type: object
       properties:

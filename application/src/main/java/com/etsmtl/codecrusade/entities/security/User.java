@@ -1,27 +1,33 @@
 package com.etsmtl.codecrusade.entities.security;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "user_type")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @Column(name = "firstName")
     @Size(max = 100)
@@ -37,8 +43,8 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk-user_authority-user"))
-    private Set<UserAuthority> authorities = new HashSet<>();
+    private List<UserAuthority> authorities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<GroupMember> memberships;
+    private List<GroupMember> memberships;
 }

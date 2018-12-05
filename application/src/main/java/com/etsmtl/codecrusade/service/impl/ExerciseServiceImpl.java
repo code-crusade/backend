@@ -8,7 +8,10 @@ import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.ObjectIdentityImpl;
 import org.springframework.security.acls.domain.PrincipalSid;
 import org.springframework.security.acls.jdbc.JdbcMutableAclService;
-import org.springframework.security.acls.model.*;
+import org.springframework.security.acls.model.MutableAcl;
+import org.springframework.security.acls.model.NotFoundException;
+import org.springframework.security.acls.model.ObjectIdentity;
+import org.springframework.security.acls.model.Sid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,5 +69,4 @@ public class ExerciseServiceImpl implements ExerciseService {
             return Optional.empty();
         }
     }
-
 }

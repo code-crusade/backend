@@ -12,11 +12,17 @@ import java.util.List;
 @Table(name = "classGroup")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ClassGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @OneToMany
     @JoinColumn(name = "classGroup_id",

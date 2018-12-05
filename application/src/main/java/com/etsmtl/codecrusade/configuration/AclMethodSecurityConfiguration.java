@@ -26,8 +26,6 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 
     @Autowired
     MethodSecurityExpressionHandler defaultMethodSecurityExpressionHandler;
-    @Autowired
-    DataSource dataSource;
 
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
@@ -36,19 +34,19 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 
     @Bean
     public MethodSecurityExpressionHandler
-    defaultMethodSecurityExpressionHandler() {
+    defaultMethodSecurityExpressionHandler(DataSource dataSource) {
         DefaultMethodSecurityExpressionHandler expressionHandler
                 = new DefaultMethodSecurityExpressionHandler();
         AclPermissionEvaluator permissionEvaluator
-                = new AclPermissionEvaluator(aclService());
+                = new AclPermissionEvaluator(aclService(dataSource));
         expressionHandler.setPermissionEvaluator(permissionEvaluator);
         return expressionHandler;
     }
 
     @Bean
-    public JdbcMutableAclService aclService() {
+    public JdbcMutableAclService aclService(DataSource dataSource) {
         return new JdbcMutableAclService(
-                dataSource, lookupStrategy(), aclCache());
+                dataSource, lookupStrategy(dataSource), aclCache());
     }
 
 
@@ -87,7 +85,7 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
     }
 
     @Bean
-    public LookupStrategy lookupStrategy() {
+    public LookupStrategy lookupStrategy(DataSource dataSource) {
         return new BasicLookupStrategy(
                 dataSource,
                 aclCache(),

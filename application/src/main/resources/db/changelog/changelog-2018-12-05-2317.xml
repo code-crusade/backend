@@ -1,0 +1,109 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gabar (generated)" id="1544051847266-2">
+        <addPrimaryKey columnNames="exercise_id, language" tableName="exercise_fixtures"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-3">
+        <addPrimaryKey columnNames="message_id, locale" tableName="localizations"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-4">
+        <addPrimaryKey columnNames="id" constraintName="assertion_resultPK" tableName="assertion_result"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-5">
+        <addPrimaryKey columnNames="id" constraintName="assertionsPK" tableName="assertions"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-6">
+        <addPrimaryKey columnNames="id" constraintName="classGroupPK" tableName="classGroup"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-7">
+        <addPrimaryKey columnNames="id" constraintName="entryPointsPK" tableName="entryPoints"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-8">
+        <addPrimaryKey columnNames="id" constraintName="exercisePK" tableName="exercise"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-9">
+        <addPrimaryKey columnNames="id" constraintName="functionParamsPK" tableName="functionParams"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-10">
+        <addPrimaryKey columnNames="id" constraintName="groupPK" tableName="group"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-11">
+        <addPrimaryKey columnNames="authority, group_id" constraintName="group_authorityPK" tableName="group_authority"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-12">
+        <addPrimaryKey columnNames="id" constraintName="group_memberPK" tableName="group_member"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-13">
+        <addPrimaryKey columnNames="key" constraintName="messagesPK" tableName="messages"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-14">
+        <addPrimaryKey columnNames="id" constraintName="reportsPK" tableName="reports"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-15">
+        <addPrimaryKey columnNames="id" constraintName="submissionPK" tableName="submission"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-16">
+        <addPrimaryKey columnNames="lang, template_id" constraintName="templateCodePK" tableName="templateCode"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-17">
+        <addPrimaryKey columnNames="id" constraintName="templatesPK" tableName="templates"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-18">
+        <addPrimaryKey columnNames="id" constraintName="testCasePK" tableName="testCase"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-19">
+        <addPrimaryKey columnNames="id" constraintName="test_case_resultPK" tableName="test_case_result"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-20">
+        <addPrimaryKey columnNames="authority, user_id" constraintName="user_authorityPK" tableName="user_authority"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-21">
+        <addPrimaryKey columnNames="id" constraintName="usersPK" tableName="users"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-22">
+        <dropForeignKeyConstraint baseTableName="acl_object_identity" constraintName="foreign_fk_1"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-23">
+        <dropForeignKeyConstraint baseTableName="acl_object_identity" constraintName="foreign_fk_2"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-24">
+        <dropForeignKeyConstraint baseTableName="acl_object_identity" constraintName="foreign_fk_3"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-25">
+        <dropForeignKeyConstraint baseTableName="acl_entry" constraintName="foreign_fk_4"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-26">
+        <dropForeignKeyConstraint baseTableName="acl_entry" constraintName="foreign_fk_5"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-27">
+        <dropUniqueConstraint constraintName="constraint_2" tableName="acl_object_identity"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-28">
+        <dropUniqueConstraint constraintName="constraint_5" tableName="acl_class"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-29">
+        <dropUniqueConstraint constraintName="constraint_53" tableName="acl_entry"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-30">
+        <dropUniqueConstraint constraintName="unique_uk_1" tableName="acl_sid"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-31">
+        <dropUniqueConstraint constraintName="unique_uk_2" tableName="acl_class"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-32">
+        <dropTable tableName="acl_class"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-33">
+        <dropTable tableName="acl_entry"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-34">
+        <dropTable tableName="acl_object_identity"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-35">
+        <dropTable tableName="acl_sid"/>
+    </changeSet>
+    <changeSet author="gabar (generated)" id="1544051847266-1">
+        <dropForeignKeyConstraint baseTableName="functionParams" constraintName="fk_entryPoint_id"/>
+        <addForeignKeyConstraint baseColumnNames="entryPoint_id" baseTableName="functionParams" constraintName="fk_entryPoint_id" referencedColumnNames="id" referencedTableName="entryPoints"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,9 +1,6 @@
 package com.etsmtl.codecrusade.entities;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -13,14 +10,19 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "entryPoints")
+@NoArgsConstructor
 public class EntryPoint {
 
 	@Id
 	@Setter(AccessLevel.NONE)
 	@GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
 	private Integer id;
+
+	@Version
+	@Setter(AccessLevel.NONE)
+	private Long version;
 
 	@Column(name = "functionName")
 	@Size(max=50)
@@ -34,4 +36,12 @@ public class EntryPoint {
 	@Enumerated(EnumType.STRING)
 	private ApplicationSupportedType returnType;
 
+	@Builder
+    public EntryPoint(@Size(max = 50) String functionName, List<FunctionParams> functionParams, ApplicationSupportedType returnType) {
+        this.id = id;
+        this.version = version;
+        this.functionName = functionName;
+        this.functionParams = functionParams;
+        this.returnType = returnType;
+    }
 }

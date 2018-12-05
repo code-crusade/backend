@@ -12,13 +12,19 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "exercise_id", foreignKey = @ForeignKey(name = "fk_exercise_id"))

@@ -8,11 +8,17 @@ import javax.persistence.*;
 @Table(name = "group_member")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class GroupMember {
 
     @Id
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Long id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "fk-group_member-group"))

@@ -1,22 +1,27 @@
 package com.etsmtl.codecrusade.entities.security;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "group")
 @Data
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Long id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @Column(name = "name")
     @NotNull
@@ -24,8 +29,8 @@ public class Group {
 
     @OneToMany
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "fk_group_authorities_group"))
-    private Set<GroupAuthority> groupAuthorities = new HashSet<>();
+    private List<GroupAuthority> groupAuthorities = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "group")
-    private Set<GroupMember> members;
+    @OneToMany(mappedBy = "group")
+    private List<GroupMember> members = new ArrayList<>();
 }

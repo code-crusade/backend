@@ -12,13 +12,20 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TestCaseResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @Column(name = "passed")
     private Boolean passed;

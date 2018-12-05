@@ -16,14 +16,20 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
 
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
+    @MessageTemplate("exercise.{id}.title")
     @OneToOne
     @JoinColumn(name = "title_message_id",
                 foreignKey = @ForeignKey(name = "fk_title_message_id"))
@@ -45,7 +51,7 @@ public class Exercise {
     private Map<String, String> fixtures;
 
     @OneToOne
-    @JoinColumn(name = "exrecise_id",
+    @JoinColumn(name = "exercise_id",
                 foreignKey = @ForeignKey(name = "fk_template_id"))
     private Template template;
 

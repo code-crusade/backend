@@ -71,11 +71,6 @@
     <changeSet author="gabar (generated)" id="1543356874256-14">
         <dropColumn columnName="class" tableName="classGroup"/>
     </changeSet>
-    <changeSet author="gabar (generated)" id="1543356874256-1">
-        <addForeignKeyConstraint baseColumnNames="entryPoint_id" baseTableName="functionParams"
-                                 constraintName="fk_entryPoint_id" referencedColumnNames="id"
-                                 referencedTableName="entryPoints"/>
-    </changeSet>
     <changeSet author="gabar (generated)" id="1543356874256-2">
         <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="testCase" constraintName="fk_exercise_id"
                                  referencedColumnNames="id" referencedTableName="exercise"/>

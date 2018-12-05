@@ -11,68 +11,6 @@
         <comment>For the initial schema definition see
             https://docs.spring.io/spring-security/site/docs/current/reference/html/appendix-schema.html
         </comment>
-        <createTable tableName="user_authority">
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="authority" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <addPrimaryKey constraintName="pk-user_authority" tableName="user_authority" columnNames="user_id,authority"/>
-        <addForeignKeyConstraint constraintName="fk-user_authority-user" baseTableName="user_authority"
-                                 baseColumnNames="user_id" referencedTableName="users"
-                                 referencedColumnNames="id"/>
-        <createIndex tableName="user_authority" indexName="ix-user_authority-user_name">
-            <column name="user_id"/>
-            <column name="authority"/>
-        </createIndex>
-
-        <!-- Groups -->
-        <createTable tableName="group">
-            <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
-                <constraints primaryKey="true" primaryKeyName="pk-group"/>
-            </column>
-            <column name="name" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <createTable tableName="group_authority">
-            <column name="group_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="authority" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="group_authority" baseColumnNames="group_id"
-                                 constraintName="fk_group_authorities_group"
-                                 referencedColumnNames="id" referencedTableName="group"/>
-
-        <createTable tableName="group_member">
-            <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
-                <constraints primaryKey="true" primaryKeyName="pk-group_member"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="group_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="group_member" baseColumnNames="group_id"
-                                 constraintName="fk-group_member-group" referencedTableName="group"
-                                 referencedColumnNames="id"/>
-
-        <addForeignKeyConstraint baseTableName="group_member" baseColumnNames="user_id"
-                                 constraintName="fk-group_member-user" referencedTableName="users"
-                                 referencedColumnNames="id"/>
-
-        <!-- Remember me token omitted -->
-
         <!-- ACLs -->
         <createTable tableName="acl_sid">
             <column name="id" type="bigint" autoIncrement="true" startWith="100" incrementBy="1">

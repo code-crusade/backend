@@ -6,7 +6,7 @@ import com.etsmtl.codecrusade.repository.GroupMemberRepository;
 import com.etsmtl.codecrusade.repository.GroupRepository;
 import com.etsmtl.codecrusade.repository.UserRepository;
 import com.etsmtl.codecrusade.service.UserService;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.ObjectIdentityImpl;
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Service implementation for user-based operations.
@@ -80,14 +80,14 @@ public class UserServiceImpl implements UserService {
             aclService.updateAcl(acl);
 
             groupRepository.findGroupByName(UserService.USER_GROUP).ifPresent(group -> {
-                Set<GroupMember> members = group.getMembers();
+                List<GroupMember> members = group.getMembers();
                 GroupMember groupMember = GroupMember.builder().group(group).user(created).group(group).build();
                 groupMemberRepository.save(groupMember);
                 if (members != null) {
                     members.add(groupMember);
                     group.setMembers(members);
                 } else {
-                    group.setMembers(Sets.newHashSet(groupMember));
+                    group.setMembers(Lists.newArrayList(groupMember));
                 }
                 groupRepository.save(group);
             });
