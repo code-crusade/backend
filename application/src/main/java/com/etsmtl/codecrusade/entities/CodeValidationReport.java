@@ -1,7 +1,6 @@
 package com.etsmtl.codecrusade.entities;
 
 import lombok.*;
-import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
