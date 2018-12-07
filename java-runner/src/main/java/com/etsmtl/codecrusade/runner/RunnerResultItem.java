@@ -11,7 +11,7 @@ public interface RunnerResultItem {
     }
 
     default boolean isFail() {
-        return RunnerResult.Status.FAIL.equals(this.getStatus());
+        return RunnerResult.Status.FAILED.equals(this.getStatus());
     }
 
     default boolean isSuccess() {

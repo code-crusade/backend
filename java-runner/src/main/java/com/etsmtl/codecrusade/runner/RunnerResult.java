@@ -6,8 +6,9 @@ public interface RunnerResult {
 
     enum Status {
         ERROR,
-        FAIL,
-        SUCCESS
+        FAILED,
+        SUCCESS,
+        TIMEOUT
     }
 
     long getExecutionTime();
@@ -23,7 +24,7 @@ public interface RunnerResult {
     }
 
     default boolean isFail() {
-        return Status.FAIL.equals(this.getStatus());
+        return Status.FAILED.equals(this.getStatus());
     }
 
     default boolean isSuccess() {

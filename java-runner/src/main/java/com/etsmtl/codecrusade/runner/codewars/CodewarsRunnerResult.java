@@ -29,7 +29,7 @@ class CodewarsRunnerResult implements RunnerResult {
         this.parseOutput(output);
         this.executionTime = executionTime;
 
-        this.status = Status.SUCCESS;
+        this.status = this.items.isEmpty() ? Status.ERROR : Status.SUCCESS;
 
         for (RunnerResultItem item : this.items) {
             if (item.isError()) {
@@ -37,7 +37,7 @@ class CodewarsRunnerResult implements RunnerResult {
                 break;
 
             } else if (item.isFail() && this.isSuccess()) {
-                this.status = Status.FAIL;
+                this.status = Status.FAILED;
             }
         }
     }

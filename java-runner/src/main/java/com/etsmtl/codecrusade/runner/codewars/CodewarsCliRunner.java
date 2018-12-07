@@ -62,9 +62,14 @@ public class CodewarsCliRunner implements Runner {
             }
         } catch (IOException e) {
             watch.stop();
-            result = new CodewarsRunnerResult(e.toString(), watch.getTime(), RunnerResult.Status.ERROR);
-        }
 
+            if (e instanceof ExecuteException  && ((ExecuteException) e).getExitValue() == 143) {
+                result = new CodewarsRunnerResult(e.toString(), timeout, RunnerResult.Status.TIMEOUT);
+
+            } else {
+                result = new CodewarsRunnerResult(e.toString(), watch.getTime(), RunnerResult.Status.ERROR);
+            }
+        }
         return result;
     }
 
