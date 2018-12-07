@@ -35,11 +35,11 @@ public class CodewarsCliRunner implements Runner {
                 .addArgument("-l")
                 .addArgument(lang.getRunnerName())
                 .addArgument("-c")
-                .addArgument(String.format("\"%s\"", code.replaceAll("\"", "\\\"")), false)
+                .addArgument(String.format("\"%s\"", code.replaceAll("\"", "\\\\\"")), false)
                 .addArgument("-t")
                 .addArgument(lang.getTestFormat())
                 .addArgument("-f")
-                .addArgument(String.format("\"%s\"", test.replaceAll("\"", "\\\"")), false);
+                .addArgument(String.format("\"%s\"", test.replaceAll("\"", "\\\\\"")), false);
 
         DefaultExecutor executor = new DefaultExecutor();
         executor.setWatchdog(new ExecuteWatchdog(timeout));
@@ -58,7 +58,7 @@ public class CodewarsCliRunner implements Runner {
 
             } else {
                 watch.stop();
-                result = new CodewarsRunnerResult(out.toString(), watch.getTime(), RunnerResult.Status.ERROR);
+                result = new CodewarsRunnerResult(out.toString().replaceAll("<:LF:>", "\n"), watch.getTime(), RunnerResult.Status.ERROR);
             }
         } catch (IOException e) {
             watch.stop();

@@ -31,10 +31,10 @@ public class CodewarsRunnerTest {
 
 
 	@Test
-	public void testRunJava() {
+	public void testRunJavaCli() {
 		String code = 	"public class Foo {" +
-						"    public long add(long a, long b){" +
-						"        return a + b; " +
+						"    public String add(long a, long b){" +
+						"        return \"test\"; " +
 						"    }"+
 						"}";
 		String fixture =    "import org.junit.Test;" +
@@ -42,12 +42,12 @@ public class CodewarsRunnerTest {
                             "public class FooTest {" +
                                 "@Test public void testFoo(){ " +
                                     "Foo foo = new Foo();" +
-                                    "long added = foo.add(1L,2L);" +
-                                    "assertEquals(3L,added);" +
+                                    "String added = foo.add(1L,2L);" +
+                                    "assertEquals(\"test\",added);" +
                                 "}" +
                             "}";
 
-        RunnerResult runnerResult = runner.run(Runner.Language.JAVA, 30, code, fixture);
+        RunnerResult runnerResult = runner.run(Runner.Language.JAVA, code, fixture);
 
         passOrFail(runnerResult.getOutput());
     }
