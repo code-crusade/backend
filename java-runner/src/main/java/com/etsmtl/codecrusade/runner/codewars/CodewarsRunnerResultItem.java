@@ -6,9 +6,11 @@ import com.etsmtl.codecrusade.runner.RunnerResultItem;
 class CodewarsRunnerResultItem implements RunnerResultItem {
 
     private String output;
+    private String describer;
     private RunnerResult.Status status;
 
-    CodewarsRunnerResultItem(String status, String output) {
+    CodewarsRunnerResultItem(String describer, String status, String output) {
+        this.describer = describer == null ? "" : describer;
         try {
             this.status = RunnerResult.Status.valueOf(status);
 
@@ -28,4 +30,7 @@ class CodewarsRunnerResultItem implements RunnerResultItem {
         return this.status;
     }
 
+    public String getDescriber() {
+        return describer;
+    }
 }

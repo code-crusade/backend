@@ -13,6 +13,8 @@ public interface RunnerResult {
 
     long getExecutionTime();
 
+    int getExitCode();
+
     String getOutput();
 
     Status getStatus();
@@ -29,5 +31,9 @@ public interface RunnerResult {
 
     default boolean isSuccess() {
         return Status.SUCCESS.equals(this.getStatus());
+    }
+
+    default boolean isTimeout() {
+        return Status.TIMEOUT.equals(this.getStatus());
     }
 }

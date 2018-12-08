@@ -113,12 +113,20 @@ public class CodewarsCliRunnerTest {
 				"}";
 		String test =    "import org.junit.Test;" +
 				"import static org.junit.Assert.assertEquals;" +
+                "import static org.junit.Assert.assertTrue;" +
 				"public class FooTest {" +
 				"@Test public void testFoo() {" +
 				"Foo foo = new Foo();" +
 				"String added = foo.add(1L,2L);" +
 				"assertEquals(\"test\",added);" +
+                "assertTrue(added instanceof String);" +
 				"}" +
+                "@Test public void testFoo2() {" +
+                "Foo foo = new Foo();" +
+                "String added = foo.add(1L,2L);" +
+                "assertEquals(\"test\",added);" +
+                "assertTrue(added instanceof String);" +
+                "}" +
 				"}";
 
 		success(this.runner.run(Runner.Language.JAVA, code, test));

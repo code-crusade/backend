@@ -2,6 +2,8 @@ package com.etsmtl.codecrusade.runner;
 
 public interface RunnerResultItem {
 
+    String getDescriber();
+
     String getOutput();
 
     RunnerResult.Status getStatus();
