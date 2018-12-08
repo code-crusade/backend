@@ -5,6 +5,7 @@ import com.etsmtl.codecrusade.entities.AssertionResultItem;
 import com.etsmtl.codecrusade.entities.Report;
 import com.etsmtl.codecrusade.entities.TestCaseResult;
 import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
+import com.etsmtl.codecrusade.entities.embeddable.ReportResultAssertions;
 import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.repository.ExerciseRepository;
 import com.etsmtl.codecrusade.runner.Runner;
@@ -58,6 +59,16 @@ public class RunnerServiceImpl implements RunnerService {
                                                                             .build()))
                             .build())
                     .build();
+
+            int success = 0;
+
+            for (AssertionResultItem i : this.report.getResult().getOutput().get(0).getItems().get(0).getItems()) {
+                success += i.getPassed() ? 1 : 0;
+            }
+
+            int failed = this.report.getResult().getOutput().get(0).getItems().get(0).getItems().size() - success;
+
+            this.report.getResult().setAssertions(new ReportResultAssertions(success, failed));
         });
         return Optional.of(this.report);
     }
