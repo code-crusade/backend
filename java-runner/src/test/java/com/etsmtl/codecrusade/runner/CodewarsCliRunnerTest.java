@@ -31,7 +31,6 @@ public class CodewarsCliRunnerTest {
 	}
 
 	// TODO: C TEST: Success, Fail, Timeout, Compile error.
-	// TODO: PYTHON TEST: Success, Fail, Timeout, Compile error.
 
     // C++ Tests.
     @Test
@@ -329,4 +328,47 @@ public class CodewarsCliRunnerTest {
 
 		timeout(this.runner.run(Runner.Language.JAVASCRIPT, 60000, code, test));
 	}
+
+    // Error Tests.
+    @Test
+    public void testPython3_Error() {
+        String code = "def foo(a, b):\n"
+                + "return a + b\n"
+                + "\n";
+        String test = "test.assert_equals(foo(1,1), 2)\n";
+
+        error(this.runner.run(Runner.Language.PYTHON3, code, test));
+    }
+
+    @Test
+    public void testPython3_Failed() {
+        String code = "def foo(a, b):\n"
+                + "    return a + b\n"
+                + "\n";
+        String test = "test.assert_equals(foo(1,1), 1)\n";
+
+        failed(this.runner.run(Runner.Language.PYTHON3, code, test));
+    }
+
+    @Test
+    public void testPython3_Success() {
+        String code = "def foo(a, b):\n"
+                + "    return a + b\n"
+                + "\n";
+        String test = "test.assert_equals(foo(1,1), 2)\n";
+
+        success(this.runner.run(Runner.Language.PYTHON3, code, test));
+    }
+
+    @Test
+    public void testPython3_Timeout() {
+        String code = "def foo(a, b):\n"
+                + "    while a == 1:\n"
+                + "        a = 1\n"
+                + "    return a + b\n"
+                + "\n";
+        String test = "test.assert_equals(foo(1,1), 2)\n";
+
+        timeout(this.runner.run(Runner.Language.PYTHON3, 60000, code, test));
+    }
 }
