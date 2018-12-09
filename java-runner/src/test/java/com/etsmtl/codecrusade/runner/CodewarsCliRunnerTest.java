@@ -14,11 +14,6 @@ public class CodewarsCliRunnerTest {
         runner = new CodewarsCliRunner();
     }
 
-	private void passOrFail(String runnerOutput) {
-		Assert.assertTrue("Output must at least contain \"<PASSED::>\" or \"<FAILED::>\"",
-				runnerOutput.contains("<FAILED::>") || runnerOutput.contains("<PASSED::>"));
-	}
-
 	private static void success(RunnerResult result) {
     	Assert.assertEquals(result.getStatus(), RunnerResult.Status.SUCCESS);
 	}
@@ -37,10 +32,55 @@ public class CodewarsCliRunnerTest {
 
 	// TODO: C TEST: Success, Fail, Timeout, Compile error.
 	// TODO: C++ TEST: Success, Fail, Timeout, Compile error.
-	// TODO: C# TEST: Fail, Timeout, Compile error.
 	// TODO: PYTHON TEST: Success, Fail, Timeout, Compile error.
 
 	// C# Tests.
+	@Test
+	public void testCSharp_Error() {
+		String code = "public class Foo {"
+				+ "  public string foo() "
+				+ "  {"
+				+ "    return \"test\""
+				+ "  }"
+				+ "}";
+		String test = "using NUnit.Framework;"
+				+ " [TestFixture]"
+				+ " public class FooTest"
+				+ " {"
+				+ "   [Test]"
+				+ "   public void testFoo()"
+				+ "   {"
+				+ "     Foo foo = new Foo();"
+				+ "     string result = foo.foo();"
+				+ "     Assert.That(result, Is.EqualTo(\"test\"));"
+				+ "   }"
+				+ " }";
+		error(this.runner.run(Runner.Language.CSHARP, code, test));
+	}
+
+	@Test
+	public void testCSharp_Failed() {
+		String code = "public class Foo {"
+				+ "  public string foo() "
+				+ "  {"
+				+ "    return \"test2\";"
+				+ "  }"
+				+ "}";
+		String test = "using NUnit.Framework;"
+				+ " [TestFixture]"
+				+ " public class FooTest"
+				+ " {"
+				+ "   [Test]"
+				+ "   public void testFoo()"
+				+ "   {"
+				+ "     Foo foo = new Foo();"
+				+ "     string result = foo.foo();"
+				+ "     Assert.That(result, Is.EqualTo(\"test\"));"
+				+ "   }"
+				+ " }";
+		failed(this.runner.run(Runner.Language.CSHARP, code, test));
+	}
+
 	@Test
 	public void testCSharp_Success() {
 		String code = "public class Foo {"
@@ -62,6 +102,31 @@ public class CodewarsCliRunnerTest {
 				+ "   }"
 				+ " }";
 		success(this.runner.run(Runner.Language.CSHARP, code, test));
+	}
+
+	@Test
+	public void testCSharp_Timeout() {
+		String code = "public class Foo {\n"
+				+ "  public string foo() \n"
+				+ "  {\n"
+				+ "    int i = 0;\n"
+				+ "    while(i == 0) { i = 0; }\n"
+				+ "    return \"test\"\n;"
+				+ "  }\n"
+				+ "}";
+		String test = "using NUnit.Framework;\n"
+				+ " [TestFixture]\n"
+				+ " public class FooTest\n"
+				+ " {\n"
+				+ "   [Test]\n"
+				+ "   public void testFoo()\n"
+				+ "   {\n"
+				+ "     Foo foo = new Foo();\n"
+				+ "     string result = foo.foo();\n"
+				+ "     Assert.That(result, Is.EqualTo(\"test\"));\n"
+				+ "   }\n"
+				+ " }";
+		timeout(this.runner.run(Runner.Language.CSHARP, 60000, code, test));
 	}
 
 	// Java Tests.
