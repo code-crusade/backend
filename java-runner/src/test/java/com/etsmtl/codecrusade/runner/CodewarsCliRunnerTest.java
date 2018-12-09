@@ -31,8 +31,84 @@ public class CodewarsCliRunnerTest {
 	}
 
 	// TODO: C TEST: Success, Fail, Timeout, Compile error.
-	// TODO: C++ TEST: Success, Fail, Timeout, Compile error.
 	// TODO: PYTHON TEST: Success, Fail, Timeout, Compile error.
+
+    // C++ Tests.
+    @Test
+    public void testCpp_Error() {
+        String code = "class Foo { public: int foo() { return 1 }};";
+        String test = "#include <igloo/igloo.h>\n" +
+                "using namespace igloo;\n" +
+                "\n" +
+                "Context(foo_test)\n" +
+                "{\n" +
+                "  Spec(foo_test_1)\n" +
+                "  {\n" +
+                "    Assert::That(foo.foo(), Equals(1));\n" +
+                "  }\n" +
+                "\n" +
+                "  Foo foo;\n" +
+                "};\n";
+
+        error(this.runner.run(Runner.Language.CPLUSPLUS, code, test));
+    }
+
+    @Test
+    public void testCpp_Failed() {
+        String code = "class Foo { public: int foo() { return 1; }};";
+        String test = "#include <igloo/igloo.h>\n" +
+                "using namespace igloo;\n" +
+                "\n" +
+                "Context(foo_test)\n" +
+                "{\n" +
+                "  Spec(foo_test_1)\n" +
+                "  {\n" +
+                "    Assert::That(foo.foo(), Equals(2));\n" +
+                "  }\n" +
+                "\n" +
+                "  Foo foo;\n" +
+                "};\n";
+
+        failed(this.runner.run(Runner.Language.CPLUSPLUS, code, test));
+    }
+
+    @Test
+    public void testCpp_Success() {
+        String code = "class Foo { public: int foo() { return 1; }};";
+        String test = "#include <igloo/igloo.h>\n" +
+                "using namespace igloo;\n" +
+                "\n" +
+                "Context(foo_test)\n" +
+                "{\n" +
+                "  Spec(foo_test_1)\n" +
+                "  {\n" +
+                "    Assert::That(foo.foo(), Equals(1));\n" +
+                "  }\n" +
+                "\n" +
+                "  Foo foo;\n" +
+                "};\n";
+
+        success(this.runner.run(Runner.Language.CPLUSPLUS, code, test));
+    }
+
+    @Test
+    public void testCpp_Timeout() {
+        String code = "class Foo { public: int foo() { while(true); return 1; }};";
+        String test = "#include <igloo/igloo.h>\n" +
+                "using namespace igloo;\n" +
+                "\n" +
+                "Context(foo_test)\n" +
+                "{\n" +
+                "  Spec(foo_test_1)\n" +
+                "  {\n" +
+                "    Assert::That(foo.foo(), Equals(1));\n" +
+                "  }\n" +
+                "\n" +
+                "  Foo foo;\n" +
+                "};\n";
+
+        timeout(this.runner.run(Runner.Language.CPLUSPLUS, 60000, code, test));
+    }
 
 	// C# Tests.
 	@Test
