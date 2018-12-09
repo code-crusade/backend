@@ -40,15 +40,16 @@ public class CodewarsCliRunnerTest {
 	// TODO: C# TEST: Fail, Timeout, Compile error.
 	// TODO: PYTHON TEST: Success, Fail, Timeout, Compile error.
 
+	// C# Tests.
 	@Test
 	public void testCSharp_Success() {
-    	String code = "public class Foo {"
+		String code = "public class Foo {"
 				+ "  public string foo() "
 				+ "  {"
 				+ "    return \"test\";"
 				+ "  }"
 				+ "}";
-    	String test =  "using NUnit.Framework;"
+		String test =  "using NUnit.Framework;"
 				+ " [TestFixture]"
 				+ " public class FooTest"
 				+ " {"
@@ -60,7 +61,7 @@ public class CodewarsCliRunnerTest {
 				+ "     Assert.That(result, Is.EqualTo(\"test\"));"
 				+ "   }"
 				+ " }";
-    	success(this.runner.run(Runner.Language.CSHARP, code, test));
+		success(this.runner.run(Runner.Language.CSHARP, code, test));
 	}
 
 	// Java Tests.
@@ -106,27 +107,27 @@ public class CodewarsCliRunnerTest {
 
 	@Test
 	public void testJava_Success() {
-		String code = 	"public class Foo {" +
-				"    public String add (long a, long b) {" +
-				"        return \"test\";" +
-				"    }"+
+		String code = "public class Foo {\n" +
+				"    public String add (long a, long b) {\n" +
+				"        return \"test\";\n" +
+				"    }\n" +
 				"}";
-		String test =    "import org.junit.Test;" +
-				"import static org.junit.Assert.assertEquals;" +
-                "import static org.junit.Assert.assertTrue;" +
-				"public class FooTest {" +
-				"@Test public void testFoo() {" +
-				"Foo foo = new Foo();" +
-				"String added = foo.add(1L,2L);" +
-				"assertEquals(\"test\",added);" +
-                "assertTrue(added instanceof String);" +
-				"}" +
-                "@Test public void testFoo2() {" +
-                "Foo foo = new Foo();" +
-                "String added = foo.add(1L,2L);" +
-                "assertEquals(\"test\",added);" +
-                "assertTrue(added instanceof String);" +
-                "}" +
+		String test = "import org.junit.Test;\n" +
+				"import static org.junit.Assert.assertEquals;\n" +
+				"import static org.junit.Assert.assertTrue;\n" +
+				"public class FooTest {\n" +
+				"@Test public void testFoo() {\n" +
+				"Foo foo = new Foo();\n" +
+				"String added = foo.add(1L,2L);\n" +
+				"assertEquals(\"test\",added);\n" +
+				"assertTrue(added instanceof String);\n" +
+				"}\n" +
+				"@Test public void testFoo2() {\n" +
+				"Foo foo = new Foo();\n" +
+				"String added = foo.add(1L,2L);\n" +
+				"assertEquals(\"test\",added);\n" +
+				"assertTrue(added instanceof String);\n" +
+				"}\n" +
 				"}";
 
 		success(this.runner.run(Runner.Language.JAVA, code, test));
@@ -136,7 +137,9 @@ public class CodewarsCliRunnerTest {
 	public void testJava_Timeout() {
 		String code = 	"public class Foo {" +
 				"    public String add (long a, long b) {" +
-				"        while(true);" +
+				"        while(a < b) {" +
+				"           b++;        " +
+				"    }" +
 				"        return \"test\";" +
 				"    }"+
 				"}";
@@ -146,11 +149,11 @@ public class CodewarsCliRunnerTest {
 				"@Test public void testFoo() {" +
 				"Foo foo = new Foo();" +
 				"String added = foo.add(1L,2L);" +
-				"assertEquals(\"test\",added);" +
+				"assertEquals(\"test\", added);" +
 				"}" +
 				"}";
 
-		timeout(runner.run(Runner.Language.JAVA, 30, code, test));
+		timeout(runner.run(Runner.Language.JAVA, 60000, code, test));
 	}
 
 	// JavaScript Tests.
@@ -183,6 +186,6 @@ public class CodewarsCliRunnerTest {
 		String code = "for(;true;)";
 		String test = "Test.assertEquals(a, 'a')";
 
-		timeout(this.runner.run(Runner.Language.JAVASCRIPT, 30, code, test));
+		timeout(this.runner.run(Runner.Language.JAVASCRIPT, 60000, code, test));
 	}
 }

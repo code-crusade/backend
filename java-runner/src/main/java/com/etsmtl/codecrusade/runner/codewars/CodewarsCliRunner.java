@@ -31,11 +31,11 @@ public class CodewarsCliRunner implements Runner {
                 .addArgument("-l")
                 .addArgument(lang.getRunnerName())
                 .addArgument("-c")
-                .addArgument(String.format("\"%s\"", code.replaceAll("\"", "\\\\\"")), false)
+                .addArgument(String.format("\"%s\"", code.replaceAll("\"", "\\\\\"").replaceAll("\n", "\\\\n")), false)
                 .addArgument("-t")
                 .addArgument(lang.getTestFormat())
                 .addArgument("-f")
-                .addArgument(String.format("\"%s\"", test.replaceAll("\"", "\\\\\"")), false);
+                .addArgument(String.format("\"%s\"", test.replaceAll("\"", "\\\\\"").replaceAll("\n", "\\\\n")), false);
 
         DefaultExecutor executor = new DefaultExecutor();
         executor.setWatchdog(new ExecuteWatchdog(timeout));
@@ -57,7 +57,7 @@ public class CodewarsCliRunner implements Runner {
                 result = new CodewarsRunnerResult(out.toString().replaceAll("<:LF:>", "\n"), watch.getTime(), RunnerResult.Status.ERROR);
             }
         } catch (ExecuteException e) {
-            if (e.getExitValue() == 143) {
+            if (e.getExitValue() == 143 || e.getExitValue() == 1) {
                 result = new CodewarsRunnerResult(e.toString(), timeout, RunnerResult.Status.TIMEOUT, e.getExitValue());
             } else {
                 result = new CodewarsRunnerResult(e.toString(), timeout, RunnerResult.Status.ERROR, e.getExitValue());
