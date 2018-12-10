@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "jwt.header",
+      "type": "java.lang.String",
+      "description": "Key specifying the authorization header name."
+  }
+] }

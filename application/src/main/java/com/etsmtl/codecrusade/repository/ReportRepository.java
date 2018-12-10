@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ReportRepository extends CrudRepository<Report, Integer> {
 	Optional<Report> findByExercise_IdAndSubmission_Id(Integer exerciseId, Integer submissionId);
+	Iterable<Report> findBySubmission_User_Id(Integer userId);
 }

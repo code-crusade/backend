@@ -1,11 +1,11 @@
 package com.etsmtl.codecrusade.entities.embeddable;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.io.Serializable;
 
 /**
@@ -13,13 +13,19 @@ import java.io.Serializable;
  */
 @Embeddable
 @Data
+@NoArgsConstructor
 public class TemplateCodeId implements Serializable {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "templateId")
     @Setter(AccessLevel.NONE)
     private Integer templateId;
 
     @Column(name = "lang")
-    @Setter(AccessLevel.NONE)
     private String lang;
+
+    @Builder
+    public TemplateCodeId(String lang){
+        this.lang = lang;
+    }
 }

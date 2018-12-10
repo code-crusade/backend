@@ -11,13 +11,14 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "submission")
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
 @SubmissionArgumentsValid
 @NoArgsConstructor
 public class Submission extends Auditable<String> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
 	private Integer id;
 
 	@Column(name="code")

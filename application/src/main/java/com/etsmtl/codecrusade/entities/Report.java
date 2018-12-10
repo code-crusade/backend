@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "reports")
@@ -11,13 +12,19 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "exercise_id", foreignKey = @ForeignKey(name = "fk_exercise_id"))
@@ -31,21 +38,25 @@ public class Report {
     private Integer exitCode;
 
     @Column(name = "message")
+    @Size(max = 500)
     private String message;
 
     @Embedded
     private ReportResult result;
 
     @Column(name = "stderr")
+    @Size(max = 5000)
     private String stderr;
 
     @Column(name = "stdout")
+    @Size(max = 5000)
     private String stdout;
 
     @Column(name = "timedOut")
     private Boolean timedOut;
 
     @Column(name = "token")
+    @Size(max = 5000)
     private String token;
 
     @Column(name = "executionTime")

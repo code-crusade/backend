@@ -5,13 +5,13 @@ info:
   title: Api Documentation
   termsOfService: 'urn:tos'
   contact: {}
+security:
+- bearerAuth: []
 paths:
   /exercises:
     get:
       summary: Gets the full list of exercises
       operationId: exercisesIndex
-      security:
-      - authCookie: []
       responses:
         '200':
           description: OK
@@ -24,8 +24,6 @@ paths:
     post:
       summary: Creates a new exercise
       operationId: exercisesAdd
-      security:
-      - authCookie: []
       requestBody:
         required: true
         content:
@@ -48,8 +46,6 @@ paths:
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
-      security:
-      - authCookie: []
       parameters:
       - name: exerciseId
         in: path
@@ -72,8 +68,6 @@ paths:
   '/exercises/{exerciseId}/submissions':
     get:
       summary: Gets the list of submissions for the specified exercise
-      security:
-      - authCookie: []
       parameters:
       - name: exerciseId
         in: path
@@ -97,8 +91,6 @@ paths:
           description: Exercise does not exist
     post:
       summary: Submits the code as the current user's solution for the exercise
-      security:
-      - authCookie: []
       parameters:
       - name: exerciseId
         in: path
@@ -122,11 +114,33 @@ paths:
           description: User is not allowed to post solutions for this exercise
         '404':
           description: Exercise does not exist
+  '/exercises/{exerciseId}/fixtures':
+    get:
+      summary: Gets all fixtures for an exercise
+      parameters:
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fixture'
+        '401':
+          description: User must be logged in to see fixtures.
+        '403':
+          description: User is not allowed to see this exercises' fixtures.
+        '404':
+          description: Fixture sub-collection does not exist.
   '/exercises/{exerciseId}/test':
     post:
-      summary: Validate the code against the exercise's test suite
-      security:
-      - authCookie: []
+      summary: Validate the code against the user-provided test suite
       parameters:
       - name: exerciseId
         in: path
@@ -157,8 +171,6 @@ paths:
   '/exercises/{exerciseId}/submissions/{submissionId}':
     get:
       summary: Gets the list of submissions for the specified exercise
-      security:
-      - authCookie: []
       parameters:
       - name: exerciseId
         in: path
@@ -186,8 +198,6 @@ paths:
   '/exercises/{exerciseId}/submissions/{submissionId}/results':
     get:
       summary: Gets the results of the exercise validation for this submission
-      security:
-      - authCookie: []
       parameters:
       - name: exerciseId
         in: path
@@ -216,8 +226,6 @@ paths:
     get:
       summary: Gets the full list of groups
       operationId: groupsBrowse
-      security:
-      - authCookie: []
       responses:
         '200':
           description: OK
@@ -230,8 +238,6 @@ paths:
     post:
       summary: Creates a new group
       operationId: groupsAdd
-      security:
-      - authCookie: []
       requestBody:
         required: true
         content:
@@ -254,8 +260,6 @@ paths:
     put:
       summary: Edits an existing group
       operationId: groupsEdit
-      security:
-      - authCookie: []
       requestBody:
         required: true
         content:
@@ -279,8 +283,6 @@ paths:
     get:
       summary: Gets the full list of users
       operationId: usersBrowse
-      security:
-      - authCookie: []
       responses:
         '200':
           description: OK
@@ -293,8 +295,6 @@ paths:
     post:
       summary: Creates a new user
       operationId: usersAdd
-      security:
-      - authCookie: []
       requestBody:
         required: true
         content:
@@ -318,8 +318,6 @@ paths:
     get:
       summary: Gets the specified user
       operationId: usersRead
-      security:
-      - authCookie: []
       parameters:
       - name: userId
         in: path
@@ -339,82 +337,42 @@ paths:
           description: User is not allowed to see this user
         '404':
           description: User does not exist
-  '/runner/{exerciseId}':
-    post:
-      deprecated: true
-      summary: Runs provided code
-      operationId: runCodeForExercise
+  '/users/{userId}/reports':
+    get:
+      summary: Gets the specified user's reports
+      operationId: userReportsRead
       parameters:
-      - name: exerciseId
+      - name: userId
         in: path
         required: true
         schema:
           type: integer
-          format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RunnerArguments'
       responses:
         '200':
           description: OK
-        '400':
-          $ref: '#/components/responses/RFC7807Error'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeValidationReport'
         '401':
-          description: Unauthorized
+          description: User must be logged in to see this user
         '403':
-          description: Forbidden
+          description: User is not allowed to see this user
         '404':
-          description: Not Found
-  '/auth/caslogin':
+          description: User does not exist
+  '/google-login':
     get:
-      summary: Provides a session cookie given a valid CAS Service ticket
-      # The service ticket can be used by the server to get user data from the SSO server
-      # Should probably be provided by spring-security or java-cas-client
-      externalDocs:
-        description: Apereo CAS protocol documentation
-        url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
-      security: [] # You shouldn't have to be logged in to login
-      tags: ['auth']
-      parameters:
-      - name: ticket
-        in: query
-        required: true
-        schema:
-          type: string
-          example: 'ST-12345678'
+      summary: Redirects to the google login page according to the Authorization Code grant type flow.
       responses:
-        '200':
-          description: Successfully authenticated
+        '302':
+          description: Redirect to the google auth uri.
           headers:
-            Set-Cookie:
+            Location:
               schema:
                 type: string
-                example: JSESSIONID=abcde12345;
-        # TODO : What to do if auth fails? 302?
-  '/auth/login':
-    post:
-      summary: Provides a session cookie given a username and password
-      security: [] # You shouldn't have to be logged in to login
-      tags: ['auth']
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Credentials'
-      responses:
-        '200':
-          description: Successfully authenticated
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-                example: JSESSIONID=abcde12345;
-        '400':
-          description: Authentication failed
+              description: Standard redirect URI.
 servers:
 - url: '//localhost:8080/'
 components:
@@ -425,12 +383,15 @@ components:
         code:
           description: code
           type: string
+          maxLength: 5000
         language:
           description: language
           type: string
+          maxLength: 255
         fixture:
           description: fixture
           type: string
+          maxLength: 5000
       example:
         language: js
         code: 'function dateNbDays(a0, a, p) {
@@ -463,6 +424,7 @@ components:
           type: integer
         message:
           type: string
+          maxLength: 500
         result:
           type: object
           properties:
@@ -483,14 +445,18 @@ components:
           - assertions
           - completed
           - output
+        # We account for large stack traces
         stderr:
           type: string
+          maxLength: 5000
         stdout:
           type: string
+          maxLength: 5000
         timedOut:
           type: boolean
         token:
           type: string
+          maxLength: 5000
         executionTime:
           type: integer
       required:
@@ -510,6 +476,7 @@ components:
           type: boolean
         text:
           type: string
+          maxLength: 500
         items:
           type: array
           items:
@@ -525,6 +492,7 @@ components:
           type: boolean
         text:
           type: string
+          maxLength: 500
         items:
           type: array
           items:
@@ -534,6 +502,7 @@ components:
                 type: boolean
               message:
                 type: string
+                maxLength: 500
       required:
       - text
       - passed
@@ -561,8 +530,10 @@ components:
       properties:
         fr:
           type: string
+          maxLength: 5000
         en:
           type: string
+          maxLength: 5000
       required:
       - fr
     Exercise:
@@ -579,10 +550,11 @@ components:
           $ref: '#/components/schemas/Difficulties'
         template:
           $ref: '#/components/schemas/Template'
-        supportedLanguages:
+        fixtures:
+          writeOnly: true
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Fixture'
         sampleTestCases:
           type: array
           items:
@@ -593,7 +565,23 @@ components:
       - description
       - difficulty
       - template
+      - fixtures
       - sampleTestCases
+    Fixture:
+      type: object
+      properties:
+        cpp:
+          type: string
+          maxLength: 5000
+        python:
+          type: string
+          maxLength: 5000
+        java:
+          type: string
+          maxLength: 5000
+        javascript:
+          type: string
+          maxLength: 5000
     ExerciseSubmission:
       type: object
       properties:
@@ -606,6 +594,7 @@ components:
           type: integer
         code:
           type: string
+          maxLength: 5000
         language:
           type: string
         createdAt:
@@ -620,29 +609,27 @@ components:
     Template:
       type: object
       properties:
-        className:
-          type: string
         functionName:
           type: string
+          maxLength: 50
         params:
           type: array
           items:
             $ref: '#/components/schemas/Parameter'
-        functionReturnValue:
-          $ref: '#/components/schemas/AnyValue'
         functionReturnType:
           $ref: '#/components/schemas/SupportedType'
         prependedCode:
           type: object
           additionalProperties:
             type: string
+            maxLength: 1000
         appendedCode:
           type: object
           additionalProperties:
             type: string
+            maxLength: 1000
       required:
       - functionName
-      - functionReturnValue
       - params
       - functionReturnType
       - prependedCode
@@ -667,28 +654,19 @@ components:
           type: integer
         firstName:
           type: string
+          maxLength: 100
         lastName:
           type: string
+          maxLength: 100
         email:
           type: string
+          maxLength: 254
           format: email
-        password:
-          type: string
       required:
       - id
       - firstName
       - lastName
       - email
-      - password
-    Credentials:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-      required:
-      - username
       - password
     SupportedLanguages:
       description: Languages supported by the api
@@ -721,6 +699,7 @@ components:
       properties:
         it:
           type: string
+          maxLength: 50
         assertions:
           type: array
           items:
@@ -758,6 +737,7 @@ components:
       properties:
         name:
           type: string
+          maxLength: 50
         type:
           $ref: '#/components/schemas/SupportedType'
       required:
@@ -774,6 +754,7 @@ components:
           type: integer
         course:
           type: string
+          maxLength: 50
         semester:
           $ref: '#/components/schemas/Semesters'
         year:
@@ -799,11 +780,14 @@ components:
         accessCode:
           type: integer
         firstName:
-          type: integer
+          type: string
+          maxLength: 100
         lastName:
           type: string
+          maxLength: 100
         email:
           type: string
+          maxLength: 254
         totalExercisesSuccessed:
           type: number
         totalExercisesDone:
@@ -814,10 +798,10 @@ components:
       - lastName
       - type
   securitySchemes:
-    authCookie:
-      type: apiKey
-      in: cookie
-      name: JSESSIONID
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
     RFC7807Error:
       description: Api problem response

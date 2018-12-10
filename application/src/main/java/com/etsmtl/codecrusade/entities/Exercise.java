@@ -1,13 +1,14 @@
 package com.etsmtl.codecrusade.entities;
 
 import com.etsmtl.codecrusade.annotation.MessageTemplate;
-import com.etsmtl.codecrusade.entities.converters.StringListAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "exercise")
@@ -15,29 +16,42 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Integer id;
 
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
+    @MessageTemplate("exercise.{id}.title")
     @OneToOne
-    @JoinColumn(name = "title_message_id", foreignKey = @ForeignKey(name = "fk_title_message_id"))
+    @JoinColumn(name = "title_message_id",
+                foreignKey = @ForeignKey(name = "fk_title_message_id"))
     private Message title;
 
     @MessageTemplate("exercise.{id}.description")
     @OneToOne
-    @JoinColumn(name = "description_message_id", foreignKey = @ForeignKey(name = "fk_desc_message_id"))
+    @JoinColumn(name = "description_message_id",
+                foreignKey = @ForeignKey(name = "fk_desc_message_id"))
     private Message description;
 
-    @Convert(converter = StringListAttributeConverter.class)
-    @Column(name = "supportedLanguages")
-    private List<String> supportedLanguages = new ArrayList<>();
+    @ElementCollection
+    @MapKeyColumn(name = "language")
+    @Column(name = "fixture")
+    @Size(max = 5000)
+    @CollectionTable(name = "exercise_fixtures",
+                     joinColumns = @JoinColumn(name = "exercise_id",
+                                               foreignKey = @ForeignKey(name = "fk_exercise_id")))
+    private Map<String, String> fixtures;
 
     @OneToOne
-    @JoinColumn(name = "exrecise_id",
+    @JoinColumn(name = "exercise_id",
                 foreignKey = @ForeignKey(name = "fk_template_id"))
     private Template template;
 

@@ -10,16 +10,23 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    String ROLE_USER = "ROLE_USER";
-    String ROLE_STUDENT = "ROLE_STUDENT";
+    String USER_GROUP = "USER";
+    String ADMIN_GROUP = "ADMIN";
 
-	Iterable<User> findAll();
+    Iterable<User> findAll();
 
-	Optional<User> createUser(@NotNull User user);
+    Optional<User> createUser(@NotNull User user);
 
-	Optional<User> findById(@NotNull Integer id);
+    Optional<User> findById(@NotNull Integer id);
 
-	class UserNameExistsException extends RuntimeException {
+    /**
+     * Exception that indicates an email was already found for a provided email.
+     */
+    class EmailExistsException extends RuntimeException {
+
+    }
+
+    class UserCreationException extends RuntimeException{
 
     }
 }

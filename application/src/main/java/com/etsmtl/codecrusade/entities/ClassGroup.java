@@ -3,6 +3,7 @@ package com.etsmtl.codecrusade.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,32 +11,47 @@ import java.util.List;
 @Entity
 @Table(name = "classGroup")
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ClassGroup {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(AccessLevel.NONE)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
+    private Integer id;
 
-	@OneToMany
-	@JoinColumn(name = "classGroup_id",
-				foreignKey = @ForeignKey(name = "fk_classGroup_id"))
-	private List<Student> students = new ArrayList<>();
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
 
-	@Column(name = "groupNumber")
-	private Integer groupNumber;
+    @OneToMany
+    @JoinColumn(name = "classGroup_id",
+                foreignKey = @ForeignKey(name = "fk_classGroup_id"))
+    private List<Student> students = new ArrayList<>();
 
-	@Column(name = "course")
-	private String course;
+    @Column(name = "groupNumber")
+    private Integer groupNumber;
 
-	@Enumerated(EnumType.STRING)
-	private Semester semester;
+    @Column(name = "course")
+    @Size(max = 50)
+    private String course;
 
-	@Column(name = "year")
-	private BigDecimal year;
+    @Enumerated(EnumType.STRING)
+    private Semester semester;
 
-	@Column(name = "archived")
-	private Boolean archived;
+    @Column(name = "year")
+    private BigDecimal year;
+
+    @Column(name = "archived")
+    private Boolean archived;
+
+    @Builder
+    public ClassGroup(List<Student> students, Integer groupNumber, String course, Semester semester, BigDecimal year, Boolean archived) {
+        this.students = students;
+        this.groupNumber = groupNumber;
+        this.course = course;
+        this.semester = semester;
+        this.year = year;
+        this.archived = archived;
+    }
 }
