@@ -1,8 +1,9 @@
 package com.etsmtl.codecrusade.controllers;
 
 import com.etsmtl.codecrusade.entities.Report;
-import com.etsmtl.codecrusade.model.CodeValidationReport;
-import com.etsmtl.codecrusade.model.User;
+import com.etsmtl.codecrusade.entities.security.User;
+import com.etsmtl.codecrusade.model.CodeValidationReportModel;
+import com.etsmtl.codecrusade.model.UserModel;
 import com.etsmtl.codecrusade.service.ReportService;
 import com.etsmtl.codecrusade.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -25,7 +26,7 @@ public class UserController implements UsersApi {
     private UserService userService;
 
     @Override
-    public ResponseEntity<List<CodeValidationReport>> userReportsRead(Integer userId) {
+    public ResponseEntity<List<CodeValidationReportModel>> userReportsRead(Integer userId) {
         return ResponseEntity.ok(StreamSupport.stream(reportService.findAllReportsForUser(userId).spliterator(), false)
                                               .map(this::convertToDto)
                                               .collect(toList()));
@@ -39,14 +40,14 @@ public class UserController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<List<User>> usersBrowse() {
+    public ResponseEntity<List<UserModel>> usersBrowse() {
         return ResponseEntity.ok(StreamSupport.stream(userService.findAll().spliterator(), false)
                                               .map(this::convertToDto)
                                               .collect(toList()));
     }
 
     @Override
-    public ResponseEntity<User> usersAdd(@Valid User user) {
+    public ResponseEntity<UserModel> usersAdd(@Valid UserModel user) {
         return userService.createUser(convertToEntity(user))
                           .map(this::convertToDto)
                           .map(created -> ResponseEntity.created(
@@ -56,22 +57,22 @@ public class UserController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<User> usersRead(Integer userId) {
+    public ResponseEntity<UserModel> usersRead(Integer userId) {
         return userService.findById(userId)
                           .map(this::convertToDto)
                           .map(ResponseEntity::ok)
                           .orElse(ResponseEntity.notFound().build());
     }
 
-    private User convertToDto(com.etsmtl.codecrusade.entities.security.User user) {
-        return modelMapper.map(user, User.class);
+    private UserModel convertToDto(User user) {
+        return modelMapper.map(user, UserModel.class);
     }
 
-    private com.etsmtl.codecrusade.entities.security.User convertToEntity(User dto) {
-        return modelMapper.map(dto, com.etsmtl.codecrusade.entities.security.User.class);
+    private User convertToEntity(UserModel dto) {
+        return modelMapper.map(dto, User.class);
     }
 
-    private CodeValidationReport convertToDto(Report report) {
-        return modelMapper.map(report, CodeValidationReport.class);
+    private CodeValidationReportModel convertToDto(Report report) {
+        return modelMapper.map(report, CodeValidationReportModel.class);
     }
 }

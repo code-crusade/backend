@@ -1,8 +1,9 @@
 package com.etsmtl.codecrusade.controllers;
 
+import com.etsmtl.codecrusade.entities.Exercise;
 import com.etsmtl.codecrusade.entities.Report;
-import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
 import com.etsmtl.codecrusade.entities.Submission;
+import com.etsmtl.codecrusade.entities.embeddable.ReportResult;
 import com.etsmtl.codecrusade.entities.embeddable.SubmissionArgument;
 import com.etsmtl.codecrusade.model.*;
 import com.etsmtl.codecrusade.service.CodeValidationService;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
@@ -49,12 +51,15 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<List<Fixture>> exercisesExerciseIdFixturesGet(Integer exerciseId) {
-        return null;
+    public ResponseEntity<List<FixtureModel>> exercisesExerciseIdFixturesGet(Integer exerciseId) {
+        return ResponseEntity.ok(exerciseService.findFixturesForExercise(exerciseId)
+                                                .stream()
+                                                .map(this::convertToDto)
+                                                .collect(toList()));
     }
 
     @Override
-    public ResponseEntity<Exercise> exercisesExerciseIdGet(Integer exerciseId) {
+    public ResponseEntity<ExerciseModel> exercisesExerciseIdGet(Integer exerciseId) {
         if (exerciseId != null) {
             return exerciseService.getExerciseFromId(exerciseId)
                                   .map(this::convertToEntity)
@@ -66,8 +71,8 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<ExerciseSubmission> exercisesExerciseIdSubmissionsSubmissionIdGet(Integer exerciseId,
-                                                                                            Integer submissionId) {
+    public ResponseEntity<ExerciseSubmissionModel> exercisesExerciseIdSubmissionsSubmissionIdGet(Integer exerciseId,
+                                                                                                 Integer submissionId) {
         if (exerciseId != null && submissionId != null) {
             return submissionService.getSubmissionByExerciseForAuthenticatedUser(exerciseId, submissionId)
                                     .map(this::convertToEntity)
@@ -79,14 +84,14 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<List<Exercise>> exercisesIndex() {
+    public ResponseEntity<List<ExerciseModel>> exercisesIndex() {
         return ResponseEntity.ok(StreamSupport.stream(exerciseService.getAllExercises().spliterator(), false)
                                               .map(this::convertToEntity)
                                               .collect(toList()));
     }
 
     @Override
-    public ResponseEntity<List<ExerciseSubmission>> exercisesExerciseIdSubmissionsGet(Integer exerciseId) {
+    public ResponseEntity<List<ExerciseSubmissionModel>> exercisesExerciseIdSubmissionsGet(Integer exerciseId) {
         return ResponseEntity.ok(
                 StreamSupport.stream(submissionService.getAllSubmissionsByExercise(exerciseId).spliterator(), false)
                              .map(this::convertToEntity)
@@ -95,7 +100,7 @@ public class ExercisesController implements ExercisesApi {
 
     @Override
     public ResponseEntity<Void> exercisesExerciseIdSubmissionsPost(Integer exerciseId,
-                                                                   @Valid ExerciseSubmission exerciseSubmission) {
+                                                                   @Valid ExerciseSubmissionModel exerciseSubmission) {
 
         return submissionService.createSubmissionForExercise(exerciseId, convertToEntity(exerciseSubmission))
                                 .map(created -> ResponseEntity.ok().<Void>build())
@@ -103,8 +108,8 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<CodeValidationReport> exercisesExerciseIdSubmissionsSubmissionIdResultsGet(Integer exerciseId,
-                                                                                                     Integer submissionId) {
+    public ResponseEntity<CodeValidationReportModel> exercisesExerciseIdSubmissionsSubmissionIdResultsGet(Integer exerciseId,
+                                                                                                          Integer submissionId) {
         return codeValidationService.getReportForExerciseAndSubmission(exerciseId, submissionId)
                                     .map(this::convertToDto)
                                     .map(ResponseEntity::ok)
@@ -112,8 +117,8 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<CodeValidationReport> exercisesExerciseIdTestPost(Integer exerciseId,
-                                                                            @Valid RunnerArguments runnerArguments) {
+    public ResponseEntity<CodeValidationReportModel> exercisesExerciseIdTestPost(Integer exerciseId,
+                                                                                 @Valid RunnerArgumentsModel runnerArguments) {
         return runnerService.runCodeForExercise(exerciseId, convertToEntity(runnerArguments))
                             .map(this::convertToDto)
                             .map(ResponseEntity::ok)
@@ -121,7 +126,7 @@ public class ExercisesController implements ExercisesApi {
     }
 
     @Override
-    public ResponseEntity<Exercise> exercisesAdd(@Valid Exercise exercise) {
+    public ResponseEntity<ExerciseModel> exercisesAdd(@Valid ExerciseModel exercise) {
         return exerciseService.createExercise(convertToEntity(exercise))
                               .map(created -> ResponseEntity.created(UriComponentsBuilder.fromPath("/exercises/{id}")
                                                                                          .buildAndExpand(
@@ -131,31 +136,35 @@ public class ExercisesController implements ExercisesApi {
                               .orElse(ResponseEntity.badRequest().build());
     }
 
-    private Exercise convertToEntity(com.etsmtl.codecrusade.entities.Exercise entity) {
-        return modelMapper.map(entity, Exercise.class);
+    private ExerciseModel convertToEntity(Exercise entity) {
+        return modelMapper.map(entity, ExerciseModel.class);
     }
 
-    private ExerciseSubmission convertToEntity(Submission entity) {
-        return modelMapper.map(entity, ExerciseSubmission.class);
+    private ExerciseSubmissionModel convertToEntity(Submission entity) {
+        return modelMapper.map(entity, ExerciseSubmissionModel.class);
     }
 
-    private SubmissionArgument convertToEntity(RunnerArguments dto) {
+    private SubmissionArgument convertToEntity(RunnerArgumentsModel dto) {
         return modelMapper.map(dto, SubmissionArgument.class);
     }
 
-    private Submission convertToEntity(ExerciseSubmission dto) {
+    private Submission convertToEntity(ExerciseSubmissionModel dto) {
         return modelMapper.map(dto, Submission.class);
     }
 
-    private CodeValidationReportResult convertToDto(ReportResult dto) {
-        return modelMapper.map(dto, CodeValidationReportResult.class);
+    private CodeValidationReportResultModel convertToDto(ReportResult entity) {
+        return modelMapper.map(entity, CodeValidationReportResultModel.class);
     }
 
-    private CodeValidationReport convertToDto(Report report) {
-        return modelMapper.map(report, CodeValidationReport.class);
+    private CodeValidationReportModel convertToDto(Report report) {
+        return modelMapper.map(report, CodeValidationReportModel.class);
     }
 
-    private com.etsmtl.codecrusade.entities.Exercise convertToEntity(Exercise exercise) {
-        return modelMapper.map(exercise, com.etsmtl.codecrusade.entities.Exercise.class);
+    private Exercise convertToEntity(ExerciseModel exercise) {
+        return modelMapper.map(exercise, Exercise.class);
+    }
+
+    private FixtureModel convertToDto(Map<String, String> fixture) {
+        return modelMapper.map(fixture, FixtureModel.class);
     }
 }

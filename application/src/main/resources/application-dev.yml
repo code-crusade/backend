@@ -1,0 +1,9 @@
+spring:
+  liquibase:
+    enabled: true
+  cloud:
+    discovery:
+      enabled: false
+eureka:
+  client:
+    enabled: false

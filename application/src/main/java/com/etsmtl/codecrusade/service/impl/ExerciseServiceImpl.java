@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -68,5 +69,11 @@ public class ExerciseServiceImpl implements ExerciseService {
         } else {
             return Optional.empty();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Map<String, String>> findFixturesForExercise(Integer exerciseId) {
+        return exerciseRepository.findById(exerciseId).map(Exercise::getFixtures);
     }
 }

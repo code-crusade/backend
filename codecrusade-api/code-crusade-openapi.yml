@@ -362,6 +362,31 @@ paths:
           description: User is not allowed to see this user
         '404':
           description: User does not exist
+  '/students/{userId}':
+    get:
+      summary: Gets user details including his submited excersises
+      operationId: studentsRead
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '401':
+          description: User must be logged in to see this student
+        '403':
+          description: User is not allowed to see this student
+        '404':
+          description: User does not exist
   '/google-login':
     get:
       summary: Redirects to the google login page according to the Authorization Code grant type flow.
@@ -395,26 +420,26 @@ components:
       example:
         language: js
         code: 'function dateNbDays(a0, a, p) {
-              	// your code
-                return "2016-11-22";
-                }'
+          // your code
+          return "2016-11-22";
+          }'
         fixture: 'function testing(actual, expected) {
-                 	Test.assertEquals(actual, expected)
-                 }
+          Test.assertEquals(actual, expected)
+          }
 
-                 Test.describe("dateNbDays",function() {
-                   Test.it("Basic tests",function() {
-                   testing(dateNbDays(4281, 5087, 2), "2024-07-03");
-                   testing(dateNbDays(4620, 5188, 2), "2021-09-19");
-                   testing(dateNbDays(9999, 11427, 6), "2018-03-13");
-                   testing(dateNbDays(3525, 4822, 3), "2026-04-18");
-                   testing(dateNbDays(5923, 6465, 6), "2017-06-10");
-                   testing(dateNbDays(4254, 4761, 8), "2017-05-22");
-                   testing(dateNbDays(1244, 2566, 4), "2033-11-04");
-                   testing(dateNbDays(6328, 7517, 5), "2019-05-25");
-                   testing(dateNbDays(2920, 3834, 2), "2029-06-03");
-                   testing(dateNbDays(7792, 8987, 4), "2019-07-09");
-                   })})'
+          Test.describe("dateNbDays",function() {
+          Test.it("Basic tests",function() {
+          testing(dateNbDays(4281, 5087, 2), "2024-07-03");
+          testing(dateNbDays(4620, 5188, 2), "2021-09-19");
+          testing(dateNbDays(9999, 11427, 6), "2018-03-13");
+          testing(dateNbDays(3525, 4822, 3), "2026-04-18");
+          testing(dateNbDays(5923, 6465, 6), "2017-06-10");
+          testing(dateNbDays(4254, 4761, 8), "2017-05-22");
+          testing(dateNbDays(1244, 2566, 4), "2033-11-04");
+          testing(dateNbDays(6328, 7517, 5), "2019-05-25");
+          testing(dateNbDays(2920, 3834, 2), "2029-06-03");
+          testing(dateNbDays(7792, 8987, 4), "2019-07-09");
+          })})'
     CodeValidationReport:
       type: object
       properties:
@@ -552,9 +577,8 @@ components:
           $ref: '#/components/schemas/Template'
         fixtures:
           writeOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Fixture'
+          allOf:
+          - $ref: '#/components/schemas/Fixture'
         sampleTestCases:
           type: array
           items:
@@ -652,6 +676,8 @@ components:
       properties:
         id:
           type: integer
+        accessCode:
+          type: string
         firstName:
           type: string
           maxLength: 100
@@ -667,7 +693,7 @@ components:
       - firstName
       - lastName
       - email
-      - password
+      - accessCode
     SupportedLanguages:
       description: Languages supported by the api
       type: string
@@ -777,8 +803,11 @@ components:
       description: A student user
       type: object
       properties:
-        accessCode:
+        id:
           type: integer
+          readOnly: true
+        accessCode:
+          type: string
         firstName:
           type: string
           maxLength: 100
@@ -792,11 +821,17 @@ components:
           type: number
         totalExercisesDone:
           type: number
+        excersises:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExerciseSubmission'
       required:
+      - id
       - accessCode
       - firstName
       - lastName
-      - type
+      - totalExercisesSuccessed
+      - totalExercisesDone
   securitySchemes:
     bearerAuth:
       type: http

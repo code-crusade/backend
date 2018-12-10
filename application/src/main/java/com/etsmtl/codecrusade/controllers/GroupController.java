@@ -1,7 +1,7 @@
 package com.etsmtl.codecrusade.controllers;
 
 import com.etsmtl.codecrusade.entities.ClassGroup;
-import com.etsmtl.codecrusade.model.Group;
+import com.etsmtl.codecrusade.model.GroupModel;
 import com.etsmtl.codecrusade.service.ClassGroupService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class GroupController implements GroupsApi {
 	}
 
 	@Override
-	public ResponseEntity<Group> groupsAdd(@Valid Group group) {
+	public ResponseEntity<GroupModel> groupsAdd(@Valid GroupModel group) {
 		return groupService.createGroup(convertToEntity(group))
 						   .map(created -> ResponseEntity.created(UriComponentsBuilder.fromPath("/groups/{id}")
 																					  .buildAndExpand(created.getId())
@@ -38,24 +38,24 @@ public class GroupController implements GroupsApi {
 	}
 
 	@Override
-	public ResponseEntity<Group> groupsEdit(@Valid Group group) {
+	public ResponseEntity<GroupModel> groupsEdit(@Valid GroupModel group) {
 		return groupService.saveGroup(convertToEntity(group))
 						   .map(created -> ResponseEntity.ok(convertToDto(created)))
 						   .orElse(ResponseEntity.badRequest().build());
 	}
 
 	@Override
-	public ResponseEntity<List<Group>> groupsBrowse() {
+	public ResponseEntity<List<GroupModel>> groupsBrowse() {
 		return ResponseEntity.ok(StreamSupport.stream(groupService.findAllGroups().spliterator(), false)
 											  .map(this::convertToDto)
 											  .collect(toList()));
 	}
 
-	private ClassGroup convertToEntity(Group group) {
+	private ClassGroup convertToEntity(GroupModel group) {
 		return modelMapper.map(group, ClassGroup.class);
 	}
 
-	private Group convertToDto(ClassGroup classGroup) {
-		return modelMapper.map(classGroup, Group.class);
+	private GroupModel convertToDto(ClassGroup classGroup) {
+		return modelMapper.map(classGroup, GroupModel.class);
 	}
 }

@@ -4,6 +4,7 @@ import com.etsmtl.codecrusade.entities.Exercise;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ExerciseService {
@@ -16,6 +17,8 @@ public interface ExerciseService {
 
     @PreAuthorize("hasRole('ADMIN') or hasPermission(#exercise,'WRITE')")
     Optional<Exercise> createExercise(@NotNull Exercise exercise);
+
+    Optional<Map<String,String>> findFixturesForExercise(Integer exerciseId);
 
     class ExerciseNotFoundException extends RuntimeException {
 

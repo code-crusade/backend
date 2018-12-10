@@ -21,17 +21,17 @@ import java.util.stream.Collectors;
 @Component
 public class RunnerServiceImpl implements RunnerService {
 
-	private ExerciseRepository exerciseRepository;
-	private Runner runner;
+    private ExerciseRepository exerciseRepository;
+    private Runner runner;
     private Report report;
 
-	public RunnerServiceImpl(ExerciseRepository exerciseRepository, Runner runner){
-		this.exerciseRepository = exerciseRepository;
-		this.runner = runner;
-	}
+    public RunnerServiceImpl(ExerciseRepository exerciseRepository, Runner runner) {
+        this.exerciseRepository = exerciseRepository;
+        this.runner = runner;
+    }
 
-	@Override
-	public Optional<Report> runCodeForExercise(Integer exerciseId, SubmissionArgument argument) {
+    @Override
+    public Optional<Report> runCodeForExercise(Integer exerciseId, SubmissionArgument argument) {
         this.exerciseRepository.findById(exerciseId).ifPresent(exercise -> {
             Runner.Language lang = Runner.Language.valueOf(argument.getLanguage().toUpperCase());
 

@@ -6,7 +6,7 @@
 
     <groupId>com.etsmtl.codecrusade</groupId>
     <artifactId>codecrusade-api</artifactId>
-    <version>v1.0.3</version>
+    <version>v1.0.4</version>
     <packaging>jar</packaging>
     <properties>
         <java.version>11</java.version>
@@ -75,6 +75,7 @@
                     <artifactId>codecrusade-api</artifactId>
                     <artifactVersion>${project.version}</artifactVersion>
                     <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                    <modelNameSuffix>Model</modelNameSuffix>
                     <configOptions>
                         <!--<parentGroupId>com.etsmtl.codecrusade</parentGroupId>-->
                         <!--<parentArtifactId>codecrusade-api-parent</parentArtifactId>-->

@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Annotation marking a submission for validation between its exercise and arguments.
+ * Annotation marking a submission for a validation contract between its exercise and arguments.
  */
 @Documented
 @Constraint(validatedBy = SubmissionArgumentsValidator.class)

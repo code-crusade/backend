@@ -15,19 +15,19 @@ public class CodewarsCliRunnerTest {
     }
 
 	private static void success(RunnerResult result) {
-    	Assert.assertEquals(result.getStatus(), RunnerResult.Status.SUCCESS);
+    	Assert.assertEquals(RunnerResult.Status.SUCCESS, result.getStatus());
 	}
 
 	private static void failed(RunnerResult result) {
-		Assert.assertEquals(result.getStatus(), RunnerResult.Status.FAILED);
+		Assert.assertEquals(RunnerResult.Status.FAILED, result.getStatus());
 	}
 
 	private static void error(RunnerResult result) {
-		Assert.assertEquals(result.getStatus(), RunnerResult.Status.ERROR);
+		Assert.assertEquals(RunnerResult.Status.ERROR, result.getStatus());
 	}
 
 	private static void timeout(RunnerResult result) {
-		Assert.assertEquals(result.getStatus(), RunnerResult.Status.TIMEOUT);
+		Assert.assertEquals(RunnerResult.Status.TIMEOUT, result.getStatus());
 	}
 
 	// TODO: C TEST: Success, Fail, Timeout, Compile error.
